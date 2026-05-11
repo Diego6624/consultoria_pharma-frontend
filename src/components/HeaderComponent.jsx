@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '/public/images/logo.png';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { motion } from 'framer-motion';
+import AnimateBoton from './AnimateBoton';
 
 const HeaderComponent = () => {
     const location = useLocation();
@@ -22,7 +23,7 @@ const HeaderComponent = () => {
                     <div className='flex items-center gap-3 w-full'>
                         <img src={logo} alt="Company Logo" className='w-15 h-15 bg-white rounded-full' />
                         <div className='text-[#0DB3DE] flex flex-col font-semibold'>
-                            <p>CONSULTORÍA <span className='text-[#FF0000]'>YL </span> PHARMA</p>
+                            <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
                             <p>CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
                         </div>
                     </div>
@@ -48,7 +49,7 @@ const HeaderComponent = () => {
                                         }}
                                         transition={{ duration: 0.3, ease: "easeInOut" }}
                                         style={{
-                                            originX: 0.5 // 🔥 centro
+                                            originX: 0.5
                                         }}
                                     />
                                 </Link>
@@ -56,24 +57,14 @@ const HeaderComponent = () => {
                         })}
                     </div>
 
-                    {/* BOTÓN (lo dejas igual) */}
-                    <div className='w-auto'>
-                        <Link
-                            to='/consultation'
-                            className='relative w-min h-min flex items-center p-5 py-3 bg-[#52C7E5] text-white rounded-full overflow-hidden group shadow-lg hover:shadow-xl'
-                        >
-                            <div className='absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#0DB3DE] rounded-full group-hover:w-full group-hover:h-full group-hover:left-0 group-hover:top-0 group-hover:translate-y-0 group-hover:rounded-full transition-all duration-500 ease-out'></div>
-
-                            <div className='absolute w-10 h-10 left-3 bg-[#0DB3DE] rounded-full flex items-center justify-center'>
-                                <LocalPhoneIcon className='text-white ' />
-                            </div>
-
-                            <span className='pl-10 relative font-semibold text-lg whitespace-nowrap'>
-                                Agendar Asesoría
-                            </span>
-                        </Link>
-                    </div>
-
+                    {/* Consultation */}
+                    <AnimateBoton
+                        bg="#52C7E5"
+                        bgIcon="#0DB3DE"
+                        name="Agendar Asesoría"
+                        icon={<LocalPhoneIcon />}
+                        navigate="/consultation"
+                    />
                 </div>
             </div>
         </>

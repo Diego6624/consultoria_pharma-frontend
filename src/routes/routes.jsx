@@ -5,6 +5,7 @@ import HomePage from "../pages/public/HomePage";
 import ServicesPage from "../pages/public/ServicesPage";
 import AboutUsPage from "../pages/public/AboutUsPage";
 import NewsPage from "../pages/public/NewsPage";
+import ConsultationPage from "@/pages/public/ConsultationPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(   
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
             <Route path="news" element={<NewsPage />} />
             <Route path="aboutUs" element={<AboutUsPage />} />
             <Route path="services" element={<ServicesPage />} />
+            <Route path="consultation" element={<ConsultationPage />} />
         </Route>
     )
 );
