@@ -2,14 +2,17 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import App from "../App";
 import NotFoundComponent from "../components/NotFoundComponent";
 import HomePage from "../pages/public/HomePage";
-import ContactUsPage from "../pages/public/ContactUs";
+import ServicesPage from "../pages/public/ServicesPage";
+import AboutUsPage from "../pages/public/AboutUsPage";
+import NewsPage from "../pages/public/NewsPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(   
         <Route path="/" element={<App />} errorElement={<NotFoundComponent />}>
             <Route index element={<HomePage />} />
-            <Route path="contact" element={<ContactUsPage />} />
-
+            <Route path="news" element={<NewsPage />} />
+            <Route path="aboutUs" element={<AboutUsPage />} />
+            <Route path="services" element={<ServicesPage />} />
         </Route>
     )
 );
