@@ -1,11 +1,11 @@
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import App from "../App";
 import NotFoundComponent from "../components/NotFoundComponent";
-import HomePage from "../pages/public/HomePage";
-import ServicesPage from "../pages/public/ServicesPage";
-import AboutUsPage from "../pages/public/AboutUsPage";
-import NewsPage from "../pages/public/NewsPage";
-import ConsultationPage from "@/pages/public/ConsultationPage";
+import HomePage from "../pages/public/home/HomePage";
+import ServicesPage from "../pages/public/servicesP/ServicesPage";
+import AboutUsPage from "../pages/public/aboutUs/AboutUsPage";
+import NewsPage from "../pages/public/news/NewsPage";
+import ConsultationPage from "@/pages/public/consultation/ConsultationPage";
 
 const router = createBrowserRouter(
     createRoutesFromElements(   

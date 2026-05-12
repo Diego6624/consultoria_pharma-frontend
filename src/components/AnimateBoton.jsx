@@ -5,11 +5,14 @@ const AnimateBoton = ({ bg, bgIcon, name, icon, navigate}) => {
         <div className='w-auto'>
             <Link
                 to={navigate}
-                className={`relative w-min h-min flex items-center p-5 py-3 bg-[${bg}] text-white rounded-full overflow-hidden group shadow-lg hover:shadow-xl`}
+                className={`relative w-min h-min flex items-center p-5 py-3 text-white rounded-full overflow-hidden group`}
+                style={{ backgroundColor: bg}}
             >
                 <div className='absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#0DB3DE] rounded-full group-hover:w-full group-hover:h-full group-hover:left-0 group-hover:top-0 group-hover:translate-y-0 group-hover:rounded-full transition-all duration-500 ease-out'></div>
 
-                <div className={`absolute w-10 h-10 left-3 bg-[${bgIcon}] rounded-full flex items-center justify-center`}>
+                <div className={`absolute w-10 h-10 left-3 rounded-full flex items-center justify-center`}
+                    style={{ backgroundColor: bgIcon }}
+                >
                     {icon}
                 </div>
 

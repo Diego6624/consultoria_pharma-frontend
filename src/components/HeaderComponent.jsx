@@ -16,7 +16,7 @@ const HeaderComponent = () => {
 
     return (
         <>
-            <div className="flex justify-center">
+            <div className="flex justify-center fixed top-0 left-0 right-0 z-50">
                 <div className='flex justify-between items-center w-full max-w-7xl bg-[#e7e9ea] rounded-full mx-10 my-4 px-6 py-4'>
 
                     {/* Logo */}
@@ -37,7 +37,7 @@ const HeaderComponent = () => {
                                 <Link
                                     key={item.name}
                                     to={item.path}
-                                    className="relative font-medium text-black"
+                                    className="relative font-medium text-[#003F45]"
                                 >
                                     {item.name}
 
