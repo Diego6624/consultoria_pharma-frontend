@@ -18,7 +18,7 @@ const BannerMain = () => {
             <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/10 to-transparent"></div>
 
             {/* CONTENIDO */}
-            <div className="relative flex items-center w-full h-full">
+            <div className="relative flex items-center w-full h-full md:pt-15">
                 <div className="flex flex-col justify-center px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
 
                     {/* Message */}
