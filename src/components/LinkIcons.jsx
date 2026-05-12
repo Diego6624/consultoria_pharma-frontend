@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 
-const LinkIcons = ({navigate, socialIcon}) => {
+const LinkIcons = ({navigate, socialIcon, bg, hoverBg, hoverText}) => {
     return (<>
-        <div className="flex items-center justify-center p-2">
-            <Link to={navigate} className="text-[#0DB3DE] hover:text-[#005F8B]">
+        <div className="w-auto">
+            <Link to={navigate} className={`flex items-center justify-center p-2 rounded-full 
+                bg-[${bg}] hover:bg-[${hoverBg}] w-min text-white hover:text-[${hoverText}]`}
+            >
                 {socialIcon}
             </Link>
         </div>
