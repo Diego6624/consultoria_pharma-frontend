@@ -1,68 +1,55 @@
-import InfoIcon from '@mui/icons-material/Info';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-const ServiceCard = ({
-    image,
-    category,
-    title,
-    description,
-    serviceLink,
-    icon,
+const ServiceCard =({
+  category,
+  title,
+  description,
+  icon,
+  image,
+  navigation,
 }) => {
-    return (
-        <div className="relative w-[320px] h-[500px]">
-            
-            {/* Imagen de fondo */}
-            <img
-                src={image}
-                alt={title}
-                className="absolute inset-0 w-full h-full object-cover rounded-3xl"
-            />
+  return (
+    <article className="relative w-full">
+      {/* Imagen superior */}
+      <div className="h-[300px] overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-2">
+        <img
+          src={image}
+          alt={title}
+          className="h-full w-full object-cover"
+        />
+      </div>
 
-            {/* Overlay oscuro */}
-            <div className="absolute inset-0 bg-black/20 rounded-3xl" />
-
-            {/* Card blanca adelante */}
-            <div className="absolute bottom-0 left-0 right-0 w-full rounded-3xl bg-white shadow-2xl flex flex-col gap-4 px-6 pt-8 pb-6 z-10"
-                style={{
-                    height: '68%',
-                    borderRadius: '24px',
-                }}>
-
-                {/* Category */}
-                <p className="text-gray-400 text-xs font-semibold uppercase tracking-wide">
-                    {category}
-                </p>
-
-                {/* Title */}
-                <h3 className="text-gray-900 font-black text-2xl leading-tight">
-                    {title}
-                </h3>
-
-                {/* Divider */}
-                <div className="w-12 h-1 bg-[#0DB3DE] rounded-full" />
-
-                {/* Description */}
-                <p className="text-gray-700 text-sm leading-relaxed flex-1">
-                    {description}
-                </p>
-
-                {/* Button */}
-                <Link
-                    to={serviceLink}
-                    className="w-fit flex items-center gap-2 px-5 py-3 bg-[#0DB3DE] hover:bg-[#0a9ec7] text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95"
-                >
-                    <InfoIcon fontSize="small" />
-                    Ver servicio
-                </Link>
-            </div>
-
-            {/* Floating Icon Badge */}
-            <div className="absolute -right-4 top-[140px] z-20 w-16 h-16 rounded-full bg-[#0DB3DE] flex items-center justify-center shadow-lg border-4 border-white">
-                {icon}
-            </div>
+      {/* Card flotante */}
+      <div className="relative -mt-20 mx-5 rounded-2xl border border-gray-200 bg-white px-6 pb-6 pt-10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:translate-y-2">
+        {/* Icono flotante */}
+        <div className="absolute -top-7 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-sky-500 text-white shadow-lg transition-transform duration-300 hover:-translate-y-4">
+          {icon}
         </div>
-    );
-};
+
+        <span className="block text-[15px] text-gray-700">{category}</span>
+
+        <h3 className="mt-1 text-[23px] font-bold leading-tight text-gray-900">
+          {title}
+        </h3>
+
+        <div className="mt-3 h-1 w-12 rounded-full bg-sky-500" />
+
+        <p className="mt-4 text-[15px] leading-6 text-gray-700">
+          {description}
+        </p>
+
+        <Link
+          to={navigation}
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-600"
+        >
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 text-xs">
+            i
+          </span>
+          Ver servicio
+        </Link>
+      </div>
+    </article>
+  );
+}
 
 export default ServiceCard;

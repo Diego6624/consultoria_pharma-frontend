@@ -2,7 +2,7 @@ import { Clock, FileText, LinkIcon, TriangleAlert } from "lucide-react";
 
 const QuestionsSection = () => {
     return (<>
-        <section className="p-15">
+        <section className="p-15 px-8 md:px-16 lg:px-32 xl:px-44 gap-6">
             <div className="items-center justify-center w-full h-full grid md:grid-cols-2 gap-4 px-20">
                 {/* Content */}
                 <div className="flex flex-col gap-6 mx-auto w-full h-full">

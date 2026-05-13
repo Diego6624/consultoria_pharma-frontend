@@ -5,7 +5,7 @@ const BannerMain = () => {
 
     const divStyle = {
         width: '100%',
-        height: '100dvh',
+        height: '100svh',
         backgroundImage: 'url(images/imageHome.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -13,7 +13,7 @@ const BannerMain = () => {
 
     return (<>
         <section>
-            <div className="relative w-full h-dvh" style={divStyle}>
+            <div className="relative w-full h-svh" style={divStyle}>
                 {/* 🔥 CAPA DE SOMBRA / GRADIENTE */}
                 <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/10 to-transparent"></div>
 
