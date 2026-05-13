@@ -40,23 +40,22 @@ const SpecializedServices = () => {
 
             {/* Tittle | Description */}
             <div className="relative bg-[#2F5D93] pt-16 pb-32 overflow-hidden">
-                <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
-                    <div className="grid gap-8 lg:grid-cols-2 lg:items-start">
+                <div className="w-auto mx-50 px-6 sm:px-8 lg:px-12 grid gap-8 lg:grid-cols-2 lg:items-center">
 
-                        <h2 className="text-4xl font-extrabold leading-tight text-white sm:text-5xl">
-                            Nuestros Servicios Especializados
-                        </h2>
+                    <h2 className="font-semibold text-3xl leading-tight text-white w-min">
+                        Nuestros Servicios Especializados
+                    </h2>
 
-                        <div className="relative max-w-2xl pl-6 flex items-center w-full">
-                            <span className="absolute left-0 h-[70%] w-1 rounded-full bg-sky-300" />
-                            <p className="text-lg leading-7 text-white/95 sm:text-xl">
-                                Simplificamos la burocracia técnica y legal. Desde la obtención
-                                de registros sanitarios hasta la certificación de almacenes,
-                                nos encargamos de que tu empresa cumpla con DIGEMID sin detener
-                                su operación comercial.
-                            </p>
-                        </div>
+                    <div className="relative max-w-2xl pl-6 flex items-center w-full">
+                        <span className="absolute left-0 h-[70%] w-1 rounded-full bg-sky-300" />
+                        <p className="text-lg leading-7 text-white/95 sm:text-xl">
+                            Simplificamos la burocracia técnica y legal. Desde la obtención
+                            de registros sanitarios hasta la certificación de almacenes,
+                            nos encargamos de que tu empresa cumpla con DIGEMID sin detener
+                            su operación comercial.
+                        </p>
                     </div>
+
                 </div>
 
                 {/* Borde */}
@@ -79,7 +78,14 @@ const SpecializedServices = () => {
                 <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
                     <div className="grid gap-8 lg:grid-cols-3">
                         {services.map((service, index) => (
-                            <ServiceCard key={index} {...service} />
+                            <ServiceCard key={index}
+                                category={service.category}
+                                title={service.title}
+                                description={service.description}
+                                icon={service.icon}
+                                image={service.image}
+                                navigation={service.navigation}
+                            />
                         ))}
                     </div>
                 </div>

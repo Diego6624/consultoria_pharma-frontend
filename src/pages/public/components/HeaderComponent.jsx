@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logo from '/public/images/logo.png';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { motion } from 'framer-motion';
-import AnimateBoton from './AnimateBoton';
+import AnimateBoton from '../../../components/AnimateBoton';
 
 const HeaderComponent = () => {
     const location = useLocation();
@@ -62,7 +62,10 @@ const HeaderComponent = () => {
                         bg="#52C7E5"
                         bgIcon="#0DB3DE"
                         name="Agendar Asesoría"
+                        textColor="#FFFFFF"
+                        textHover="#000000"
                         icon={<LocalPhoneIcon />}
+                        iconColor="#FFFFFF"
                         navigate="/consultation"
                     />
                 </div>

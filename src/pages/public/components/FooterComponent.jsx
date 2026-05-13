@@ -1,12 +1,12 @@
 import { Facebook, Instagram, WhatsApp } from "@mui/icons-material";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import LinkIcons from "./LinkIcons";
+import LinkIcons from "../../../components/LinkIcons";
 import logo from '/public/images/logo.png';
 import { Link } from "react-router-dom";
 
 const FooterComponent = () => {
     return (
-        <div className="flex flex-col mt-auto w-full gap-2 px-10 py-6 bg-[#0DB3DE] text-white">
+        <div className="flex flex-col mt-auto w-full p-4 py-8 md:py-15 px-8 md:px-16 lg:px-30 2xl:px-44 gap-6 bg-[#0DB3DE] text-white">
             {/* Footer Content */}
             <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-8 w-full py-2">
 

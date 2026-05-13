@@ -1,3 +1,4 @@
+import { CircleAlert } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ServiceCard =({
@@ -9,9 +10,9 @@ const ServiceCard =({
   navigation,
 }) => {
   return (
-    <article className="relative w-full">
+    <article className="group relative w-full">
       {/* Imagen superior */}
-      <div className="h-[300px] overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-2">
+      <div className="h-auto md:h-[300px] overflow-hidden rounded-2xl transition-transform duration-400 group-hover:-translate-y-2">
         <img
           src={image}
           alt={title}
@@ -20,9 +21,9 @@ const ServiceCard =({
       </div>
 
       {/* Card flotante */}
-      <div className="relative -mt-20 mx-5 rounded-2xl border border-gray-200 bg-white px-6 pb-6 pt-10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:translate-y-2">
+      <div className="relative -mt-20 mx-5 rounded-2xl border-1 border-gray-200 bg-white px-6 pb-6 pt-10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-transform duration-400 group-hover:translate-y-2">
         {/* Icono flotante */}
-        <div className="absolute -top-7 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-sky-500 text-white shadow-lg transition-transform duration-300 hover:-translate-y-4">
+        <div className="absolute -top-7 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#0DB3DE] text-white shadow-lg transition-transform duration-400 group-hover:-translate-y-8">
           {icon}
         </div>
 
@@ -32,19 +33,17 @@ const ServiceCard =({
           {title}
         </h3>
 
-        <div className="mt-3 h-1 w-12 rounded-full bg-sky-500" />
+        <div className="mt-3 h-1 w-12 rounded-full bg-[#0DB3DE]" />
 
-        <p className="mt-4 text-[15px] leading-6 text-gray-700">
+        <p className="mt-4 text-md leading-6 text-gray-700">
           {description}
         </p>
 
         <Link
           to={navigation}
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-sky-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-600"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#0DB3DE] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#079CC3]"
         >
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20 text-xs">
-            i
-          </span>
+          <CircleAlert />
           Ver servicio
         </Link>
       </div>

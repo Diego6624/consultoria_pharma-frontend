@@ -38,15 +38,15 @@ const BannerMain = () => {
 
                         {/* Button */}
                         <AnimateBoton
-                            name="Ver servicios"
                             bg=""
-                            icon={
-                                <ChevronRight className="transition-transform duration-300 group-hover:translate-x-1" />
-                            }
-                            bgIcon=""
+                            bgIcon="#0DB3DE"
+                            name="Ver servicio"
+                            textColor="#FFFFFF"
+                            textHover="#000000"
+                            icon={<ChevronRight />}
+                            iconColor="#FFFFFF"
                             navigate="/services"
                         />
-
                     </div>
                 </div>
             </div>
