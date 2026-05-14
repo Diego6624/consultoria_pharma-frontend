@@ -1,41 +1,65 @@
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
-const ArticleCard = ({ title, subtitle, image }) => (
-  <div className="relative w-full h-full overflow-hidden group cursor-pointer">
-    {/* Imagen de fondo */}
-    {image ? (
+const ArticleCard = ({ title, subtitle, image, navigate }) => {
+  return (
+    <Link
+      to={navigate}
+      className="relative w-full h-full overflow-hidden group rounded-2xl block"
+    >
+      {/* Imagen */}
       <img
         src={image}
         alt={title}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
       />
-    ) : (
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-500 to-slate-700" />
-    )}
- 
-    {/* Overlay degradado oscuro solo en la parte superior */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/25 to-transparent" />
- 
-    {/* Contenido */}
-    <div className="relative z-10 flex flex-col justify-between h-full p-5">
-      {/* Texto arriba-izquierda */}
-      <div className="flex flex-col gap-1">
-        <p className="text-white font-bold text-[15px] leading-snug drop-shadow-sm">
-          {title}
-        </p>
-        <p className="text-white/85 text-sm leading-snug max-w-[200px] drop-shadow-sm">
-          {subtitle}
-        </p>
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors duration-300" />
+
+      {/* Borde */}
+      <div className="absolute inset-0 rounded-2xl border border-white/20 transition-all duration-300 pointer-events-none" />
+
+      {/* Glow */}
+      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-500 pointer-events-none shadow-[inset_0_0_0_1px_rgba(34,211,238,0.6),0_0_25px_rgba(34,211,238,0.3)]" />
+
+      {/* Contenido */}
+      <div className="relative z-10 flex flex-col justify-between h-full p-6">
+
+        {/* Texto */}
+        <div className="flex flex-col gap-1">
+          <p className="text-white font-bold text-lg leading-snug">
+            {title}
+          </p>
+          <p className="text-white text-md leading-snug max-w-xs">
+            {subtitle}
+          </p>
+        </div>
+
+        {/* Botón flecha */}
+        <div className="relative w-10 h-10 overflow-hidden rounded-lg bg-cyan-400 group-hover:bg-cyan-300 transition-all duration-300 flex items-center justify-center">
+
+          {/* Flecha que sale */}
+          <ArrowUpRight
+            size={20}
+            className="absolute text-white transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+                       group-hover:translate-x-6 group-hover:-translate-y-6
+                       group-hover:opacity-0"
+          />
+
+          {/* Flecha que entra */}
+          <ArrowUpRight
+            size={20}
+            className="absolute text-black transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]
+                       -translate-x-6 translate-y-6 opacity-0
+                       group-hover:translate-x-0 group-hover:translate-y-0
+                       group-hover:opacity-100"
+          />
+        </div>
+
       </div>
- 
-      {/* Botón flecha cian abajo-izquierda */}
-      <div>
-        <button className="w-9 h-9 rounded-xl bg-cyan-400 hover:bg-cyan-300 active:scale-95 transition-all duration-200 flex items-center justify-center shadow-lg">
-          <ArrowUpRight />
-        </button>
-      </div>
-    </div>
-  </div>
-);
+    </Link>
+  );
+};
 
 export default ArticleCard;
