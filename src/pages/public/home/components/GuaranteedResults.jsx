@@ -52,7 +52,7 @@ const GuaranteedResults = () => {
                         textHover="#FFFFFF"
                         icon={<LocalPhoneIcon />}
                         iconColor="#FFFFFF"
-                        navigate="/contact"
+                        navigate="/consultation"
                     />
                 </div>
             </div>

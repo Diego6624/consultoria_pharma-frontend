@@ -22,10 +22,8 @@ const BannerMain = () => {
                     <div className="flex flex-col justify-center px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
 
                         {/* Message */}
-                        <div className="flex flex-col font-bold text-white text-4xl md:text-6xl lg:text-7xl gap-2">
-                            <p>Tu Negocio</p>
-                            <p className="text-[#0DB3DE]">Farmacéutico</p>
-                            <p>en Regla</p>
+                        <div className="flex flex-col font-bold text-white text-4xl md:text-6xl lg:text-7xl gap-2 w-min">
+                            <p>Tu Negocio <span className="text-[#0DB3DE]">Farmacéutico</span> en Regla</p>
                         </div>
 
                         {/* Description */}

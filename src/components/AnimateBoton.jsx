@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
-const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, textHover }) => {
+const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, textHover, bgShadow }) => {
     return (<>
         <div className='w-auto'>
             <Link
                 to={navigate}
                 className={`relative w-min h-min flex items-center p-5 py-3 rounded-full overflow-hidden group`}
-                style={{ backgroundColor: bg}}
+                style={{ backgroundColor: bg, boxShadow: bgShadow }}
             >
                 <div className='absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#0DB3DE] rounded-full group-hover:w-full group-hover:h-full group-hover:left-0 group-hover:top-0 group-hover:translate-y-0 group-hover:rounded-full transition-all duration-500 ease-out'></div>
 
