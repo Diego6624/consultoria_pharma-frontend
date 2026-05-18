@@ -1,10 +1,9 @@
 const VisionMision = () => {
-    const cardStyle = {
+    const bgStyle = {
         backgroundImage: "url('/images/visionMision.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        width: '100%',
-        height: '100%',
+        backgroundRepeat: 'no-repeat',
     };
 
     return (
@@ -13,16 +12,16 @@ const VisionMision = () => {
 
                 {/* MISION */}
                 <div
-                    style={cardStyle}
-                    className="w-auto rounded-3xl shadow-lg flex items-center gap-6 p-10"
+                    style={bgStyle}
+                    className="rounded-3xl relative overflow-hidden shadow-lg flex flex-col items-center justify-center gap-6 p-10 min-h-48"
                 >
                     <img
                         src="/images/diana.png"
                         alt="diana"
-                        className="w-16 h-16 object-contain shrink-0"
+                        className="w-16 h-16 object-contain"
                     />
 
-                    <div className="flex flex-col gap-2 text-white">
+                    <div className="flex flex-col gap-2 text-white text-center">
                         <h3 className="text-2xl font-bold">Misión</h3>
                         <p className="text-base leading-relaxed">
                             Brindar soluciones regulatorias integrales que permitan a nuestros clientes
@@ -33,20 +32,20 @@ const VisionMision = () => {
 
                 {/* VISION */}
                 <div
-                    style={cardStyle}
-                    className="w-auto rounded-3xl shadow-lg flex items-center p-10 gap-6"
+                    style={bgStyle}
+                    className="rounded-3xl relative overflow-hidden shadow-lg flex flex-col items-center justify-center gap-6 p-10 min-h-48"
                 >
                     <img
                         src="/images/eye.png"
                         alt="eye"
-                        className="w-16 h-16 object-contain flex-shrink-0"
+                        className="w-16 h-16 object-contain"
                     />
 
-                    <div className="flex flex-col gap-2 text-white">
+                    <div className="flex flex-col gap-2 text-white text-center">
                         <h3 className="text-2xl font-bold">Visión</h3>
                         <p className="text-base leading-relaxed">
-                            Ser líderes en el sector de servicios regulatorios, reconocidos por nuestra excelencia,
-                            ética y compromiso con la calidad en la atención a nuestros clientes.
+                            Ser la consultora referente en el sector farmacéutico peruano, reconocida por nuestra agilidad,
+                            precisión técnica y compromiso inquebrantable con la salud pública.
                         </p>
                     </div>
                 </div>
