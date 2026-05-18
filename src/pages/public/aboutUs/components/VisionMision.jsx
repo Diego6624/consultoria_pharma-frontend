@@ -4,7 +4,6 @@ const VisionMision = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        height: '100%',
     };
 
     return (
@@ -14,15 +13,15 @@ const VisionMision = () => {
                 {/* MISION */}
                 <div
                     style={cardStyle}
-                    className="rounded-3xl overflow-hidden shadow-lg flex items-center justify-center gap-4 p-8"
+                    className="rounded-3xl overflow-hidden shadow-lg flex items-center justify-center gap-4 p-8 h-64"
                 >
                     <img
                         src="/images/diana.png"
                         alt="diana"
-                        className="w-20 h-20 object-contain"
+                        className="w-20 h-20 object-contain flex-shrink-0"
                     />
 
-                    <div className="flex gap-3 flex-col text-white">
+                    <div className="flex gap-3 flex-col text-white text-center">
                         <h3 className="text-2xl font-bold">Misión</h3>
                         <p className="text-sm leading-relaxed">
                             Brindar soluciones regulatorias integrales que permitan a nuestros clientes
@@ -34,12 +33,12 @@ const VisionMision = () => {
                 {/* VISION */}
                 <div
                     style={cardStyle}
-                    className="rounded-3xl overflow-hidden shadow-lg flex flex-col items-center justify-center gap-4 p-8"
+                    className="rounded-3xl overflow-hidden shadow-lg flex flex-col items-center justify-center gap-4 p-8 h-64"
                 >
                     <img
                         src="/images/eye.png"
                         alt="eye"
-                        className="w-20 h-20 object-contain"
+                        className="w-20 h-20 object-contain flex-shrink-0"
                     />
 
                     <div className="flex flex-col gap-3 text-white text-center">
