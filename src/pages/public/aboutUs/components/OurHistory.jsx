@@ -37,17 +37,17 @@ const OurHistory = () => {
                     </div>
                 </div>
                 {/* Image */}
-                <div className="w-full h-full flex justify-center ">
-                    <div className="relative w-full max-w-md">
+                <div className="w-full h-full flex justify-center">
+                    <div className="relative w-full max-w-lg">
 
                         {/* CÍRCULO CELESTE (ATRÁS) */}
-                        <div className="absolute -top-8 -right-8 w-28 h-28 bg-[#A5E4F4] rounded-full z-0"></div>
+                        <div className="absolute -top-8 -right-8 w-20 h-20 bg-[#A5E4F4] rounded-full z-0"></div>
 
                         {/* IMAGEN */}
                         <img
                             src="/images/imageUs2.jpg"
                             alt="image"
-                            className="relative z-10 w-full h-[380px] object-cover shadow-lg
+                            className="relative z-10 w-full h-full object-cover shadow-lg
                  
                  [border-top-right-radius:80px]
                  [border-bottom-left-radius:80px]"

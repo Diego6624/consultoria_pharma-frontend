@@ -22,17 +22,22 @@ const OurValues = () => {
         <section className="p-15 px-8 md:px-16 lg:px-32 2xl:px-44">
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 {/* Image */}
-                <div className="flex justify-center">
-                    <div className="relative w-full max-w-md">
+                <div className="w-full h-full flex justify-center">
+                    <div className="relative w-full max-w-lg">
+
                         {/* CÍRCULO CELESTE (ATRÁS) */}
-                        <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-[#A5E4F4] rounded-full z-0"></div>
+                        <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-[#A5E4F4] rounded-full z-0"></div>
 
                         {/* IMAGEN */}
                         <img
                             src="/images/imageUs3.png"
-                            alt="scientist"
-                            className="relative z-10 w-full h-auto object-cover shadow-lg rounded-3xl"
+                            alt="image"
+                            className="relative w-full h-full object-cover shadow-lg
+                 
+                 [border-top-right-radius:80px]
+                 [border-bottom-left-radius:80px]"
                         />
+
                     </div>
                 </div>
 
@@ -44,12 +49,12 @@ const OurValues = () => {
                     {/* Lista de Valores */}
                     <div className="flex flex-col gap-6">
                         {values.map((value, index) => (
-                            <div key={index} className="flex gap-4 items-start">
+                            <div key={index} className="flex gap-4 items-center group">
                                 {/* Borde izquierdo azul */}
-                                <div className="w-1 h-full bg-[#0DB3DE] rounded-full flex-shrink-0" style={{ minHeight: '80px' }}></div>
+                                <div className="w-1 bg-[#0DB3DE] transition duration-400 group-hover:bg-[#1F4C7F] rounded-full shrink-0" style={{ minHeight: '70px' }}></div>
 
                                 {/* Contenido del valor */}
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-1 group-hover:-translate-x-2 transition-transform duration-400">
                                     <h3 className="text-lg font-bold text-gray-900">
                                         {value.title}
                                     </h3>
