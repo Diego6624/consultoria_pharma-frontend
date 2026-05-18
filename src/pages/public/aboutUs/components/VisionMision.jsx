@@ -13,12 +13,12 @@ const VisionMision = () => {
                 {/* MISION */}
                 <div
                     style={cardStyle}
-                    className="rounded-3xl overflow-hidden shadow-lg flex items-center justify-center gap-4 p-8 h-64"
+                    className="rounded-3xl overflow-hidden shadow-lg flex items-center justify-center gap-4 p-8"
                 >
                     <img
                         src="/images/diana.png"
                         alt="diana"
-                        className="w-20 h-20 object-contain flex-shrink-0"
+                        className="w-20 h-20 object-contain shrink-0"
                     />
 
                     <div className="flex gap-3 flex-col text-white text-center">
@@ -33,7 +33,7 @@ const VisionMision = () => {
                 {/* VISION */}
                 <div
                     style={cardStyle}
-                    className="rounded-3xl overflow-hidden shadow-lg flex flex-col items-center justify-center gap-4 p-8 h-64"
+                    className="rounded-3xl overflow-hidden shadow-lg flex flex-col items-center justify-center gap-4 p-8"
                 >
                     <img
                         src="/images/eye.png"
