@@ -1,6 +1,10 @@
+import BannerMain from "./components/BannerMain";
+import SearchServices from "./components/SearchServices";
+
 const ServicesPage = () => {
     return(<>
-        <h1>Servicios</h1>
+        <BannerMain />
+        <SearchServices />
     </>);
 };
 
