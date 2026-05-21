@@ -1,4 +1,4 @@
-import ServiceCard from "@/components/ServiceCard";
+import ServiceCard from "@/components/ServiceCardH";
 import { FileCheckCorner, InfoIcon, KeyRound, ShieldCheck } from "lucide-react";
 import imageCard from '/public/images/imageCards.jpg';
 import imageCard2 from '/public/images/imageCards2.jpg';

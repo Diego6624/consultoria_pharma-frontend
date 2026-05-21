@@ -1,4 +1,4 @@
-import ServicesCard from "@/components/ServiceCard";
+import ServicesCards from "@/components/ServicesCards";
 
 const ServicesList = ({ 
   services, 
@@ -14,16 +14,6 @@ const ServicesList = ({
     return matchesSearch && matchesCategory;
   });
 
-  if (isLoading) {
-    return (
-      <section className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
-        <div className="flex items-center justify-center min-h-96">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-cyan-400"></div>
-        </div>
-      </section>
-    );
-  }
-
   if (filteredServices.length === 0) {
     return (
       <section className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
@@ -36,10 +26,10 @@ const ServicesList = ({
   }
 
   return (
-    <section className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section className="px-8 md:px-16 lg:px-32 2xl:px-44">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {filteredServices.map((service) => (
-          <ServicesCard
+          <ServicesCards
             key={service.id}
             {...service}
           />

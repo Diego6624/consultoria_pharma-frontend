@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Check } from "lucide-react";
-import { servicesData } from "../servicesP/data/servicesData";
 
 const ServiceDetailPage = () => {
+
   const { id } = useParams();
   const navigate = useNavigate();
   

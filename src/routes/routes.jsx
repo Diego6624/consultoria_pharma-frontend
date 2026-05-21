@@ -3,7 +3,7 @@ import App from "../App";
 import NotFoundComponent from "../components/NotFoundComponent";
 import HomePage from "../pages/public/home/HomePage";
 import ServicesPage from "../pages/public/servicesP/ServicesPage";
-import ServiceDetailPage from "../pages/public/servicesP/ServiceDetailPage";
+import ServiceDetailPage from "../pages/public/servicesP/components/ServiceDetailPage";
 import AboutUsPage from "../pages/public/aboutUs/AboutUsPage";
 import NewsPage from "../pages/public/news/NewsPage";
 import ConsultationPage from "@/pages/public/consultation/ConsultationPage";

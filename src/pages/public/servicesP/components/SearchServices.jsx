@@ -1,4 +1,3 @@
-
 import { Search, X } from "lucide-react";
 
 const SearchServices = ({ 
@@ -13,9 +12,9 @@ const SearchServices = ({
   };
 
   return (
-    <section className="py-12 px-8 md:px-16 lg:px-32 2xl:px-44">
+    <section className="px-8 md:px-16 lg:px-32 2xl:px-44">
       <div className="flex flex-col gap-6">
-        {/* Título */}
+        {/* Título
         <div className="flex flex-col gap-2">
           <h2 className="text-3xl font-bold text-gray-900">
             Nuestros Servicios
@@ -23,7 +22,7 @@ const SearchServices = ({
           <p className="text-gray-600">
             Encuentra el servicio que necesitas filtrando por categoría o buscando por nombre
           </p>
-        </div>
+        </div> */}
 
         {/* Controles de búsqueda y filtro */}
         <div className="flex flex-col md:flex-row gap-4 w-full">
