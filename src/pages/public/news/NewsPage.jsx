@@ -1,6 +1,10 @@
+import BannerMain from "./components/BannerMain";
+import SearchNews from "./components/SearchNews";
+
 const NewsPage = () => {
     return(<>
-        <h1>Noticias</h1>
+        <BannerMain />
+        <SearchNews />
     </>)
 }
 

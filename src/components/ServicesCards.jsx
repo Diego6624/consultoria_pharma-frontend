@@ -1,7 +1,5 @@
 import { Check, ArrowRight } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { motion } from 'framer-motion';
-
+import { useLocation } from "react-router-dom";
 const ServicesCard = ({
   id,
   category,
@@ -11,7 +9,6 @@ const ServicesCard = ({
   image,
   categoryBadgeColor = "#0DB3DE"
 }) => {
-  const navigate = useNavigate();
 
   const handleNavigate = () => {
     navigate(`/services/${id}`);
@@ -26,8 +23,7 @@ const ServicesCard = ({
     };
     return colors[category] || categoryBadgeColor;
   };
-  const location = useLocation();
-  const isActive = location.pathname === item.path;
+
 
   return (
     <article className="relative w-full flex flex-col xl:flex-row overflow-hidden rounded-2xl shadow-md md:shadow-none">
@@ -91,29 +87,32 @@ const ServicesCard = ({
 
         </div>
 
-        {/* BUTTON */}
         <button
           onClick={handleNavigate}
-          className=" group mt-4 inline-flex items-center gap-2 rounded-full bg-cyan-400 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-cyan-500"
+          className="group relative mt-4 inline-flex items-center gap-2 rounded-full max-w-min py-2 text-sm font-semibold text-gray-600 hover:text-black transition-all overflow-hidden cursor-pointer"
         >
-          
-          Ver detalle
-          <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-all" />
-          <motion.div
-            className="absolute left-0 -bottom-1 h-0.5 w-full bg-[#0DB3DE]"
-            initial={false}
-            animate={{
-              scaleX: isActive ? 1 : 0
-            }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            style={{
-              originX: 0.5
-            }}
-          />
+
+          {/* CONTENIDO */}
+          <span className="flex items-center gap-2 w-max">
+            Ver detalle
+            <ArrowRight
+              size={16}
+              className="transition-all group-hover:translate-x-0.5"
+            />
+          </span>
+
+          {/* LÍNEA ANIMADA */}
+          <span className="
+  absolute 
+  left-1/2 bottom-0
+  h-[2px] w-0 
+  bg-current
+  transition-all duration-300 ease-out
+  group-hover:w-full 
+  group-hover:left-0
+" />
         </button>
-
       </div>
-
     </article>
   );
 };
