@@ -1,6 +1,10 @@
+import BannerMain from "./components/BannerMain";
+import ContactInfo from "./components/ContactInfo";
+
 const ConsultationPage = () => {
     return(<>
-        <h1>Consultation</h1>
+        <BannerMain />
+        <ContactInfo />
     </>);
 };
 

@@ -10,7 +10,7 @@ const SearchNews = () => {
             id: 1,
             titulo: "Conoce el nuevo reglamento para boticas 2026",
             descripcion: "DIGEMID actualiza los requisitos obligatorios para la apertura de nuevas boticas y farmacias a nivel nacional. Evita multas revisando estos cambios.",
-            imagen: "images/noticia1.jpg",
+            imagen: "images/imageNews2.jpg",
             categoria: "Normativa",
             fecha: "02 Mar 2026"
         },
@@ -18,7 +18,7 @@ const SearchNews = () => {
             id: 2,
             titulo: "Alerta por circulación de lotes falsificados",
             descripcion: "Autoridades advierten sobre el incremento de lotes falsificados en el mercado. Aprende a identificar y reportar estos productos en tu establecimiento.",
-            imagen: "images/noticia2.jpg",
+            imagen: "images/imageNews3.jpg",
             categoria: "Alerta Sanitaria",
             fecha: "28 Feb 2026"
         },
@@ -26,7 +26,7 @@ const SearchNews = () => {
             id: 3,
             titulo: "Claves principales para superar auditorías BPA",
             descripcion: "Superar una inspección de Buenas Prácticas de Almacenamiento requiere preparación. Conoce los tres errores más comunes que debes evitar.",
-            imagen: "images/noticia3.jpg",
+            imagen: "images/imageNews4.jpg",
             categoria: "Calidad",
             fecha: "20 Feb 2026"
         },
@@ -34,7 +34,7 @@ const SearchNews = () => {
             id: 4,
             titulo: "Guía para digitalizar tus recetas médicas",
             descripcion: "La receta electrónica avanza en Perú. Descubre cómo adaptar el sistema de tu farmacia para cumplir con este nuevo estándar digital.",
-            imagen: "images/noticia4.jpg",
+            imagen: "images/imageNews5.jpg",
             categoria: "Tecnología",
             fecha: "15 Feb 2026"
         },
@@ -42,7 +42,7 @@ const SearchNews = () => {
             id: 5,
             titulo: "Evita duras sanciones por publicidad indebida",
             descripcion: "Indecopi y DIGEMID intensifican fiscalización sobre la publicidad de productos farmacéuticos no autorizados. Protege la reputación de tu negocio.",
-            imagen: "images/noticia4.jpg",
+            imagen: "images/imageNews6.jpg",
             categoria: "Tecnología",
             fecha: "10 Feb 2026"
         },
@@ -50,7 +50,7 @@ const SearchNews = () => {
             id: 6,
             titulo: "Trámites para importar tus dispositivos médicos",
             descripcion: "Guía paso a paso para agilizar los trámites aduaneros y obtener tu registro sanitario de equipos médicos sin demoras ni reprocesos.",
-            imagen: "images/noticia4.jpg",
+            imagen: "images/imageNews7.jpg",
             categoria: "Tecnología",
             fecha: "05 Feb 2026"
         }
