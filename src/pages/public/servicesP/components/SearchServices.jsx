@@ -31,7 +31,7 @@ const SearchServices = ({
             {searchTerm && (
               <button
                 onClick={handleClearSearch}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
               >
                 <X size={18} />
               </button>

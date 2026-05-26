@@ -1,8 +1,13 @@
+import { Search, X } from 'lucide-react';
 import { useState } from 'react';
 
 const SearchNews = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('Todas las categorías');
+
+    const handleClearSearch = () => {
+        setSearchTerm('');
+    };
 
     // Datos de ejemplo de noticias
     const noticias = [
@@ -70,20 +75,34 @@ const SearchNews = () => {
             {/* Barra de búsqueda y filtros */}
             <div className="flex flex-col gap-8">
                 <div className="flex flex-col md:flex-row gap-4 items-center">
-                    {/* Input de búsqueda */}
-                    <input
-                        type="text"
-                        placeholder="Busca alguna noticia"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    <div className="flex-1 relative">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                            <Search size={20} />
+                        </div>
+                        {/* Input de búsqueda */}
+                        <input
+                            type="text"
+                            placeholder="Busca alguna noticia"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="w-full pl-12 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+                        />
 
+                        {searchTerm && (
+                            <button
+                                onClick={handleClearSearch}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
+                            >
+                                <X size={18} />
+                            </button>
+                        )}
+
+                    </div>
                     {/* Select de categorías */}
                     <select
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-56"
+                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent min-w-56 bg-white cursor-pointer hover:border-gray-400 transition-colors"
                     >
                         <option>Todas las categorías</option>
                         <option>Normativa</option>

@@ -26,16 +26,16 @@ const ServicesCard = ({
 
 
   return (
-    <article className="relative w-full flex flex-col xl:flex-row overflow-hidden rounded-2xl shadow-md md:shadow-none">
+    <article className="relative w-full flex flex-col lg:flex-row overflow-hidden rounded-2xl shadow-md md:shadow-none">
 
       {/* IMAGEN */}
       <div className="
-  w-full 
-  xl:w-1/2 
-  aspect-[4/3] md:aspect-square
-  md:max-h-[100%]
-  overflow-hidden
-">
+        w-full 
+        lg:w-1/2 
+        aspect-[4/3] md:aspect-square
+        md:max-h-[100%]
+        overflow-hidden
+      ">
         <img
           src={image}
           alt={title}
@@ -50,16 +50,16 @@ const ServicesCard = ({
 
       {/* CONTENIDO */}
       <div className="
-    w-full 
-    xl:w-1/2 
-    flex flex-col 
-    justify-between
-    bg-white 
-    px-6 py-6
-    border border-gray-200 md:border
-    md:rounded-r-2xl
-    gap-4
-  ">
+        w-full 
+        lg:w-1/2 
+        flex flex-col 
+        justify-between
+        bg-white 
+        px-6 py-6
+        border border-gray-200 md:border
+        md:rounded-r-2xl
+        gap-4
+      ">
 
         {/* TOP CONTENT */}
         <div className="flex flex-col gap-4">
@@ -103,14 +103,14 @@ const ServicesCard = ({
 
           {/* LÍNEA ANIMADA */}
           <span className="
-  absolute 
-  left-1/2 bottom-0
-  h-[2px] w-0 
-  bg-current
-  transition-all duration-300 ease-out
-  group-hover:w-full 
-  group-hover:left-0
-" />
+            absolute 
+            left-1/2 bottom-0
+            h-[2px] w-0 
+            bg-current
+            transition-all duration-300 ease-out
+            group-hover:w-full 
+            group-hover:left-0
+          " />
         </button>
       </div>
     </article>
