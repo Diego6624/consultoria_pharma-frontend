@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, textHover, bgShadow }) => {
+    const [hovered, setHovered] = useState(false);
+
     return (<>
-        <div className='w-auto'>
+        <div className='w-auto group'
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+        >
             <Link
                 to={navigate}
-                className={`relative w-min h-min flex items-center p-5 py-3 rounded-full overflow-hidden group`}
+                className={`relative w-min h-min flex items-center p-5 py-3 rounded-full overflow-hidden transition-all duration-300`}
                 style={{ backgroundColor: bg, boxShadow: bgShadow }}
             >
                 <div className='absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-[#0DB3DE] rounded-full group-hover:w-full group-hover:h-full group-hover:left-0 group-hover:top-0 group-hover:translate-y-0 group-hover:rounded-full transition-all duration-500 ease-out'></div>
@@ -16,8 +22,9 @@ const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, 
                     {icon}
                 </div>
 
-                <span className={`pl-10 relative font-semibold text-lg whitespace-nowrap hover:text-[${textHover}]`}
-                    style={{ color: textColor, }}
+                <span
+                    className={`pl-10 relative font-semibold text-lg whitespace-nowrap group-hover:transition-colors group-hover:duration-400 ease-out`}
+                    style={{ color: hovered ? textHover : textColor }}
                 >
                     {name}
                 </span>

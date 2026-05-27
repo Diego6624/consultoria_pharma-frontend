@@ -63,7 +63,7 @@ const HeaderComponent = () => {
                         bgIcon="#0DB3DE"
                         name="Agendar Asesoría"
                         textColor="#FFFFFF"
-                        textHover="#000000"
+                        textHover="#FFFFFF"
                         icon={<LocalPhoneIcon />}
                         iconColor="#FFFFFF"
                         navigate="/consultation"

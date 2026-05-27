@@ -40,15 +40,15 @@ const SpecializedServices = () => {
 
             {/* Tittle | Description */}
             <div className="relative bg-[#2F5D93] pt-16 pb-32 overflow-hidden">
-                <div className="w-auto mx-50 px-6 sm:px-8 lg:px-12 grid gap-8 lg:grid-cols-2 lg:items-center">
+                <div className="w-auto px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6 flex lg:items-center">
 
-                    <h2 className="font-semibold text-3xl leading-tight text-white w-min">
-                        Nuestros Servicios Especializados
-                    </h2>
+                    <div className="font-semibold text-3xl leading-tight text-white w-auto">
+                        <p>Nuestros Servicios Especializados</p>
+                    </div>
 
-                    <div className="relative max-w-2xl pl-6 flex items-center w-full">
+                    <div className="relative pl-6 flex items-center w-full">
                         <span className="absolute left-0 h-[70%] w-1 rounded-full bg-sky-300" />
-                        <p className="text-lg leading-7 text-white/95 sm:text-xl">
+                        <p className="text-lg text-white/95 sm:text-xl">
                             Simplificamos la burocracia técnica y legal. Desde la obtención
                             de registros sanitarios hasta la certificación de almacenes,
                             nos encargamos de que tu empresa cumpla con DIGEMID sin detener
@@ -75,7 +75,7 @@ const SpecializedServices = () => {
 
             {/* CARDS */}
             <div className="bg-white -mt-24 pt-10 pb-20">
-                <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+                <div className="mx-auto px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
                     <div className="grid gap-8 lg:grid-cols-3">
                         {services.map((service, index) => (
                             <ServiceCard key={index}

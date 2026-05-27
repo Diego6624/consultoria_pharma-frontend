@@ -21,7 +21,7 @@ const ServiceCard =({
       </div>
 
       {/* Card flotante */}
-      <div className="relative -mt-20 mx-5 rounded-2xl border-1 border-gray-200 bg-white px-6 pb-6 pt-10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-transform duration-400 group-hover:translate-y-2">
+      <div className="h-auto relative -mt-30 mx-5 rounded-2xl border border-gray-200 bg-white px-6 pb-6 pt-10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-transform duration-400 group-hover:translate-y-2">
         {/* Icono flotante */}
         <div className="absolute -top-7 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-[#0DB3DE] text-white shadow-lg transition-transform duration-400 group-hover:-translate-y-8">
           {icon}

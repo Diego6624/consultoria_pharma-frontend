@@ -40,7 +40,7 @@ const BannerMain = () => {
                             bgIcon="#0DB3DE"
                             name="Ver servicio"
                             textColor="#FFFFFF"
-                            textHover="#000000"
+                            textHover="#FFFFFF"
                             icon={<ChevronRight />}
                             iconColor="#FFFFFF"
                             navigate="/services"
