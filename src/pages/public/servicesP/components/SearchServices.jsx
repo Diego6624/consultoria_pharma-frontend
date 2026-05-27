@@ -1,11 +1,11 @@
 import { Search, X } from "lucide-react";
 
-const SearchServices = ({ 
-  searchTerm, 
-  onSearchChange, 
-  selectedCategory, 
+const SearchServices = ({
+  searchTerm,
+  onSearchChange,
+  selectedCategory,
   onCategoryChange,
-  categories 
+  categories
 }) => {
   const handleClearSearch = () => {
     onSearchChange('');

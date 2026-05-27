@@ -74,7 +74,7 @@ const SearchNews = () => {
         <section className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
             {/* Barra de búsqueda y filtros */}
             <div className="flex flex-col gap-8">
-                <div className="flex flex-col md:flex-row gap-4 items-center">
+                <div className="flex flex-col md:flex-row gap-4 w-full">
                     <div className="flex-1 relative">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                             <Search size={20} />
