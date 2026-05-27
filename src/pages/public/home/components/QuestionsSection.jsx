@@ -51,7 +51,7 @@ const QuestionsSection = () => {
                 </div>
                 {/* Image */}
                 <div className="w-full h-full items-center justify-center flex">
-                    <img src="/images/imageHome2.jpg" alt="image" className="w-full h-full object-cover rounded-b-full  shadow-md" />
+                    <img src="/images/imageHome2.jpg" alt="image" className="  md:w-[500px] h-full object-cover rounded-b-full shadow-md" />
                 </div>
             </div>
         </section>

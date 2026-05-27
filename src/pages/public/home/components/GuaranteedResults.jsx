@@ -7,7 +7,16 @@ const GuaranteedResults = () => {
             <div className="items-center justify-center w-full h-full grid md:grid-cols-2 gap-10 px-20 text-white">
                 {/* Image */}
                 <div className="w-full h-full items-center justify-center flex">
-                    <img src="/images/imageResult.jpg" alt="image" className="h-full w-full object-cover rounded-lg shadow-md" />
+                    <div className="relative w-full h-full">
+                        {/* Sombra decorativa detrás */}
+                        <div className="absolute -top-4 -left-4 w-full h-full rounded-lg bg-[#0DB3DE] z-0" />
+                        {/* Imagen */}
+                        <img
+                            src="/images/imageResult.jpg"
+                            alt="image"
+                            className="relative w-full h-full object-cover rounded-lg shadow-md z-10"
+                        />
+                    </div>
                 </div>
                 {/* Content */}
                 <div className="flex flex-col gap-6 mx-auto w-full h-full">
