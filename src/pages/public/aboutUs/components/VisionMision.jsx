@@ -33,7 +33,7 @@ const VisionMision = () => {
                     <img
                         src="/images/visionMision.png"
                         alt=""
-                        className="absolute inset-0 w-full h-full object-cover opacity-100 pointer-events-none select-none"
+                        className="absolute inset-0  w-full h-full object-cover opacity-100 pointer-events-none select-none"
                         aria-hidden="true"
                     />
                     {/* Contenido */}

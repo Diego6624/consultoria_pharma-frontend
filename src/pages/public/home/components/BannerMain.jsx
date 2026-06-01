@@ -13,7 +13,7 @@ const BannerMain = () => {
 
     return (<>
         <section>
-            <div className="relative w-full h-svh" style={divStyle}>
+            <div className="relative w-full h-svh animate-in fade-in-75 slide-in-from-top duration-500" style={divStyle}>
                 {/* 🔥 CAPA DE SOMBRA / GRADIENTE */}
                 <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/10 to-transparent"></div>
 

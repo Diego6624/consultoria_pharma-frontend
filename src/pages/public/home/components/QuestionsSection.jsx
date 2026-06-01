@@ -5,7 +5,7 @@ const QuestionsSection = () => {
         <section className="p-15 px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
             <div className="items-center justify-center w-full h-full grid md:grid-cols-2 gap-4">
                 {/* Content */}
-                <div className="flex flex-col gap-6 mx-auto w-full h-full">
+                <div className="flex flex-col gap-6 mx-auto w-full h-full animate-in fade-in-75 slide-in-from-left duration-500">
                     {/* Tittle | Description*/}
                     <div className="flex flex-col gap-2">
                         <p className="font-semibold text-3xl">
