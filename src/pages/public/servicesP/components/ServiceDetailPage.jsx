@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Check } from "lucide-react";
+import { motion } from "framer-motion";
 
 const ServiceDetailPage = () => {
 
@@ -44,16 +45,28 @@ const ServiceDetailPage = () => {
       {/* Contenido principal */}
       <div className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
         {/* Hero section con imagen */}
-        <div className="mb-12">
+        <motion.div
+          className="mb-12"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <img
             src={service.image}
             alt={service.title}
             className="w-full h-96 object-cover rounded-2xl shadow-lg"
           />
-        </div>
+        </motion.div>
 
         {/* Contenido */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <motion.div
+          className="grid grid-cols-1 lg:grid-cols-3 gap-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {/* Columna principal */}
           <div className="lg:col-span-2">
             {/* Badge de categoría */}
@@ -122,10 +135,15 @@ const ServiceDetailPage = () => {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Servicios relacionados */}
-        {relatedServices.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className="mt-20 pt-12 border-t border-gray-200">
             <h2 className="text-3xl font-bold text-gray-900 mb-8">
               Otros servicios en {service.category}
@@ -151,7 +169,7 @@ const ServiceDetailPage = () => {
               ))}
             </div>
           </div>
-        )}
+        </motion.div>
       </div>
     </div>
   );

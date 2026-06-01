@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const OurValues = () => {
     const values = [
         {
@@ -49,7 +51,14 @@ const OurValues = () => {
                     {/* Lista de Valores */}
                     <div className="flex flex-col gap-6">
                         {values.map((value, index) => (
-                            <div key={index} className="flex gap-4 items-center group">
+                            <motion.div
+                                key={index}
+                                className="flex gap-4 items-center group"
+                                initial={{ opacity: 0, x: -40 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.6, delay: index * 0.12, ease: 'easeOut' }}
+                                viewport={{ once: true, amount: 0.2 }}
+                            >
                                 {/* Borde izquierdo azul */}
                                 <div className="w-1 bg-[#0DB3DE] transition duration-400 group-hover:bg-[#1F4C7F] rounded-full shrink-0" style={{ minHeight: '70px' }}></div>
 
@@ -62,7 +71,7 @@ const OurValues = () => {
                                         {value.description}
                                     </p>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>

@@ -1,5 +1,6 @@
 import AnimateBoton from "@/components/AnimateBoton";
 import { ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 const BannerMain = () => {
 
@@ -13,7 +14,14 @@ const BannerMain = () => {
 
     return (<>
         <section>
-            <div className="relative w-full h-svh" style={divStyle}>
+            <motion.div
+                className="relative w-full h-svh"
+                style={divStyle}
+                initial={{ opacity: 0, y: -40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                viewport={{ once: true, amount: 0.3 }}
+            >
                 {/* 🔥 CAPA DE SOMBRA / GRADIENTE */}
                 <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/10 to-transparent"></div>
 
@@ -34,7 +42,7 @@ const BannerMain = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </section>
     </>)
 }

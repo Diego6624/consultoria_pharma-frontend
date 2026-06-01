@@ -1,4 +1,5 @@
 import { Search, X } from "lucide-react";
+import { motion } from "framer-motion";
 
 const SearchServices = ({
   searchTerm,
@@ -13,7 +14,13 @@ const SearchServices = ({
 
   return (
     <section className="px-8 md:px-16 lg:px-32 2xl:px-44">
-      <div className="flex flex-col gap-6">
+      <motion.div
+        className="flex flex-col gap-6"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {/* Controles de búsqueda y filtro */}
         <div className="flex flex-col md:flex-row gap-4 w-full">
           {/* Input de búsqueda */}
@@ -52,7 +59,7 @@ const SearchServices = ({
             ))}
           </select>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };

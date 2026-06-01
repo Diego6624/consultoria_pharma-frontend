@@ -1,10 +1,18 @@
+import { motion } from "framer-motion";
+
 const VisionMision = () => {
     return (
         <section className="p-15 px-8 md:px-16 lg:px-32 2xl:px-44">
             <div className="grid md:grid-cols-2 gap-6">
 
                 {/* MISION */}
-                <div className="relative rounded-3xl overflow-hidden shadow-lg bg-[#1F4C7F] flex items-center gap-4 p-8">
+                <motion.div
+                    className="relative rounded-3xl overflow-hidden shadow-lg bg-[#1F4C7F] flex items-center gap-4 p-8"
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {/* Imagen decorativa de fondo */}
                     <img
                         src="/images/visionMision.png"
@@ -25,10 +33,16 @@ const VisionMision = () => {
                             operar con excelencia, ética y cumplimiento total ante DIGEMID y otras entidades de salud.
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* VISION */}
-                <div className="relative rounded-3xl overflow-hidden shadow-lg bg-[#1F4C7F] flex items-center gap-4 ">
+                <motion.div
+                    className="relative rounded-3xl overflow-hidden shadow-lg bg-[#1F4C7F] flex items-center gap-4 "
+                    initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {/* Imagen decorativa de fondo */}
                     <img
                         src="/images/visionMision.png"
@@ -49,7 +63,7 @@ const VisionMision = () => {
                             precisión técnica y compromiso inquebrantable con la salud pública.
                         </p>
                     </div>
-                </div>
+                </motion.div>
 
             </div>
         </section>

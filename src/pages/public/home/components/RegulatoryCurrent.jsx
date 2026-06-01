@@ -1,4 +1,5 @@
 import ArticleCard from "@/components/ArticleCard";
+import { motion } from "framer-motion";
 import imageRegulatory from "/public/images/imageRegulatory.png";
 import imageRegulatory2 from "/public/images/imageRegulatory2.png";
 import imageRegulatory3 from "/public/images/imageRegulatory3.png";
@@ -74,10 +75,17 @@ const RegulatoryCurrent = () => {
 
       {/* GRID tipo figma */}
       <div className="grid grid-cols-12 auto-rows-[300px] gap-4">
-        {articles.map((article) => (
-          <div key={article.id} className={article.span}>
+        {articles.map((article, index) => (
+          <motion.div
+            key={article.id}
+            className={article.span}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: (index % 6) * 0.12, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.2 }}
+          >
             <ArticleCard {...article} />
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

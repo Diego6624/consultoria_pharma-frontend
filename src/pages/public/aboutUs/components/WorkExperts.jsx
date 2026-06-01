@@ -1,5 +1,6 @@
 import AnimateBoton from "@/components/AnimateBoton";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import { motion } from "framer-motion";
 
 const WorkExperts = () => {
     const divStyle = {
@@ -12,7 +13,14 @@ const WorkExperts = () => {
 
     return (<>
         <section>
-            <div className="relative w-full h-max" style={divStyle}>
+            <motion.div
+                className="relative w-full h-max"
+                style={divStyle}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+                viewport={{ once: true, amount: 0.3 }}
+            >
                 {/* CAPA DE SOMBRA / GRADIENTE */}
                 <div className="absolute inset-0 bg-linear-to-r from-black/30 to-transparent"></div>
 
@@ -45,7 +53,7 @@ const WorkExperts = () => {
                         />
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </section>
     </>);
 

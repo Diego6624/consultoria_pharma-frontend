@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 const MapsLocation = () => {
     const [activeLocation, setActiveLocation] = useState(0);
@@ -29,7 +30,13 @@ const MapsLocation = () => {
         <>
             <section className="relative w-full">
                 {/* Contenedor del mapa con posición relativa */}
-                <div className="relative w-full overflow-hidden  h-80 md:h-[550px] lg:h-screen">
+                <motion.div
+                    className="relative w-full overflow-hidden  h-80 md:h-[550px] lg:h-screen"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {/* Mapa de fondo */}
                     <iframe
                         key={activeLocation}
@@ -60,7 +67,7 @@ const MapsLocation = () => {
                             </button>
                         ))}
                     </div>
-                </div>
+                </motion.div>
             </section>
         </>
     );

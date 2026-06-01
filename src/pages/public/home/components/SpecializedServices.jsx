@@ -1,5 +1,6 @@
 import ServiceCard from "@/components/ServiceCardH";
 import { FileCheckCorner, InfoIcon, KeyRound, ShieldCheck } from "lucide-react";
+import { motion } from "framer-motion";
 import imageCard from '/public/images/imageCards.jpg';
 import imageCard2 from '/public/images/imageCards2.jpg';
 import imageCard3 from '/public/images/imageCards3.jpg';
@@ -78,14 +79,22 @@ const SpecializedServices = () => {
                 <div className="mx-auto px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
                     <div className="grid gap-8 lg:grid-cols-3">
                         {services.map((service, index) => (
-                            <ServiceCard key={index}
-                                category={service.category}
-                                title={service.title}
-                                description={service.description}
-                                icon={service.icon}
-                                image={service.image}
-                                navigation={service.navigation}
-                            />
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: index * 0.15, ease: 'easeOut' }}
+                                viewport={{ once: true, amount: 0.2 }}
+                            >
+                                <ServiceCard
+                                    category={service.category}
+                                    title={service.title}
+                                    description={service.description}
+                                    icon={service.icon}
+                                    image={service.image}
+                                    navigation={service.navigation}
+                                />
+                            </motion.div>
                         ))}
                     </div>
                 </div>

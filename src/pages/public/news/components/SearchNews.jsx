@@ -1,5 +1,6 @@
 import { Search, X } from 'lucide-react';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 const SearchNews = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -119,8 +120,15 @@ const SearchNews = () => {
 
                 {/* Grid de noticias */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {noticiasFiltradas.map(noticia => (
-                        <div key={noticia.id} className="flex flex-col rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                    {noticiasFiltradas.map((noticia, index) => (
+                        <motion.div
+                            key={noticia.id}
+                            className="flex flex-col rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: (index % 6) * 0.12, ease: 'easeOut' }}
+                            viewport={{ once: true, amount: 0.2 }}
+                        >
                             {/* Imagen con badge superpuesto */}
                             <div className="w-full h-48 bg-gray-300 overflow-hidden relative group">
                                 <img
@@ -145,7 +153,7 @@ const SearchNews = () => {
                                 </div>
                                 <p className="text-gray-500 text-xs">- {noticia.fecha}</p>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 

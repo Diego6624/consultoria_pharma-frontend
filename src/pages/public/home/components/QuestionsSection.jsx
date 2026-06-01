@@ -1,11 +1,18 @@
 import { Clock, FileText, TriangleAlert } from "lucide-react";
+import { motion } from "framer-motion";
 
 const QuestionsSection = () => {
     return (<>
         <section className="p-15 px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
             <div className="items-center justify-center w-full h-full grid md:grid-cols-2 gap-4">
                 {/* Content */}
-                <div className="flex flex-col gap-6 mx-auto w-full h-full animate-in fade-in-75 slide-in-from-left duration-500">
+                <motion.div
+                    className="flex flex-col gap-6 mx-auto w-full h-full"
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {/* Tittle | Description*/}
                     <div className="flex flex-col gap-2">
                         <p className="font-semibold text-3xl">
@@ -48,11 +55,17 @@ const QuestionsSection = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </motion.div>
                 {/* Image */}
-                <div className="w-full h-full items-center justify-center flex">
+                <motion.div
+                    className="w-full h-full items-center justify-center flex"
+                    initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     <img src="/images/imageHome2.jpg" alt="image" className="  md:w-[500px] h-full object-cover rounded-b-full shadow-md" />
-                </div>
+                </motion.div>
             </div>
         </section>
     </>);

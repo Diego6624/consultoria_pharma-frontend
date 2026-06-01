@@ -1,12 +1,19 @@
 import AnimateBoton from "@/components/AnimateBoton";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import { motion } from "framer-motion";
 
 const GuaranteedResults = () => {
     return (<>
         <section className="p-15 px-8 md:px-16 lg:px-32 2xl:px-44 gap-6 bg-[#1F4C7F]">
             <div className="items-center justify-center w-full h-full grid md:grid-cols-2 gap-10 px-20 text-white">
                 {/* Image */}
-                <div className="w-full h-full items-center justify-center flex">
+                <motion.div
+                    className="w-full h-full items-center justify-center flex"
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     <div className="relative w-full h-full">
                         {/* Sombra decorativa detrás */}
                         <div className="absolute -top-4 -left-4 w-full h-full rounded-lg bg-[#0DB3DE] z-0" />
@@ -17,9 +24,15 @@ const GuaranteedResults = () => {
                             className="relative w-full h-full object-cover rounded-lg shadow-md z-10"
                         />
                     </div>
-                </div>
+                </motion.div>
                 {/* Content */}
-                <div className="flex flex-col gap-6 mx-auto w-full h-full">
+                <motion.div
+                    className="flex flex-col gap-6 mx-auto w-full h-full"
+                    initial={{ opacity: 0, x: 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {/* Tittle | Description*/}
                     <div className="flex flex-col gap-2">
                         <p className="font-semibold text-3xl">
@@ -63,7 +76,7 @@ const GuaranteedResults = () => {
                         iconColor="#FFFFFF"
                         navigate="/consultation"
                     />
-                </div>
+                </motion.div>
             </div>
         </section>
     </>);

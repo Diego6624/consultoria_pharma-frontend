@@ -1,5 +1,6 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { motion } from "framer-motion";
 
 const infoData = [
     {
@@ -22,7 +23,13 @@ const infoData = [
 const ContactInfo = () => {
     return (<>
         <section className="p-15 px-8 md:px-16 lg:px-32 2xl:px-44 gap-6">
-            <div className="bg-[#268EA9] grid md:grid-cols-2 justify-center w-full h-full gap-10 px-10 py-10 rounded-lg">
+            <motion.div
+                className="bg-[#268EA9] grid md:grid-cols-2 justify-center w-full h-full gap-10 px-10 py-10 rounded-lg"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                viewport={{ once: true, amount: 0.2 }}
+            >
                 {/* Content */}
                 <div className="flex flex-col gap-8 w-full h-full justify-between">
                     <div className="flex flex-col gap-2">
@@ -114,7 +121,7 @@ const ContactInfo = () => {
                         </button>
                     </form>
                 </div>
-            </div>
+            </motion.div>
         </section>
     </>);
 };
