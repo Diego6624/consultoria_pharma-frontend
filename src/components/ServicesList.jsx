@@ -1,4 +1,5 @@
 import ServicesCards from "@/components/ServicesCards";
+import { motion } from "framer-motion";
 
 const ServicesList = ({ 
   services, 
@@ -28,11 +29,18 @@ const ServicesList = ({
   return (
     <section className="px-8 md:px-16 lg:px-32 2xl:px-44">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {filteredServices.map((service) => (
-          <ServicesCards
+        {filteredServices.map((service, index) => (
+          <motion.div
             key={service.id}
-            {...service}
-          />
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.15, ease: 'easeOut' }}
+            viewport={{ once: true, amount: 0.2 }}
+          >
+            <ServicesCards
+              {...service}
+            />
+          </motion.div>
         ))}
       </div>
     </section>
