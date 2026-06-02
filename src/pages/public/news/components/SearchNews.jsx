@@ -123,14 +123,14 @@ const SearchNews = () => {
                     {noticiasFiltradas.map((noticia, index) => (
                         <motion.div
                             key={noticia.id}
-                            className="flex flex-col rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                            className="flex flex-col rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: (index % 6) * 0.12, ease: 'easeOut' }}
                             viewport={{ once: true, amount: 0.2 }}
                         >
                             {/* Imagen con badge superpuesto */}
-                            <div className="w-full h-48 bg-gray-300 overflow-hidden relative group">
+                            <div className="w-full h-48 bg-gray-300 overflow-hidden relative">
                                 <img
                                     src={noticia.imagen}
                                     alt={noticia.titulo}
