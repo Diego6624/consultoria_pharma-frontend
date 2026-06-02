@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, textHover, bgShadow }) => {
+const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, textHover, bgShadow, textSize }) => {
     const [hovered, setHovered] = useState(false);
 
     return (<>
@@ -23,7 +23,7 @@ const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, 
                 </div>
 
                 <span
-                    className={`pl-10 relative font-semibold text-lg whitespace-nowrap group-hover:transition-colors group-hover:duration-400 ease-out`}
+                    className={`pl-10 relative font-semibold ${textSize || 'text-lg'} whitespace-nowrap group-hover:transition-colors group-hover:duration-400 ease-out`}
                     style={{ color: hovered ? textHover : textColor }}
                 >
                     {name}

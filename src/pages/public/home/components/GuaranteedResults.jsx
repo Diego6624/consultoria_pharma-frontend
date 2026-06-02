@@ -68,7 +68,7 @@ const GuaranteedResults = () => {
                         ))}
                     </div>
 
-                    <div className="w-fit">
+                    <div className="flex justify-center md:justify-start">
                         <AnimateBoton
                             bg="#FFFFFF"
                             bgIcon="#0DB3DE"
@@ -78,6 +78,7 @@ const GuaranteedResults = () => {
                             icon={<LocalPhoneIcon />}
                             iconColor="#FFFFFF"
                             navigate="/consultation"
+                            textSize="text-md"
                         />
                     </div>
                 </motion.div>

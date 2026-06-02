@@ -22,19 +22,19 @@ const PersonalizedAdvice = () => {
                 viewport={{ once: true, amount: 0.3 }}
             >
                 {/* CAPA DE SOMBRA / GRADIENTE */}
-                <div className="absolute inset-0 bg-linear-to-r from-black/30 to-transparent"></div>
+                <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/10 md:to-transparent"></div>
 
                 {/* CONTENIDO */}
                 <div className="relative flex items-center justify-center w-full h-full md:pt-15">
-                    <div className="flex flex-col justify-center items-center px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
+                    <div className="flex flex-col justify-center items-center px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-4 md:gap-6">
 
                         {/* Message */}
                         <div className="flex items-center justify-center gap-2">
-                            <p className="font-bold text-white text-4xl">¿Necesitas asesoría personalizada?</p>
+                            <p className="font-bold text-white text-3xl md:text-4xl">¿Necesitas asesoría personalizada?</p>
                         </div>
 
                         {/* Description */}
-                        <div className="flex text-white text-xl">
+                        <div className="flex text-white text-lg">
                             <p>
                                 Soluciones rápidas para tu negocio farmacéutico.
                             </p>
@@ -46,6 +46,7 @@ const PersonalizedAdvice = () => {
                             bgIcon="#0DB3DE"
                             name="Contáctanos"
                             textColor="#000000"
+                            textSize="text-md"
                             textHover="#FFFFFF"
                             icon={<LocalPhoneIcon />}
                             iconColor="#FFFFFF"
