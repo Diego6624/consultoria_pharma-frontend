@@ -5,7 +5,7 @@ const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, 
     const [hovered, setHovered] = useState(false);
 
     return (<>
-        <div className='w-auto group'
+        <div className='max-w-min group'
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
         >

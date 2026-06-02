@@ -41,14 +41,14 @@ const SpecializedServices = () => {
 
             {/* Tittle | Description */}
             <div className="relative bg-[#2F5D93] pt-16 pb-32 overflow-hidden">
-                <div className="w-auto px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6 flex lg:items-center">
+                <div className="w-auto px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-4 md:gap-6 flex flex-col md:flex-row  lg:items-center">
 
                     <div className="font-semibold text-3xl leading-tight text-white w-auto">
                         <p>Nuestros Servicios Especializados</p>
                     </div>
 
-                    <div className="relative pl-6 flex items-center w-full">
-                        <span className="absolute left-0 h-[70%] w-1 rounded-full bg-sky-300" />
+                    <div className="md:relative md:pl-6 flex flex-col md:flex-row md:items-center gap-2 md:gap-0 w-full">
+                        <span className="md:absolute left-0 h-1 md:h-[70%] w-12 md:w-1 rounded-full bg-sky-300" />
                         <p className="text-lg text-white/95 sm:text-xl">
                             Simplificamos la burocracia técnica y legal. Desde la obtención
                             de registros sanitarios hasta la certificación de almacenes,
