@@ -1,9 +1,9 @@
 import ServiceCard from "@/components/ServiceCardH";
 import { FileCheckCorner, InfoIcon, KeyRound, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
-import imageCard from '/public/images/imageCards.jpg';
-import imageCard2 from '/public/images/imageCards2.jpg';
-import imageCard3 from '/public/images/imageCards3.jpg';
+import imageCard from '/images/imageCards.jpg';
+import imageCard2 from '/images/imageCards2.jpg';
+import imageCard3 from '/images/imageCards3.jpg';
 
 const services = [
     {

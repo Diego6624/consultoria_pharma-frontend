@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import logo from '/public/images/logo.png';
+import logo from '/images/logo.png';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimateBoton from '../../../components/AnimateBoton';
@@ -33,14 +33,14 @@ const HeaderComponent = () => {
                 {/* 🔹 MOBILE HEADER */}
                 <div className="flex w-full items-center justify-between md:hidden">
                     {/* Logo + texto (derecha) */}
-                    <div className='flex items-center gap-2'>
+                    <Link className='flex items-center gap-2 min-w-max' to="/">
                         <img src={logo} alt="Company Logo" className='w-10 h-10 bg-white rounded-full' />
                         <div className='text-[#0DB3DE] flex flex-col text-xs font-semibold leading-tight'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
                             <p className='sm:flex hidden'>CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
                             <p className='sm:hidden flex text-black'>ASESORÍA FARMACÉUTICA</p>
                         </div>
-                    </div>
+                    </Link>
 
                     {/* Icono menú (izquierda) */}
                     <button onClick={() => setOpen(!open)}>
@@ -52,13 +52,13 @@ const HeaderComponent = () => {
                 <div className="hidden md:flex w-full items-center justify-between">
 
                     {/* Logo */}
-                    <div className='flex items-center gap-3 w-full'>
+                    <Link className='flex items-center gap-3 min-w-max' to="/">
                         <img src={logo} alt="Company Logo" className='w-15 h-15 bg-white rounded-full' />
                         <div className='text-[#0DB3DE] flex flex-col font-semibold'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
                             <p>CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
                         </div>
-                    </div>
+                    </Link>
 
                     {/* Navbar */}
                     <div className='flex gap-10 items-center justify-center w-full relative'>

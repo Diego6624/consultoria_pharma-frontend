@@ -1,7 +1,7 @@
 import { Facebook, Instagram, WhatsApp } from "@mui/icons-material";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LinkIcons from "../../../components/LinkIcons";
-import logo from '/public/images/logo.png';
+import logo from '/images/logo.png';
 import { Link } from "react-router-dom";
 
 const FooterComponent = () => {

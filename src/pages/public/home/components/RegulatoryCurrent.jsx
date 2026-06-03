@@ -1,11 +1,11 @@
 import ArticleCard from "@/components/ArticleCard";
 import { motion } from "framer-motion";
-import imageRegulatory from "/public/images/imageRegulatory.png";
-import imageRegulatory2 from "/public/images/imageRegulatory2.png";
-import imageRegulatory3 from "/public/images/imageRegulatory3.png";
-import imageRegulatory4 from "/public/images/imageRegulatory4.png";
-import imageRegulatory5 from "/public/images/imageRegulatory5.png";
-import imageRegulatory6 from "/public/images/imageRegulatory6.png";
+import imageRegulatory from "/images/imageRegulatory.png";
+import imageRegulatory2 from "/images/imageRegulatory2.png";
+import imageRegulatory3 from "/images/imageRegulatory3.png";
+import imageRegulatory4 from "/images/imageRegulatory4.png";
+import imageRegulatory5 from "/images/imageRegulatory5.png";
+import imageRegulatory6 from "/images/imageRegulatory6.png";
 
 const articles = [
   {
