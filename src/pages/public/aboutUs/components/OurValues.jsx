@@ -23,8 +23,25 @@ const OurValues = () => {
     return (
         <section className="p-15 px-8 md:px-16 lg:px-32 2xl:px-44">
             <div className="grid md:grid-cols-2 gap-8 items-center">
+                {/* Text Responsive */}
+                <motion.div
+                        className="text-4xl font-bold text-gray-900 md:hidden flex"
+                        initial={{ opacity: 0, y: -20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        viewport={{ once: true, amount: 0.2 }}
+                >
+                        Nuestros Valores
+                </motion.div>
+                
                 {/* Image */}
-                <div className="w-full h-full flex justify-center">
+                <motion.div
+                    className="w-full h-full flex justify-center"
+                    initial={{ opacity: 0, x: -40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     <div className="relative w-full max-w-lg">
 
                         {/* CÍRCULO CELESTE (ATRÁS) */}
@@ -35,17 +52,25 @@ const OurValues = () => {
                             src="/images/imageUs3.png"
                             alt="image"
                             className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg bg-center
-                                [border-top-right-radius:150px]
-                                [border-bottom-left-radius:150px]"
+                                md:[border-top-right-radius:150px] [border-top-right-radius:100px]
+                                md:[border-bottom-left-radius:150px] [border-bottom-left-radius:100px]"
                         />
 
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Content */}
                 <div className="flex flex-col gap-6">
                     {/* Título */}
-                    <h2 className="text-4xl font-bold text-gray-900">Nuestros Valores</h2>
+                    <motion.div
+                        className="text-4xl font-bold text-gray-900 md:flex hidden"
+                        initial={{ opacity: 0, y: -20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
+                        Nuestros Valores
+                    </motion.div>
 
                     {/* Lista de Valores */}
                     <div className="flex flex-col gap-6">
@@ -53,9 +78,9 @@ const OurValues = () => {
                             <motion.div
                                 key={index}
                                 className="flex gap-4 items-center group"
-                                initial={{ opacity: 0, x: -40 }}
+                                initial={{ opacity: 0, x: 40 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.6, delay: index * 0.12, ease: 'easeOut' }}
+                                transition={{ duration: 0.8, delay: index * 0.12, ease: 'easeOut' }}
                                 viewport={{ once: true, amount: 0.2 }}
                             >
                                 {/* Borde izquierdo azul */}
