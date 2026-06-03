@@ -6,7 +6,7 @@ const BannerMain = () => {
 
             {/* Imagen — entra de arriba a abajo */}
             <motion.div
-                className="bg-[url(/images/imageUs.jpg)] absolute inset-0 w-full h-full bg-cover bg-center"
+                className="bg-[url(/images/imageUs.jpg)] absolute inset-0 w-full h-full bg-cover bg-position-[70%_center] md:bg-center"
                 initial={{ opacity: 0, y: -40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}

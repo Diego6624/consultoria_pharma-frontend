@@ -5,7 +5,7 @@ const BannerMain = () => {
         <section className="relative w-full h-svh overflow-hidden">
 
             <motion.div
-                className="bg-[url(/images/imageContact.jpg)] absolute inset-0 w-full h-full bg-cover bg-center"
+                className="bg-[url(/images/imageContact.jpg)] absolute inset-0 w-full h-full bg-cover bg-position-[70%_center] md:bg-center"
                 initial={{ opacity: 0, y: -40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -23,7 +23,7 @@ const BannerMain = () => {
 
                     <div className="flex flex-col font-bold text-white gap-1
                                     text-4xl sm:text-5xl md:text-6xl lg:text-7xl
-                                    max-w-sm md:max-w-xl py-2 md:py-0">
+                                    max-w-sm md:max-w-2xl py-2 md:py-0">
                         <p className="leading-tight">
                             Ponte en{" "}
                             <span className="text-[#0DB3DE]">Contacto</span>{" "}
