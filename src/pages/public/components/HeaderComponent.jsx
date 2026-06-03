@@ -25,9 +25,9 @@ const HeaderComponent = () => {
             <div className="
                 flex items-center justify-between
                 w-full max-w-7xl
-                bg-[#FFFFFFD4] backdrop-blur-sm
+                bg-white md:bg-[#FFFFFFD4] md:backdrop-blur-sm
                 px-4 py-3
-                md:mx-auto md:my-4 md:px-6 md:py-4 md:rounded-full
+                md:mx-auto md:my-4 md:px-6 md:py-4 md:rounded-full md:border-0 border-b
             ">
 
                 {/* 🔹 MOBILE HEADER */}
@@ -38,7 +38,7 @@ const HeaderComponent = () => {
                         <div className='text-[#0DB3DE] flex flex-col text-xs font-semibold leading-tight'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
                             <p className='sm:flex hidden'>CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
-                            <p className='sm:hidden flex text-black'>CONSULTORÍA Y ASESORÍA</p>
+                            <p className='sm:hidden flex text-black'>ASESORÍA FARMACÉUTICA</p>
                         </div>
                     </div>
 
@@ -93,6 +93,7 @@ const HeaderComponent = () => {
                         bgIcon="#0DB3DE"
                         name="Agendar Asesoría"
                         textColor="#FFFFFF"
+                        textSize="text-md md:text-lg"
                         textHover="#FFFFFF"
                         icon={<LocalPhoneIcon />}
                         iconColor="#FFFFFF"

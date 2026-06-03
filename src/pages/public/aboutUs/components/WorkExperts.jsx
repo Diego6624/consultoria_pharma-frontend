@@ -16,9 +16,9 @@ const WorkExperts = () => {
             <motion.div
                 className="relative w-full h-max"
                 style={divStyle}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, ease: 'easeOut' }}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
                 viewport={{ once: true, amount: 0.3 }}
             >
                 {/* CAPA DE SOMBRA / GRADIENTE */}
@@ -30,7 +30,7 @@ const WorkExperts = () => {
 
                         {/* Message */}
                         <div className="flex items-center justify-center gap-2">
-                            <p className="font-bold text-white text-4xl">¿Listo para trabajar con expertos?</p>
+                            <p className="font-bold text-white text-3xl md:text-4xl">¿Listo para trabajar con expertos?</p>
                         </div>
 
                         {/* Description */}
@@ -46,6 +46,7 @@ const WorkExperts = () => {
                             bgIcon="#0DB3DE"
                             name="Contáctanos"
                             textColor="#000000"
+                            textSize="text-md md:text-lg"
                             textHover="#FFFFFF"
                             icon={<LocalPhoneIcon />}
                             iconColor="#FFFFFF"

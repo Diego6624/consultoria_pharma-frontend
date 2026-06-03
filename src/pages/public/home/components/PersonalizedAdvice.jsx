@@ -46,7 +46,7 @@ const PersonalizedAdvice = () => {
                             bgIcon="#0DB3DE"
                             name="Contáctanos"
                             textColor="#000000"
-                            textSize="text-md"
+                            textSize="text-md md:text-lg"
                             textHover="#FFFFFF"
                             icon={<LocalPhoneIcon />}
                             iconColor="#FFFFFF"

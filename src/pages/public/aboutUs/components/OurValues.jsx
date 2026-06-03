@@ -28,16 +28,15 @@ const OurValues = () => {
                     <div className="relative w-full max-w-lg">
 
                         {/* CÍRCULO CELESTE (ATRÁS) */}
-                        <div className="absolute -bottom-8 -left-8 w-20 h-20 bg-[#A5E4F4] rounded-full z-0"></div>
+                        <div className="absolute bottom-0 md:bottom-0 left-0 md:left-0 w-20 h-20 bg-[#A5E4F4] rounded-full z-0"></div>
 
                         {/* IMAGEN */}
                         <img
                             src="/images/imageUs3.png"
                             alt="image"
-                            className="relative w-full h-full object-cover shadow-lg
-                 
-                 [border-top-right-radius:80px]
-                 [border-bottom-left-radius:80px]"
+                            className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg bg-center
+                                [border-top-right-radius:150px]
+                                [border-bottom-left-radius:150px]"
                         />
 
                     </div>

@@ -15,17 +15,15 @@ const OurHistory = () => {
                     viewport={{ once: true, amount: 0.2 }}
                 >
                     {/* Tittle | Description*/}
-                    <div className="flex flex-col gap-4 mx-auto w-full h-full">
+                    <div className="flex flex-col gap-6 mx-auto w-full h-full">
                         <p className="font-semibold text-3xl">
                             Nuestra Historia
                         </p>
-                        <div className="flex flex-col gap-1 text-xl">
-                            <p className="">
-                                El sector farmacéutico es estricto. Un simple error administrativo puede derivar en
-                                multas costosas o el cierre de tu negocio.
+                        <div className="flex flex-col gap-2 text-xl">
+                            <p >
+                               Fundada con la visión de simplificar el complejo entorno regulatorio peruano, Consultoría YL Pharma nació para cerrar la brecha entre la normativa técnica y la gestión comercial. 
                             </p>
                             <p>
-                                Fundada con la visión de simplificar el complejo entorno regulatorio peruano, Consultoría YL Pharma nació para cerrar la brecha entre la normativa técnica y la gestión comercial.
                                 Con más de 8 años de experiencia acumulada, hemos ayudado a decenas de empresas a iniciar y mantener sus operaciones sin riesgos legales.
                             </p>
                         </div>
@@ -54,16 +52,15 @@ const OurHistory = () => {
                     <div className="relative w-full max-w-lg">
 
                         {/* CÍRCULO CELESTE (ATRÁS) */}
-                        <div className="absolute -top-8 -right-8 w-20 h-20 bg-[#A5E4F4] rounded-full z-0"></div>
+                        <div className="absolute top-0 md:top-0 right-0 md:right-0 w-20 h-20 bg-[#A5E4F4] rounded-full z-0"></div>
 
                         {/* IMAGEN */}
                         <img
                             src="/images/imageUs2.jpg"
                             alt="image"
-                            className="relative z-10 w-full h-full object-cover shadow-lg
-                 
-                 [border-top-right-radius:80px]
-                 [border-bottom-left-radius:80px]"
+                            className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg bg-center
+                                [border-top-right-radius:150px]
+                                [border-bottom-left-radius:150px]"
                         />
 
                     </div>
