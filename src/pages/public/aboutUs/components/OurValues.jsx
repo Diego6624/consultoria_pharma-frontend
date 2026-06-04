@@ -25,7 +25,7 @@ const OurValues = () => {
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 {/* Text Responsive */}
                 <motion.div
-                        className="text-4xl font-bold text-gray-900 md:hidden flex"
+                        className="text-3xl font-bold text-gray-900 md:hidden flex justify-center"
                         initial={{ opacity: 0, y: -20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, ease: 'easeOut' }}

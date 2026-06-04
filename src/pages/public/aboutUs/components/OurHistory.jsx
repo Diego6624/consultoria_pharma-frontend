@@ -19,7 +19,7 @@ const OurHistory = () => {
                         <p className="font-semibold text-3xl text-center md:text-start">
                             Nuestra Historia
                         </p>
-                        <div className="flex flex-col gap-2 text-xl">
+                        <div className="flex flex-col gap-2 text-xl text-center">
                             <p >
                                 Fundada con la visión de simplificar el complejo entorno regulatorio peruano, Consultoría YL Pharma nació para cerrar la brecha entre la normativa técnica y la gestión comercial.
                             </p>
@@ -60,7 +60,7 @@ const OurHistory = () => {
                         <img
                             src="/images/imageUs2.jpg"
                             alt="image"
-                            className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg bg-center
+                            className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg
                                 md:[border-top-right-radius:150px] [border-top-right-radius:100px]
                                 md:[border-bottom-left-radius:150px] [border-bottom-left-radius:100px]"
                         />
