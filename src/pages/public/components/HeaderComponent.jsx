@@ -30,17 +30,17 @@ const HeaderComponent = () => {
                 md:mx-auto md:my-4 md:px-6 md:py-4 md:rounded-full md:border-0 border-b
             ">
                 {/* 🔹 MOBILE HEADER */}
-                <div className="flex w-full items-center justify-between md:hidden">
+                <div className="flex w-full items-center justify-between md:hidden gap-8">
                     {/* Logo + nombre centrado */}
-                    <Link className="flex items-center gap-3" to="/">
+                    <Link className="flex items-center gap-3 min-w-min" to="/">
                         <img src={logo} alt="Company Logo" className='w-12 h-12 bg-white rounded-full border border-gray-200' />
-                        <div className='text-[#0DB3DE] flex flex-col text-sm font-semibold leading-tight'>
+                        <div className='text-[#0DB3DE] flex flex-col text-sm font-semibold leading-tight min-w-min'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
                             <p className="text-black font-normal text-xs">CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
                         </div>
                     </Link>
 
-                    <button onClick={() => setOpen(!open)}>
+                    <button onClick={() => setOpen(!open)} className='min-w-min p-2'>
                         {open
                             ? <X className="w-7 h-7 text-[#003F45]" />
                             : <Menu className="w-7 h-7 text-[#003F45]" />
