@@ -32,7 +32,7 @@ const MapsLocation = () => {
                 className="relative w-full"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
+                transition={{ duration: 1, ease: 'easeOut' }}
                 viewport={{ once: true, amount: 0.2 }}
             >
                 {/* Botones debajo del mapa — solo visible en mobile */}

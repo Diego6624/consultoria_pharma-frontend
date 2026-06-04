@@ -25,8 +25,9 @@ const FooterComponent = () => {
                         normativo de tu empresa con soluciones ágiles y seguras.
                     </p>
                     <div className="flex gap-2">
-                        <LinkIcons socialIcon={<Facebook />} navigate={"/"} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE" />
+                        <LinkIcons socialIcon={<Facebook />} navigate={"https://web.facebook.com/asesoriafarmaceuticayl"} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE"/>
                         <LinkIcons socialIcon={<Instagram />} navigate={"/"} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE" />
+                        <LinkIcons socialIcon={<WhatsApp />} navigate={"https://wa.me/51901676492?text=%C2%A1Hola!%20Estoy%20interesado%20en%20sus%20servicios%20de%20consultor%C3%ADa%20farmac%C3%A9utica.%20Me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20c%C3%B3mo%20pueden%20ayudarme."} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE" />
                     </div>
                 </div>
 
@@ -56,11 +57,11 @@ const FooterComponent = () => {
                         <p className="font-bold text-base">Contacto</p>
                         <div className="flex items-center gap-2 text-sm">
                             <WhatsApp fontSize="small" />
-                            <p>+51 999 999 999</p>
+                            <p>+51 901 676 492</p>
                         </div>
                         <div className="flex items-center gap-2 text-sm">
                             <LocalPhoneIcon fontSize="small" />
-                            <p>+51 999 999 999</p>
+                            <p>+51 943 132 132</p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -91,9 +92,11 @@ const FooterComponent = () => {
             <hr className="border-[#1F4C7F] my-1 border-2" />
 
             {/* Copyright & Policies */}
-            <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs sm:text-sm text-white/90">
-                <p>© 2025 Consultoría YL Pharma. Todos los derechos reservados.</p>
-                <p className="cursor-pointer hover:underline">Políticas de privacidad</p>
+            <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs md:text-sm text-white/90  text-center">
+                <p>© 2025 YLPHARMA. Todos los derechos reservados.</p>
+                <p className="">
+                    Desarrollado por <Link to="https://moralestechsolutionsadvanced.com/" className="hover:underline text-[#0022ff]">Morales Tech Solutions Advanced SAC</Link> | <Link to="https://www.facebook.com/moralestechsolutionsadvanced" className="hover:underline text-[#0022ff]">Síguenos en Facebook</Link>
+                </p>
             </div>
         </div>
     );
