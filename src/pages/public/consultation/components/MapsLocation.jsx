@@ -27,17 +27,32 @@ const MapsLocation = () => {
     ];
 
     return (
-        <>
-            <section className="relative w-full">
-                {/* Contenedor del mapa con posición relativa */}
-                <motion.div
-                    className="relative w-full overflow-hidden  h-80 md:h-[550px] lg:h-screen"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.6, ease: 'easeOut' }}
-                    viewport={{ once: true, amount: 0.2 }}
-                >
-                    {/* Mapa de fondo */}
+        <section className="relative w-full">
+            <motion.div
+                className="relative w-full"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                viewport={{ once: true, amount: 0.2 }}
+            >
+                {/* Botones debajo del mapa — solo visible en mobile */}
+                <div className="flex md:hidden w-full">
+                    {locations.map((location) => (
+                        <button
+                            key={location.id}
+                            onClick={() => setActiveLocation(location.id)}
+                            className={`flex-1 py-3 px-2 text-center text-xs font-semibold transition-all duration-300 border-t-2 ${activeLocation === location.id
+                                ? "bg-[#0DB3DE] text-white border-[#0DB3DE]"
+                                : "bg-[#268EA9] text-white border-transparent hover:bg-[#1F7FA0]"
+                                }`}
+                        >
+                            <p className="font-bold leading-tight">{location.name}</p>
+                            <p className="opacity-80 text-[11px] leading-tight mt-0.5">{location.description}</p>
+                        </button>
+                    ))}
+                </div>
+                {/* Mapa */}
+                <div className="relative w-full overflow-hidden h-64 sm:h-80 md:h-[550px] lg:h-screen">
                     <iframe
                         key={activeLocation}
                         width="100%"
@@ -48,28 +63,30 @@ const MapsLocation = () => {
                         referrerPolicy="no-referrer-when-downgrade"
                         src={locations[activeLocation].iframeUrl}
                         title={locations[activeLocation].name}
-                    ></iframe>
+                    />
 
-                    {/* Botones posicionados sobre el mapa */}
-                    <div className="absolute left-6 md:left-10 top-1/2 transform -translate-y-1/2 flex flex-col gap-3 z-10">
+                    {/* Botones sobre el mapa — solo visible en md+ */}
+                    <div className="hidden md:flex absolute left-10 top-1/2 -translate-y-1/2 flex-col gap-3 z-10">
                         {locations.map((location) => (
                             <button
                                 key={location.id}
                                 onClick={() => setActiveLocation(location.id)}
-                                className={`px-4 md:px-6 py-3 rounded-lg font-semibold transition-all duration-300 text-left text-sm md:text-base max-w-xs shadow-lg ${
-                                    activeLocation === location.id
-                                        ? "bg-[#0DB3DE] text-white"
-                                        : "bg-[#268EA9] text-white hover:bg-[#1F7FA0]"
-                                }`}
+                                className={`px-6 py-3 rounded-lg font-semibold text-left text-base max-w-xs shadow-lg
+                        transition-all duration-300
+                        hover:translate-x-2
+                        ${activeLocation === location.id
+                                        ? "bg-[#0DB3DE] text-white translate-x-2"
+                                        : "bg-[#268EA9] text-white"
+                                    }`}
                             >
                                 <p className="font-bold">{location.name}</p>
-                                <p className="text-xs md:text-sm opacity-90">{location.description}</p>
+                                <p className="text-sm opacity-90">{location.description}</p>
                             </button>
                         ))}
                     </div>
-                </motion.div>
-            </section>
-        </>
+                </div>
+            </motion.div>
+        </section>
     );
 };
 

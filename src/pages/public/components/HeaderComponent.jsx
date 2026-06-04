@@ -29,29 +29,27 @@ const HeaderComponent = () => {
                 px-4 py-3
                 md:mx-auto md:my-4 md:px-6 md:py-4 md:rounded-full md:border-0 border-b
             ">
-
                 {/* 🔹 MOBILE HEADER */}
                 <div className="flex w-full items-center justify-between md:hidden">
-                    {/* Logo + texto (derecha) */}
-                    <Link className='flex items-center gap-2 min-w-max' to="/">
-                        <img src={logo} alt="Company Logo" className='w-10 h-10 bg-white rounded-full' />
-                        <div className='text-[#0DB3DE] flex flex-col text-xs font-semibold leading-tight'>
+                    {/* Logo + nombre centrado */}
+                    <Link className="flex items-center gap-3  border-b border-gray-100" to="/">
+                        <img src={logo} alt="Company Logo" className='w-12 h-12 bg-white rounded-full border border-gray-200' />
+                        <div className='text-[#0DB3DE] flex flex-col text-sm font-semibold leading-tight'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
-                            <p className='sm:flex hidden'>CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
-                            <p className='sm:hidden flex text-black'>ASESORÍA FARMACÉUTICA</p>
+                            <p className="text-black font-normal text-xs">CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
                         </div>
                     </Link>
 
-                    {/* Icono menú (izquierda) */}
                     <button onClick={() => setOpen(!open)}>
-                        <Menu className="w-7 h-7 text-[#003F45]" />
+                        {open
+                            ? <X className="w-7 h-7 text-[#003F45]" />
+                            : <Menu className="w-7 h-7 text-[#003F45]" />
+                        }
                     </button>
                 </div>
 
                 {/* 🔹 DESKTOP HEADER */}
                 <div className="hidden md:flex w-full items-center justify-between">
-
-                    {/* Logo */}
                     <Link className='flex items-center gap-3 min-w-max' to="/">
                         <img src={logo} alt="Company Logo" className='w-15 h-15 bg-white rounded-full' />
                         <div className='text-[#0DB3DE] flex flex-col font-semibold'>
@@ -60,25 +58,16 @@ const HeaderComponent = () => {
                         </div>
                     </Link>
 
-                    {/* Navbar */}
                     <div className='flex gap-10 items-center justify-center w-full relative'>
                         {navItems.map((item) => {
                             const isActive = location.pathname === item.path;
-
                             return (
-                                <Link
-                                    key={item.name}
-                                    to={item.path}
-                                    className="relative font-medium text-[#003F45]"
-                                >
+                                <Link key={item.name} to={item.path} className="relative font-medium text-[#003F45]">
                                     {item.name}
-
                                     <motion.div
                                         className="absolute left-0 -bottom-1 h-0.5 w-full bg-[#0DB3DE]"
                                         initial={false}
-                                        animate={{
-                                            scaleX: isActive ? 1 : 0
-                                        }}
+                                        animate={{ scaleX: isActive ? 1 : 0 }}
                                         transition={{ duration: 0.3 }}
                                         style={{ originX: 0.5 }}
                                     />
@@ -87,7 +76,6 @@ const HeaderComponent = () => {
                         })}
                     </div>
 
-                    {/* Botón */}
                     <AnimateBoton
                         bg="#52C7E5"
                         bgIcon="#0DB3DE"
@@ -100,52 +88,56 @@ const HeaderComponent = () => {
                         navigate="/consultation"
                     />
                 </div>
-
             </div>
+
+            {/* 🔹 MOBILE DROPDOWN — cae desde el header hacia abajo */}
             <AnimatePresence>
                 {open && (
                     <>
-                        {/* Overlay */}
+                        {/* Overlay para cerrar tocando fuera */}
                         <motion.div
-                            className="fixed inset-0 bg-black/40 z-40"
+                            className="fixed inset-0 z-40"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setOpen(false)}
                         />
 
-                        {/* Sidebar */}
+                        {/* Panel dropdown */}
                         <motion.div
-                            className="fixed top-0 left-0 h-full w-72 bg-white z-50 p-6 flex flex-col gap-6"
-                            initial={{ x: "-100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "-100%" }}
-                            transition={{ type: "tween", duration: 0.3 }}
+                            className="absolute top-full left-0 right-0 z-50
+                                       bg-white border-t border-b border-gray-100
+                                       flex flex-col overflow-hidden"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
                         >
-                            {/* Header del menú */}
-                            <div className="flex justify-between items-center">
-                                <p className="font-semibold text-[#003F45]">Menú</p>
-                                <button onClick={() => setOpen(false)}>
-                                    <X className="w-6 h-6" />
-                                </button>
-                            </div>
 
-                            {/* Links */}
-                            <div className="flex flex-col gap-4">
-                                {navItems.map((item) => (
-                                    <Link
-                                        key={item.name}
-                                        to={item.path}
-                                        onClick={() => setOpen(false)}
-                                        className="text-[#003F45] font-medium text-lg"
-                                    >
-                                        {item.name}
-                                    </Link>
-                                ))}
+                            {/* Links centrados */}
+                            <div className="flex flex-col">
+                                {navItems.map((item) => {
+                                    const isActive = location.pathname === item.path;
+                                    return (
+                                        <Link
+                                            key={item.name}
+                                            to={item.path}
+                                            onClick={() => setOpen(false)}
+                                            className={`text-center py-4 text-sm font-medium tracking-widest uppercase
+                                                        border-b border-gray-100 transition-colors duration-200
+                                                        ${isActive
+                                                    ? "text-[#0DB3DE]"
+                                                    : "text-[#003F45] hover:text-[#0DB3DE] hover:bg-gray-50"
+                                                }`}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    );
+                                })}
                             </div>
 
                             {/* Botón abajo */}
-                            <div className="mt-auto">
+                            <div className="flex justify-center px-6 py-5">
                                 <AnimateBoton
                                     bg="#52C7E5"
                                     bgIcon="#0DB3DE"

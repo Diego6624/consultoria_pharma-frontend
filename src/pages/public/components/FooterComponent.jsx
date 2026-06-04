@@ -7,11 +7,11 @@ import { Link } from "react-router-dom";
 const FooterComponent = () => {
     return (
         <div className="flex flex-col mt-auto w-full pt-8 pb-4 px-6 sm:px-10 md:px-16 lg:px-30 2xl:px-44 gap-4 bg-[#0DB3DE] text-white">
-            
+
             {/* Footer Content */}
             <div className="grid grid-cols-2 md:grid-cols-[2fr_1fr_1fr_1fr_auto] gap-6 md:gap-8 w-full py-2">
 
-                {/* Col 1 — Logo + Descripción + Redes — ocupa las 2 columnas en mobile */}
+                {/* Col 1 — Logo + Descripción + Redes */}
                 <div className="col-span-2 md:col-span-1 flex flex-col gap-4">
                     <div className="flex gap-2 items-center">
                         <img src={logo} alt="Logo" className="w-12 h-12 bg-white rounded-full object-contain shrink-0" />
@@ -48,8 +48,10 @@ const FooterComponent = () => {
                     <Link to="/" className="text-white hover:underline text-sm">Calidad</Link>
                 </div>
 
-                {/* Col 4 — Contacto + Horarios */}
-                <div className="flex flex-col gap-4">
+                {/* Col 4 — Contacto + Horarios
+                    En mobile: ocupa 2 columnas y se divide internamente en 2 columnas (Contacto | Horarios)
+                    En desktop: columna normal */}
+                <div className="col-span-2 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-4">
                     <div className="flex flex-col gap-2">
                         <p className="font-bold text-base">Contacto</p>
                         <div className="flex items-center gap-2 text-sm">
@@ -61,13 +63,14 @@ const FooterComponent = () => {
                             <p>+51 999 999 999</p>
                         </div>
                     </div>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-2">
                         <p className="font-bold text-base">Horarios</p>
                         <p className="text-sm">Lunes a Viernes</p>
+                        <p className="text-sm font-semibold">9:00 AM - 6:00 PM</p>
                     </div>
                 </div>
 
-                {/* Col 5 — Mapa — ocupa las 2 columnas en mobile */}
+                {/* Col 5 — Mapa */}
                 <div className="col-span-2 md:col-span-1 rounded-2xl overflow-hidden
                                 w-full h-40 md:w-45 md:h-37.5
                                 shrink-0 shadow-lg">
