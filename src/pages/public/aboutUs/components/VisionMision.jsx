@@ -11,7 +11,7 @@ const VisionMision = () => {
                                 bg-[url(/images/visionMision.png)] bg-cover bg-center
                                 flex flex-col md:flex-row items-center md:items-center
                                 text-center md:text-left
-                                gap-4 p-5 md:p-6 min-h-[220px] md:min-h-48"
+                                gap-4 p-5 md:p-6 min-h-[220px] md:min-h-48 md:hover:-translate-y-2 md:transition-transform md:duration-300"
                     initial={{ opacity: 0, x: -40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -40,7 +40,7 @@ const VisionMision = () => {
                                 bg-[url(/images/visionMision.png)] bg-cover bg-center
                                 flex flex-col md:flex-row items-center
                                 text-center md:text-left
-                                gap-4 p-5 md:p-6 min-h-[220px] md:min-h-48"
+                                gap-4 p-5 md:p-6 min-h-[220px] md:min-h-48 md:hover:-translate-y-2 md:transition-transform md:duration-300"
                     initial={{ opacity: 0, x: 40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}

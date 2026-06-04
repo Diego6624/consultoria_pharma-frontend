@@ -77,7 +77,7 @@ const OurValues = () => {
                         {values.map((value, index) => (
                             <motion.div
                                 key={index}
-                                className="flex gap-4 items-center group"
+                                className="flex gap-4 items-center group cursor-default"
                                 initial={{ opacity: 0, x: 40 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 transition={{ duration: 0.8, delay: index * 0.12, ease: 'easeOut' }}
