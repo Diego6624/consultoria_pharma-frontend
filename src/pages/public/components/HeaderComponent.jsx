@@ -32,7 +32,7 @@ const HeaderComponent = () => {
                 {/* 🔹 MOBILE HEADER */}
                 <div className="flex w-full items-center justify-between md:hidden">
                     {/* Logo + nombre centrado */}
-                    <Link className="flex items-center gap-3  border-b border-gray-100" to="/">
+                    <Link className="flex items-center gap-3" to="/">
                         <img src={logo} alt="Company Logo" className='w-12 h-12 bg-white rounded-full border border-gray-200' />
                         <div className='text-[#0DB3DE] flex flex-col text-sm font-semibold leading-tight'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
