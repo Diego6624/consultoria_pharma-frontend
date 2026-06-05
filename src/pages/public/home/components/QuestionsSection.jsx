@@ -21,7 +21,7 @@ const QuestionsSection = () => {
     ];
 
     return (
-        <section className="py-10 md:py-16 px-6 sm:px-10 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
+        <section className="overflow-hidden py-10 md:py-16 px-6 sm:px-10 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6 items-center">
 
                 {/* Content — siempre primero en mobile */}

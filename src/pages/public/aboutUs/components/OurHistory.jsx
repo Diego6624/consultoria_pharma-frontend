@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 const OurHistory = () => {
     return (<>
-        <section className="p-15 px-8 md:px-16 lg:px-32 2xl:px-44 gap-6">
+        <section className="overflow-hidden p-15 px-8 md:px-16 lg:px-32 2xl:px-44 gap-6">
             <div className="items-center justify-center w-full h-full grid md:grid-cols-2 gap-8 md:gap-4 md:px-20">
                 {/* Content */}
                 <motion.div

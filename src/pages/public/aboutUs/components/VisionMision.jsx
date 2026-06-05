@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const VisionMision = () => {
     return (
-        <section className="py-10 px-4 md:p-15 md:px-16 lg:px-32 2xl:px-44">
+        <section className="overflow-hidden py-10 px-4 md:p-15 md:px-16 lg:px-32 2xl:px-44">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                 {/* MISION */}
