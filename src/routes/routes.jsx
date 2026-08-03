@@ -20,33 +20,38 @@ import RoleRoute from "@/pages/private/RoleRoute";
 import { Navigate } from "react-router-dom";
 
 const router = createBrowserRouter(
-    createRoutesFromElements(   
-        <Route path="/" element={<App />} errorElement={<NotFoundComponent />}>
-            <Route index element={<HomePage />} />
-            <Route path="news" element={<NewsPage />} />
-            <Route path="aboutUs" element={<AboutUsPage />} />
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="services/:id" element={<ServiceDetailPage />} />
-            <Route path="consultation" element={<ConsultationPage />} />
-                <Route path="login" element={<LoginPage />} />
+  createRoutesFromElements(
+    <Route>
+      <Route path="/" element={<App />} errorElement={<NotFoundComponent />}>
+        <Route index element={<HomePage />} />
+        <Route path="news" element={<NewsPage />} />
+        <Route path="aboutUs" element={<AboutUsPage />} />
+        <Route path="services" element={<ServicesPage />} />
+        <Route path="services/:id" element={<ServiceDetailPage />} />
+        <Route path="consultation" element={<ConsultationPage />} />
+      </Route>
 
-                <Route element={<PrivateRoute />}>
-                    <Route element={<RoleRoute allowedRoles={["MASTER","ADMIN"]} />}>
-                        <Route path="admin" element={<AdminShell />}>
-                            <Route index element={<Navigate to="dashboard" replace />} />
-                            <Route path="dashboard" element={<DashboardPage />} />
-                            <Route path="noticias" element={<ArticleListPage />} />
-                            <Route path="noticias/nuevo" element={<ArticleFormPage />} />
-                            <Route path="noticias/:id/editar" element={<ArticleFormPage />} />
-                            <Route path="servicios" element={<ServiceListPage />} />
-                            <Route path="servicios/nuevo" element={<ServiceFormPage />} />
-                            <Route path="servicios/:id/editar" element={<ServiceFormPage />} />
-                            <Route path="no-autorizado" element={<NotAuthorized />} />
-                        </Route>
-                    </Route>
-                </Route>
+      <Route path="login" element={<LoginPage />} />
+
+      <Route element={<PrivateRoute />}>
+        <Route element={<RoleRoute allowedRoles={["MASTER", "ADMIN"]} />}>
+          <Route path="admin" element={<AdminShell />}>
+            <Route index element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="dashboard" element={<DashboardPage />} />
+            <Route path="noticias" element={<ArticleListPage />} />
+            <Route path="noticias/nuevo" element={<ArticleFormPage />} />
+            <Route path="noticias/:id/editar" element={<ArticleFormPage />} />
+            <Route path="servicios" element={<ServiceListPage />} />
+            <Route path="servicios/nuevo" element={<ServiceFormPage />} />
+            <Route path="servicios/:id/editar" element={<ServiceFormPage />} />
+            <Route path="no-autorizado" element={<NotAuthorized />} />
+          </Route>
         </Route>
-    )
+      </Route>
+
+      <Route path="*" element={<NotFoundComponent />} />
+    </Route>
+  )
 );
 
 export default router;

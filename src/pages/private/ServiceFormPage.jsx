@@ -4,7 +4,11 @@ import DOMPurify from "dompurify";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import TipTapEditor from "@/components/TipTapEditor";
-import { crearServicio, obtenerServicioAdmin, actualizarServicio } from "@/services/serviciosService";
+import {
+  crearServicioConImagen,
+  obtenerServicioAdmin,
+  actualizarServicioConImagen,
+} from "@/services/serviciosService2";
 
 const initialForm = {
   titulo: "",
@@ -20,6 +24,9 @@ export default function ServiceFormPage() {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [imageFile, setImageFile] = useState(null);
+  const [previewImageUrl, setPreviewImageUrl] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -44,6 +51,25 @@ export default function ServiceFormPage() {
     load();
   }, [id]);
 
+  const handleFileChange = (event) => {
+    const file = event.target.files?.[0] ?? null;
+    setImageFile(file);
+
+    if (file) {
+      setPreviewImageUrl(URL.createObjectURL(file));
+    } else {
+      setPreviewImageUrl("");
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (previewImageUrl) {
+        URL.revokeObjectURL(previewImageUrl);
+      }
+    };
+  }, [previewImageUrl]);
+
   const handleChange = (field) => (event) => {
     setForm((current) => ({ ...current, [field]: event.target.value }));
   };
@@ -57,17 +83,32 @@ export default function ServiceFormPage() {
     setSaving(true);
     setError("");
 
-    const payload = {
-      ...form,
-      contenido: DOMPurify.sanitize(form.contenido),
-    };
+    const formData = new FormData();
+    formData.append("titulo", form.titulo);
+    formData.append("descripcion", form.descripcion);
+    formData.append("contenido", DOMPurify.sanitize(form.contenido));
+    formData.append("imagen", form.imagen || "");
+    if (imageFile) {
+      formData.append("imageFile", imageFile);
+    }
+
+    setUploadProgress(0);
 
     try {
       if (id) {
-        await updateAdminService(id, payload);
+        await actualizarServicioConImagen(id, formData, {
+          onUploadProgress: (e) => {
+            if (e.total) setUploadProgress(Math.round((e.loaded * 100) / e.total));
+          },
+        });
       } else {
-        await createAdminService(payload);
+        await crearServicioConImagen(formData, {
+          onUploadProgress: (e) => {
+            if (e.total) setUploadProgress(Math.round((e.loaded * 100) / e.total));
+          },
+        });
       }
+      setUploadProgress(100);
       navigate("/admin/servicios", { replace: true });
     } catch (error) {
       setError(error.message || "Error al guardar el servicio");
@@ -99,6 +140,34 @@ export default function ServiceFormPage() {
         <div className="space-y-3">
           <label className="block text-sm font-medium text-slate-700">Imagen (URL)</label>
           <Input value={form.imagen} onChange={handleChange("imagen")} placeholder="https://..." />
+        </div>
+
+        <div className="space-y-3">
+          <label className="block text-sm font-medium text-slate-700">Subir imagen</label>
+          <div className="flex items-center gap-4">
+            <Input type="file" accept="image/*" onChange={handleFileChange} />
+            <div className="flex flex-col">
+              {previewImageUrl ? (
+                <div className="flex items-start gap-2">
+                  <img src={previewImageUrl} alt="Vista previa" className="mt-2 h-28 w-28 rounded-md border object-cover" />
+                  <button type="button" className="text-sm text-destructive/80" onClick={() => { setImageFile(null); setPreviewImageUrl(""); setForm((c)=>({ ...c, imagen: "" })); }}>Eliminar</button>
+                </div>
+              ) : form.imagen ? (
+                <div className="flex items-start gap-2">
+                  <img src={form.imagen} alt="Imagen actual" className="mt-2 h-28 w-28 rounded-md border object-cover" />
+                  <button type="button" className="text-sm text-destructive/80" onClick={() => setForm((c)=>({ ...c, imagen: "" }))}>Eliminar URL</button>
+                </div>
+              ) : (
+                <div className="text-xs text-slate-500">No hay imagen seleccionada.</div>
+              )}
+              {uploadProgress > 0 && uploadProgress < 100 && (
+                <div className="mt-2 w-48 bg-slate-200 rounded-full h-2 overflow-hidden">
+                  <div className="h-2 bg-primary" style={{ width: `${uploadProgress}%` }} />
+                </div>
+              )}
+            </div>
+          </div>
+          <p className="text-xs text-slate-500">Selecciona un archivo para reemplazar la imagen o deja la URL si ya tienes una.</p>
         </div>
 
         <div className="space-y-3">
