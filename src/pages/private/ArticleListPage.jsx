@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { listarNoticiasAdmin, eliminarNoticia } from "@/services/noticiasService2";
+import { listarNoticiasAdmin, eliminarNoticia } from "@/services/noticiasService";
 
 export default function ArticleListPage() {
   const [articles, setArticles] = useState([]);

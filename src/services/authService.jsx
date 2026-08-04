@@ -1,4 +1,4 @@
-import api from "./apiClient2.jsx";
+import api from "./apiClient.jsx";
 import { setSession, logout as clearSession, getSession } from "../lib/auth";
 
 export async function login(credentials) {

@@ -1,4 +1,4 @@
-import api from "./apiClient2.jsx";
+import api from "./apiClient.jsx";
 
 export const listarCategorias = () => api.get(`/api/public/categorias`);
 export const listarCategoriasAdmin = () => api.get(`/api/admin/categorias`);

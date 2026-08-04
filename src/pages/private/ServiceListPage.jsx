@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { listarServiciosAdmin, eliminarServicio } from "@/services/serviciosService2";
+import { listarServiciosAdmin, eliminarServicio } from "@/services/serviciosService";
 
 export default function ServiceListPage() {
   const [services, setServices] = useState([]);

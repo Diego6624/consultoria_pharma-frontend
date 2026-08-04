@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { listarNoticiasAdmin } from "@/services/noticiasService2";
-import { listarServiciosAdmin } from "@/services/serviciosService2";
+import { listarNoticiasAdmin } from "@/services/noticiasService";
+import { listarServiciosAdmin } from "@/services/serviciosService";
 
 export default function DashboardPage() {
   const [summary, setSummary] = useState({ articles: 0, services: 0 });

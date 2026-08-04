@@ -8,7 +8,7 @@ import {
   crearServicioConImagen,
   obtenerServicioAdmin,
   actualizarServicioConImagen,
-} from "@/services/serviciosService2";
+} from "@/services/serviciosService";
 
 const initialForm = {
   titulo: "",

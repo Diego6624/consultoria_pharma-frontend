@@ -8,7 +8,7 @@ import {
   crearNoticiaConImagen,
   obtenerNoticiaAdmin,
   actualizarNoticiaConImagen,
-} from "@/services/noticiasService2";
+} from "@/services/noticiasService";
 import { listarCategoriasAdmin } from "@/services/categoriasService";
 
 const initialForm = {
