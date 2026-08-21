@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import {
   actualizarNoticiaConImagen,
 } from "@/services/noticiasService";
 import { listarCategoriasAdmin } from "@/services/categoriasService";
+import { UploadCloud, X, Loader2 } from "lucide-react";
 
 const initialForm = {
   titulo: "",
@@ -31,9 +32,12 @@ export default function ArticleFormPage() {
   const [imageFile, setImageFile] = useState(null);
   const [previewImageUrl, setPreviewImageUrl] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     async function load() {
+      setLoading(true);
       try {
         const [cats, article] = await Promise.all([
           listarCategoriasAdmin(),
@@ -48,27 +52,57 @@ export default function ArticleFormPage() {
             descripcion: article.descripcion || "",
             contenido: article.contenido || "",
             imagen: article.imagen || "",
-            fechaPublicacion: article.fechaPublicacion ? new Date(article.fechaPublicacion).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16),
+            fechaPublicacion: article.fechaPublicacion
+              ? new Date(article.fechaPublicacion).toISOString().slice(0, 16)
+              : new Date().toISOString().slice(0, 16),
             idCategoria: article.idCategoria?.toString() || "",
           });
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
 
     load();
   }, [id]);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files?.[0] ?? null;
-    setImageFile(file);
-
-    if (file) {
-      setPreviewImageUrl(URL.createObjectURL(file));
-    } else {
-      setPreviewImageUrl("");
+  const processFile = (file) => {
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      setError("Por favor selecciona un archivo de imagen válido.");
+      return;
     }
+    setError("");
+    setImageFile(file);
+    setPreviewImageUrl(URL.createObjectURL(file));
+  };
+
+  const handleFileChange = (event) => {
+    processFile(event.target.files?.[0]);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    processFile(e.dataTransfer.files?.[0]);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const clearImage = () => {
+    setImageFile(null);
+    setPreviewImageUrl("");
+    setForm((c) => ({ ...c, imagen: "" }));
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   useEffect(() => {
@@ -104,20 +138,21 @@ export default function ArticleFormPage() {
       formData.append("imageFile", imageFile);
     }
 
-    // reset progress
     setUploadProgress(0);
 
     try {
       if (id) {
         await actualizarNoticiaConImagen(id, formData, {
           onUploadProgress: (e) => {
-            if (e.total) setUploadProgress(Math.round((e.loaded * 100) / e.total));
+            if (e.total)
+              setUploadProgress(Math.round((e.loaded * 100) / e.total));
           },
         });
       } else {
         await crearNoticiaConImagen(formData, {
           onUploadProgress: (e) => {
-            if (e.total) setUploadProgress(Math.round((e.loaded * 100) / e.total));
+            if (e.total)
+              setUploadProgress(Math.round((e.loaded * 100) / e.total));
           },
         });
       }
@@ -130,86 +165,186 @@ export default function ArticleFormPage() {
     }
   };
 
+  const currentImage = previewImageUrl || form.imagen;
+
   return (
     <div className="rounded-3xl border border-border bg-white p-6 shadow-sm shadow-slate-200/40">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold">{id ? "Editar artículo" : "Crear artículo"}</h2>
-          <p className="text-sm text-slate-600">Utiliza el editor para contenido enriquecido.</p>
+          <h2 className="text-xl font-semibold">
+            {id ? "Editar artículo" : "Crear artículo"}
+          </h2>
+          <p className="text-sm text-slate-600">
+            Utiliza el editor para contenido enriquecido.
+          </p>
         </div>
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-slate-700">Título</label>
-            <Input value={form.titulo} onChange={handleChange("titulo")} required />
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Título
+            </label>
+            <Input
+              value={form.titulo}
+              onChange={handleChange("titulo")}
+              placeholder="Título del artículo"
+              required
+            />
           </div>
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-slate-700">Descripción corta</label>
-            <Input value={form.descripcion} onChange={handleChange("descripcion")} required />
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Descripción corta
+            </label>
+            <Input
+              value={form.descripcion}
+              onChange={handleChange("descripcion")}
+              placeholder="Breve descripción del artículo"
+              required
+            />
           </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-slate-700">Fecha de publicación</label>
-            <Input type="datetime-local" value={form.fechaPublicacion} onChange={handleChange("fechaPublicacion")} required />
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Fecha de publicación
+            </label>
+            <Input
+              type="datetime-local"
+              value={form.fechaPublicacion}
+              onChange={handleChange("fechaPublicacion")}
+              required
+            />
           </div>
-          <div className="space-y-3">
-            <label className="block text-sm font-medium text-slate-700">Categoría</label>
-            <select value={form.idCategoria} onChange={handleChange("idCategoria")} className="h-9 w-full rounded-md border border-input bg-transparent px-2.5 text-sm outline-none" required>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Categoría
+            </label>
+            <select
+              value={form.idCategoria}
+              onChange={handleChange("idCategoria")}
+              className="h-9 w-full rounded-md border border-input bg-transparent px-2.5 text-sm outline-none focus:ring-1 focus:ring-slate-900"
+              required
+            >
               <option value="">Selecciona una categoría</option>
               {categories.map((cat) => (
-                <option key={cat.idCategoria} value={cat.idCategoria}>{cat.nombre}</option>
+                <option key={cat.idCategoria} value={cat.idCategoria}>
+                  {cat.nombre}
+                </option>
               ))}
             </select>
           </div>
         </div>
 
-        <div className="space-y-3">
-          <label className="block text-sm font-medium text-slate-700">Imagen (URL)</label>
-          <Input value={form.imagen} onChange={handleChange("imagen")} placeholder="https://..." />
-        </div>
+        {/* Imagen de portada moderna */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-slate-700">
+            Imagen de portada
+          </label>
 
-        <div className="space-y-3">
-          <label className="block text-sm font-medium text-slate-700">Subir imagen</label>
-          <div className="flex items-center gap-4">
-            <Input type="file" accept="image/*" onChange={handleFileChange} />
-            <div className="flex flex-col">
-              {previewImageUrl ? (
-                <div className="flex items-start gap-2">
-                  <img src={previewImageUrl} alt="Vista previa" className="mt-2 h-28 w-28 rounded-md border object-cover" />
-                  <button type="button" className="text-sm text-destructive/80" onClick={() => { setImageFile(null); setPreviewImageUrl(""); setForm((c)=>({ ...c, imagen: "" })); }}>Eliminar</button>
-                </div>
-              ) : form.imagen ? (
-                <div className="flex items-start gap-2">
-                  <img src={form.imagen} alt="Imagen actual" className="mt-2 h-28 w-28 rounded-md border object-cover" />
-                  <button type="button" className="text-sm text-destructive/80" onClick={() => setForm((c)=>({ ...c, imagen: "" }))}>Eliminar URL</button>
-                </div>
-              ) : (
-                <div className="text-xs text-slate-500">No hay imagen seleccionada.</div>
-              )}
-              {uploadProgress > 0 && uploadProgress < 100 && (
-                <div className="mt-2 w-48 bg-slate-200 rounded-full h-2 overflow-hidden">
-                  <div className="h-2 bg-primary" style={{ width: `${uploadProgress}%` }} />
-                </div>
-              )}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+
+          {currentImage ? (
+            <div className="relative inline-block">
+              <img
+                src={currentImage}
+                alt="Vista previa"
+                className="h-48 w-auto max-w-full rounded-xl border object-cover shadow-sm"
+              />
+              <button
+                type="button"
+                onClick={clearImage}
+                className="absolute -right-2 -top-2 flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-white shadow-md transition-transform hover:scale-105"
+                title="Eliminar imagen"
+              >
+                <X size={14} />
+              </button>
             </div>
-          </div>
-          <p className="text-xs text-slate-500">Selecciona un archivo para reemplazar la imagen o deja la URL si ya tienes una.</p>
+          ) : (
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              className={`
+                flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed
+                px-6 py-10 transition-colors duration-200
+                ${
+                  isDragging
+                    ? "border-slate-900 bg-slate-50"
+                    : "border-slate-200 bg-slate-50/50 hover:border-slate-400 hover:bg-slate-50"
+                }
+              `}
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100">
+                <UploadCloud size={24} className="text-slate-500" />
+              </div>
+              <div className="text-center">
+                <p className="text-sm font-medium text-slate-700">
+                  Haz clic o arrastra una imagen aquí
+                </p>
+                <p className="text-xs text-slate-400">
+                  PNG, JPG, WEBP hasta 5 MB
+                </p>
+              </div>
+            </div>
+          )}
+
+          {uploadProgress > 0 && uploadProgress < 100 && (
+            <div className="mt-2 w-full max-w-xs">
+              <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
+                <span>Subiendo...</span>
+                <span>{uploadProgress}%</span>
+              </div>
+              <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+                <div
+                  className="h-full rounded-full bg-slate-900 transition-all duration-300"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="space-y-3">
-          <label className="block text-sm font-medium text-slate-700">Contenido</label>
+        <div className="space-y-2">
+          <label className="block text-sm font-medium text-slate-700">
+            Contenido
+          </label>
           <TipTapEditor value={form.contenido} onChange={handleContentChange} />
         </div>
 
-        {error && <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">{error}</div>}
+        {error && (
+          <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive">
+            {error}
+          </div>
+        )}
 
-        <div className="flex flex-wrap gap-3">
-          <Button type="submit" disabled={saving}>{saving ? "Guardando..." : "Guardar"}</Button>
-          <Button variant="outline" type="button" onClick={() => navigate("/admin/noticias")}>Cancelar</Button>
+        <div className="flex flex-wrap gap-3 pt-2">
+          <Button type="submit" disabled={saving} className="gap-2">
+            {saving ? (
+              <>
+                <Loader2 size={16} className="animate-spin" />
+                Guardando...
+              </>
+            ) : (
+              "Guardar artículo"
+            )}
+          </Button>
+          <Button
+            variant="outline"
+            type="button"
+            onClick={() => navigate("/admin/noticias")}
+          >
+            Cancelar
+          </Button>
         </div>
       </form>
     </div>
