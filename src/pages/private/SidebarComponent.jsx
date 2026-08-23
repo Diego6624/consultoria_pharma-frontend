@@ -2,7 +2,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sidebar, SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, SidebarSeparator } from "@/components/ui/sidebar";
 import useAuth from "@/hooks/useAuth";
-import { BriefcaseBusiness, LayoutDashboard, LogOut, MapPinned, MessageSquareText, Newspaper, Users } from "lucide-react";
+import { BriefcaseBusiness, LayoutDashboard, LogOut, MapPinned, MessageSquareText, Newspaper, Tags, Users } from "lucide-react";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -24,6 +24,7 @@ export default function SidebarComponent() {
     { label: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
     { label: "Artículos", path: "/admin/noticias", icon: Newspaper },
     { label: "Servicios", path: "/admin/servicios", icon: BriefcaseBusiness },
+    { label: "Categorías", path: "/admin/categorias", icon: Tags },
     { label: "Ubicaciones", path: "/admin/ubicaciones", icon: MapPinned },
     { label: "Consultas", path: "/admin/consultas", icon: MessageSquareText },
   ];

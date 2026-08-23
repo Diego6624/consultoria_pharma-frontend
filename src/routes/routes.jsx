@@ -16,6 +16,7 @@ import ServiceListPage from "@/pages/private/ServiceListPage";
 import ServiceFormPage from "@/pages/private/ServiceFormPage";
 import UsersPage from "@/pages/private/UsersPage";
 import LocationsPage from "@/pages/private/LocationsPage";
+import CategoriesPage from "@/pages/private/CategoriesPage";
 import ConsultationsPage from "@/pages/private/ConsultationsPage";
 import NotAuthorized from "@/pages/private/NotAuthorized";
 import PrivateRoute from "@/pages/private/PrivateRoute";
@@ -48,6 +49,7 @@ const router = createBrowserRouter(
             <Route path="servicios/nuevo" element={<ServiceFormPage />} />
             <Route path="servicios/:id/editar" element={<ServiceFormPage />} />
             <Route path="ubicaciones" element={<LocationsPage />} />
+            <Route path="categorias" element={<CategoriesPage />} />
             <Route path="consultas" element={<ConsultationsPage />} />
             <Route element={<RoleRoute allowedRoles={["MASTER"]} />}>
               <Route path="usuarios" element={<UsersPage />} />
