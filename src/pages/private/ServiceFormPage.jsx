@@ -9,13 +9,15 @@ import {
   obtenerServicioAdmin,
   actualizarServicioConImagen,
 } from "@/services/serviciosService";
-import { UploadCloud, X, Loader2, ImageIcon } from "lucide-react";
+import { listarCategoriasPorTipo } from "@/services/categoriasService";
+import { UploadCloud, X, Loader2 } from "lucide-react";
 
 const initialForm = {
   titulo: "",
   descripcion: "",
   contenido: "",
   imagen: "",
+  idCategoria: "",
 };
 
 export default function ServiceFormPage() {
@@ -30,6 +32,20 @@ export default function ServiceFormPage() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+  const [categorias, setCategorias] = useState([]);
+
+  useEffect(() => {
+    async function loadCategorias() {
+      try {
+        const data = await listarCategoriasPorTipo("SERVICIO"); // ✅ sin desestructurar
+        setCategorias(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error(error);
+        setCategorias([]);
+      }
+    }
+    loadCategorias();
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -37,12 +53,13 @@ export default function ServiceFormPage() {
     async function load() {
       setLoading(true);
       try {
-        const service = await obtenerServicioAdmin(id);
+        const service = await obtenerServicioAdmin(id); // ✅ sin desestructurar
         setForm({
           titulo: service.titulo || "",
           descripcion: service.descripcion || "",
           contenido: service.contenido || "",
           imagen: service.imagen || "",
+          idCategoria: service.idCategoria || "",
         });
       } catch (error) {
         console.error(error);
@@ -50,7 +67,6 @@ export default function ServiceFormPage() {
         setLoading(false);
       }
     }
-
     load();
   }, [id]);
 
@@ -116,6 +132,7 @@ export default function ServiceFormPage() {
     formData.append("titulo", form.titulo);
     formData.append("descripcion", form.descripcion);
     formData.append("contenido", DOMPurify.sanitize(form.contenido));
+    formData.append("idCategoria", form.idCategoria);
     formData.append("imagen", form.imagen || "");
     if (imageFile) {
       formData.append("imageFile", imageFile);
@@ -188,6 +205,24 @@ export default function ServiceFormPage() {
               required
             />
           </div>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Categoría
+            </label>
+            <select
+              value={form.idCategoria}
+              onChange={handleChange("idCategoria")}
+              required
+              className="h-10 w-full rounded-md border border-input bg-white px-3 text-sm text-slate-700 outline-none focus:border-slate-400"
+            >
+              <option value="">Selecciona una categoría</option>
+              {(categorias ?? []).map((cat) => (
+                <option key={cat.idCategoria} value={cat.idCategoria}>
+                  {cat.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Imagen de portada moderna */}
@@ -229,10 +264,9 @@ export default function ServiceFormPage() {
               className={`
                 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed
                 px-6 py-10 transition-colors duration-200
-                ${
-                  isDragging
-                    ? "border-slate-900 bg-slate-50"
-                    : "border-slate-200 bg-slate-50/50 hover:border-slate-400 hover:bg-slate-50"
+                ${isDragging
+                  ? "border-slate-900 bg-slate-50"
+                  : "border-slate-200 bg-slate-50/50 hover:border-slate-400 hover:bg-slate-50"
                 }
               `}
             >
