@@ -9,7 +9,7 @@ import {
   obtenerNoticiaAdmin,
   actualizarNoticiaConImagen,
 } from "@/services/noticiasService";
-import { listarCategoriasAdmin } from "@/services/categoriasService";
+import { listarCategoriasPorTipo } from "@/services/categoriasService";
 import { UploadCloud, X, Loader2 } from "lucide-react";
 
 const initialForm = {
@@ -40,9 +40,11 @@ export default function ArticleFormPage() {
       setLoading(true);
       try {
         const [cats, article] = await Promise.all([
-          listarCategoriasAdmin(),
+          listarCategoriasPorTipo("NOTICIA"),
           id ? obtenerNoticiaAdmin(id) : Promise.resolve(null),
         ]);
+
+        setCategories(Array.isArray(cats) ? cats : []);
 
         setCategories(cats || []);
 
@@ -277,10 +279,9 @@ export default function ArticleFormPage() {
               className={`
                 flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed
                 px-6 py-10 transition-colors duration-200
-                ${
-                  isDragging
-                    ? "border-slate-900 bg-slate-50"
-                    : "border-slate-200 bg-slate-50/50 hover:border-slate-400 hover:bg-slate-50"
+                ${isDragging
+                  ? "border-slate-900 bg-slate-50"
+                  : "border-slate-200 bg-slate-50/50 hover:border-slate-400 hover:bg-slate-50"
                 }
               `}
             >

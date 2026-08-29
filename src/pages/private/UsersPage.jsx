@@ -8,6 +8,7 @@ import {
   listarUsuariosAdmin,
   actualizarUsuarioAdmin,
 } from "@/services/usuariosService";
+import useAuth from "@/hooks/useAuth";
 
 const emptyForm = {
   nombre: "",
@@ -21,6 +22,7 @@ function normalizeRole(role) {
 }
 
 export default function UsersPage() {
+  const { user: currentUser } = useAuth();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
@@ -121,6 +123,10 @@ export default function UsersPage() {
     return Array.from({ length: count }, (_, index) => index);
   }, [total]);
 
+  const filteredUsers = users.filter(
+    (user) => user.idUsuario !== currentUser?.idUsuario
+  );
+
   return (
     <div className="space-y-6">
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -171,10 +177,10 @@ export default function UsersPage() {
             <tbody>
               {loading ? (
                 <tr><td colSpan="5" className="px-4 py-8 text-center text-slate-500">Cargando usuarios...</td></tr>
-              ) : users.length === 0 ? (
+              ) : filteredUsers.length === 0 ? (
                 <tr><td colSpan="5" className="px-4 py-8 text-center text-slate-500">No hay usuarios registrados.</td></tr>
               ) : (
-                users.map((user) => (
+                filteredUsers.map((user) => (
                   <tr key={user.idUsuario} className="border-t border-slate-200">
                     <td className="px-4 py-3">{user.nombre}</td>
                     <td className="px-4 py-3">{user.email}</td>
@@ -185,9 +191,15 @@ export default function UsersPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 space-x-2">
-                      <Button variant="outline" size="sm" onClick={() => handleEdit(user)}>Editar</Button>
-                      <Button variant="secondary" size="sm" onClick={() => handleToggle(user)}>{user.estado ? "Desactivar" : "Activar"}</Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDelete(user.idUsuario)}>Eliminar</Button>
+                      <Button variant="outline" size="sm" onClick={() => handleEdit(user)}>
+                        Editar
+                      </Button>
+                      <Button variant="secondary" size="sm" onClick={() => handleToggle(user)}>
+                        {user.estado ? "Desactivar" : "Activar"}
+                      </Button>
+                      <Button variant="destructive" size="sm" onClick={() => handleDelete(user.idUsuario)}>
+                        Eliminar
+                      </Button>
                     </td>
                   </tr>
                 ))
