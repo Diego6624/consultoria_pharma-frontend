@@ -17,7 +17,6 @@ const initialForm = {
   descripcion: "",
   contenido: "",
   imagen: "",
-  fechaPublicacion: new Date().toISOString().slice(0, 16),
   idCategoria: "",
 };
 
@@ -43,10 +42,8 @@ export default function ArticleFormPage() {
           listarCategoriasPorTipo("NOTICIA"),
           id ? obtenerNoticiaAdmin(id) : Promise.resolve(null),
         ]);
-
+        
         setCategories(Array.isArray(cats) ? cats : []);
-
-        setCategories(cats || []);
 
         if (article) {
           setForm({
@@ -54,9 +51,6 @@ export default function ArticleFormPage() {
             descripcion: article.descripcion || "",
             contenido: article.contenido || "",
             imagen: article.imagen || "",
-            fechaPublicacion: article.fechaPublicacion
-              ? new Date(article.fechaPublicacion).toISOString().slice(0, 16)
-              : new Date().toISOString().slice(0, 16),
             idCategoria: article.idCategoria?.toString() || "",
           });
         }
@@ -133,7 +127,6 @@ export default function ArticleFormPage() {
     formData.append("descripcion", form.descripcion);
     formData.append("contenido", DOMPurify.sanitize(form.contenido));
     formData.append("imagen", form.imagen || "");
-    formData.append("fechaPublicacion", form.fechaPublicacion);
     formData.append("idCategoria", form.idCategoria.toString());
 
     if (imageFile) {
@@ -209,17 +202,6 @@ export default function ArticleFormPage() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="space-y-2">
-            <label className="block text-sm font-medium text-slate-700">
-              Fecha de publicación
-            </label>
-            <Input
-              type="datetime-local"
-              value={form.fechaPublicacion}
-              onChange={handleChange("fechaPublicacion")}
-              required
-            />
-          </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-slate-700">
               Categoría
