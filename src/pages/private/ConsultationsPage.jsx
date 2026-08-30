@@ -111,7 +111,7 @@ export default function ConsultationsPage() {
                 <div className="space-y-2 text-sm text-slate-600">
                   <p><span className="font-medium text-slate-700">Correo:</span> {selectedItem.correo}</p>
                   <p><span className="font-medium text-slate-700">Teléfono:</span> {selectedItem.telefono || "-"}</p>
-                  <p><span className="font-medium text-slate-700">Servicio:</span> {selectedItem.idServicio || "-"}</p>
+                  <p><span className="font-medium text-slate-700">Servicio:</span> {selectedItem.nombreServicio || "Ninguno"}</p>
                   <p><span className="font-medium text-slate-700">Fecha:</span> {new Date(selectedItem.fecha).toLocaleString()}</p>
                 </div>
                 <div className="rounded-xl border border-slate-200 bg-white p-4">
