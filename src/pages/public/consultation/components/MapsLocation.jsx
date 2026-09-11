@@ -56,19 +56,18 @@ const MapsLocation = () => {
         viewport={{ once: true, amount: 0.2 }}
       >
         {/* Botones debajo del mapa — solo visible en mobile */}
-        <div className="flex md:hidden w-full">
+        <div className="flex md:hidden w-full overflow-x-auto">
           {locations.map((location, index) => (
             <button
               key={location.id}
               onClick={() => setActiveLocation(index)}
-              className={`flex-1 py-3 px-2 text-center text-xs font-semibold transition-all duration-300 border-t-2 ${
-                activeLocation === index
-                  ? "bg-[#0DB3DE] text-white border-[#0DB3DE]"
-                  : "bg-[#268EA9] text-white border-transparent hover:bg-[#1F7FA0]"
-              }`}
+              className={`flex-shrink-0 w-32 py-3 px-2 text-center text-xs font-semibold transition-all duration-300 border-t-2 ${activeLocation === index
+                ? "bg-[#0DB3DE] text-white border-[#0DB3DE]"
+                : "bg-[#268EA9] text-white border-transparent hover:bg-[#1F7FA0]"
+                }`}
             >
-              <p className="font-bold leading-tight">{location.name}</p>
-              <p className="opacity-80 text-[11px] leading-tight mt-0.5">
+              <p className="font-bold leading-tight line-clamp-2">{location.name}</p>
+              <p className="opacity-80 text-[10px] leading-tight mt-0.5 line-clamp-1">
                 {location.description}
               </p>
             </button>
@@ -95,16 +94,15 @@ const MapsLocation = () => {
               <button
                 key={location.id}
                 onClick={() => setActiveLocation(index)}
-                className={`px-6 py-3 rounded-lg font-semibold text-left text-base max-w-xs shadow-lg
-                  transition-all duration-300 hover:translate-x-2
-                  ${
-                    activeLocation === index
-                      ? "bg-[#0DB3DE] text-white translate-x-2"
-                      : "bg-[#268EA9] text-white"
+                className={`w-56 px-5 py-3 rounded-lg font-semibold text-left text-sm shadow-lg
+        transition-all duration-300 hover:translate-x-2
+        ${activeLocation === index
+                    ? "bg-[#0DB3DE] text-white translate-x-2"
+                    : "bg-[#268EA9] text-white"
                   }`}
               >
-                <p className="font-bold">{location.name}</p>
-                <p className="text-sm opacity-90">{location.description}</p>
+                <p className="font-bold leading-tight line-clamp-1">{location.name}</p>
+                <p className="text-xs opacity-90 mt-0.5 line-clamp-1">{location.description}</p>
               </button>
             ))}
           </div>

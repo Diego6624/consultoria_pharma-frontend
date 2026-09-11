@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, MapPin, Phone, Send, Loader2, CheckCircle } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Mail, MapPin, Phone, Send, Loader2, CheckCircle, XCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { listarServiciosPublicos } from "@/services/serviciosService";
 import api from "@/services/apiClient.jsx";
@@ -35,8 +36,7 @@ const ContactInfo = () => {
     const [form, setForm] = useState(initialForm);
     const [servicios, setServicios] = useState([]);
     const [sending, setSending] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState("");
+    const [modal, setModal] = useState({ open: false, type: "", message: "" });
 
     useEffect(() => {
         async function loadServicios() {
@@ -61,8 +61,6 @@ const ContactInfo = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSending(true);
-        setError("");
-        setSuccess(false);
 
         try {
             const payload = {
@@ -72,17 +70,24 @@ const ContactInfo = () => {
                 mensaje: form.mensaje.trim(),
             };
 
-            // ✅ Solo agrega idServicio si es un número válido
             const idServicio = Number(form.idServicio);
             if (form.idServicio && !isNaN(idServicio)) {
                 payload.idServicio = idServicio;
             }
 
             await api.post("/api/public/consultas", payload);
-            setSuccess(true);
             setForm(initialForm);
+            setModal({
+                open: true,
+                type: "success",
+                message: "¡Tu mensaje fue enviado correctamente! Nos pondremos en contacto contigo pronto.",
+            });
         } catch (err) {
-            setError(err.message || "No se pudo enviar el mensaje. Intenta de nuevo.");
+            setModal({
+                open: true,
+                type: "error",
+                message: err.message || "No se pudo enviar el mensaje. Por favor intenta de nuevo.",
+            });
         } finally {
             setSending(false);
         }
@@ -90,6 +95,44 @@ const ContactInfo = () => {
 
     return (
         <section className="py-10 px-6 sm:px-10 md:px-16 lg:px-32 2xl:px-44">
+
+            {/* Modal de resultado */}
+            <Dialog open={modal.open} onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}>
+                <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                        <div className="flex flex-col items-center gap-4 py-4">
+                            {modal.type === "success" ? (
+                                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
+                                    <CheckCircle className="h-8 w-8 text-emerald-600" />
+                                </div>
+                            ) : (
+                                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
+                                    <XCircle className="h-8 w-8 text-red-600" />
+                                </div>
+                            )}
+                            <DialogTitle className="text-center text-lg font-semibold">
+                                {modal.type === "success" ? "¡Mensaje enviado!" : "Ocurrió un error"}
+                            </DialogTitle>
+                            <DialogDescription className="text-center text-sm text-slate-600">
+                                {modal.message}
+                            </DialogDescription>
+                        </div>
+                    </DialogHeader>
+                    {/* <div className="flex justify-center pb-2">
+                        <button
+                            onClick={() => setModal((prev) => ({ ...prev, open: false }))}
+                            className={`px-6 py-2 rounded-lg font-semibold text-white text-sm transition-colors duration-300 ${
+                                modal.type === "success"
+                                    ? "bg-emerald-600 hover:bg-emerald-700"
+                                    : "bg-red-600 hover:bg-red-700"
+                            }`}
+                        >
+                            {modal.type === "success" ? "¡Perfecto!" : "Intentar de nuevo"}
+                        </button>
+                    </div> */}
+                </DialogContent>
+            </Dialog>
+
             <motion.div
                 className="bg-[#268EA9] grid grid-cols-1 md:grid-cols-2 w-full gap-8 px-6 sm:px-8 md:px-10 py-8 md:py-10 rounded-lg"
                 initial={{ opacity: 0, y: 40 }}
@@ -153,7 +196,6 @@ const ContactInfo = () => {
                     </p>
 
                     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                        {/* Nombre */}
                         <div className="flex flex-col gap-1.5">
                             <label className="text-white font-semibold text-sm md:text-base">
                                 Nombre Completo
@@ -170,7 +212,6 @@ const ContactInfo = () => {
                             />
                         </div>
 
-                        {/* Teléfono y Email */}
                         <div className="flex flex-col sm:flex-row gap-4">
                             <div className="flex flex-col gap-1.5 w-full">
                                 <label className="text-white font-semibold text-sm md:text-base">
@@ -204,7 +245,6 @@ const ContactInfo = () => {
                             </div>
                         </div>
 
-                        {/* Tipo de consulta — cargado desde el backend */}
                         <div className="flex flex-col gap-1.5">
                             <label className="text-white font-semibold text-sm md:text-base">
                                 Tipo de consulta
@@ -230,7 +270,6 @@ const ContactInfo = () => {
                             </Select>
                         </div>
 
-                        {/* Mensaje */}
                         <div className="flex flex-col gap-1.5">
                             <label className="text-white font-semibold text-sm md:text-base">
                                 Mensaje
@@ -246,22 +285,6 @@ const ContactInfo = () => {
                             />
                         </div>
 
-                        {/* Mensaje de éxito */}
-                        {success && (
-                            <div className="flex items-center gap-2 rounded-lg bg-emerald-500/20 border border-emerald-400 px-4 py-3 text-white text-sm">
-                                <CheckCircle size={16} className="shrink-0" />
-                                <p>¡Mensaje enviado correctamente! Te contactaremos pronto.</p>
-                            </div>
-                        )}
-
-                        {/* Mensaje de error */}
-                        {error && (
-                            <div className="rounded-lg bg-red-500/20 border border-red-400 px-4 py-3 text-white text-sm">
-                                {error}
-                            </div>
-                        )}
-
-                        {/* Botón */}
                         <button
                             type="submit"
                             disabled={sending}
