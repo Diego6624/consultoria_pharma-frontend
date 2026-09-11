@@ -1,5 +1,5 @@
 import { Check, ArrowRight } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 const ServicesCard = ({
   id,
@@ -11,9 +11,9 @@ const ServicesCard = ({
   categoryBadgeColor = "#0DB3DE"
 }) => {
 
-  const handleNavigate = () => {
-    navigate(`/services/${id}`);
-  };
+  const navigate = useNavigate();
+
+  const handleNavigate = () => navigate(`/services/${id}`);
 
   // Mapeo de colores por categoría
   const getCategoryColor = () => {

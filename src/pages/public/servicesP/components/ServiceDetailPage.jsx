@@ -1,19 +1,35 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Check } from "lucide-react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate, Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { obtenerServicioPublico } from "@/services/serviciosService";
+import { getImageUrl, sanitizeHtml } from "@/lib/content";
+import { PublicError, PublicLoading } from "@/components/PublicLoading";
 
 const ServiceDetailPage = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  
-  const service = servicesData.find(s => s.id === id);
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  if (!service) {
+  useEffect(() => {
+    let active = true;
+    setLoading(true);
+    setError("");
+    obtenerServicioPublico(id)
+      .then((data) => active && setService(data))
+      .catch((loadError) => active && setError(loadError.message))
+      .finally(() => active && setLoading(false));
+    return () => { active = false; };
+  }, [id]);
+
+  if (loading) return <PublicLoading label="Cargando servicio..." />;
+  if (!service || error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Servicio no encontrado</h1>
-        <p className="text-gray-600 mb-8">El servicio que buscas no existe.</p>
+        <h1 className="mb-4 text-3xl font-bold text-gray-900">Servicio no encontrado</h1>
+        <p className="mb-8 text-gray-600">{error || "El servicio que buscas no existe."}</p>
         <button
           onClick={() => navigate('/services')}
           className="flex items-center gap-2 bg-cyan-400 hover:bg-cyan-500 text-white font-semibold px-6 py-3 rounded-full transition-colors"
@@ -24,10 +40,6 @@ const ServiceDetailPage = () => {
       </div>
     );
   }
-
-  const relatedServices = servicesData
-    .filter(s => s.category === service.category && s.id !== service.id)
-    .slice(0, 2);
 
   return (
     <div className="min-h-screen bg-white">
@@ -45,44 +57,28 @@ const ServiceDetailPage = () => {
       {/* Contenido principal */}
       <div className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
         {/* Hero section con imagen */}
-        <motion.div
-          className="mb-12"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
+        <div className="mb-12">
           <img
-            src={service.image}
-            alt={service.title}
+            src={getImageUrl(service.imagen)}
+            alt={service.titulo}
             className="w-full h-96 object-cover rounded-2xl shadow-lg"
           />
-        </motion.div>
+        </div>
 
         {/* Contenido */}
-        <motion.div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Columna principal */}
           <div className="lg:col-span-2">
             {/* Badge de categoría */}
             <div className="mb-6">
-              <span className={`inline-block px-4 py-2 rounded-full text-white font-semibold
-                ${service.category === 'Regulatorio' ? 'bg-teal-600' : 
-                  service.category === 'Calidad' ? 'bg-cyan-400' : 
-                  'bg-purple-600'}
-              `}>
-                {service.category}
+                <span className="inline-block rounded-full bg-cyan-500 px-4 py-2 font-semibold text-white">
+                {service.nombreCategoria || "Servicio"}
               </span>
             </div>
 
             {/* Título */}
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {service.title}
+              {service.titulo}
             </h1>
 
             {/* Línea divisora */}
@@ -90,27 +86,9 @@ const ServiceDetailPage = () => {
 
             {/* Descripción principal */}
             <p className="text-xl leading-8 text-gray-700 mb-12">
-              {service.description}
+              {service.descripcion}
             </p>
-
-            {/* Características */}
-            {service.features && service.features.length > 0 && (
-              <div className="mb-12">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Lo que incluye este servicio
-                </h2>
-                <ul className="space-y-4">
-                  {service.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-4 text-lg text-gray-700">
-                      <div className="flex-shrink-0 mt-1">
-                        <Check size={24} className="text-cyan-400" />
-                      </div>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+            <div className="prose prose-slate mb-12 max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.contenido) }} />
 
             {/* CTA */}
             <div className="mb-12">
@@ -135,41 +113,10 @@ const ServiceDetailPage = () => {
               </button>
             </div>
           </div>
-        </motion.div>
-
-        {/* Servicios relacionados */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <div className="mt-20 pt-12 border-t border-gray-200">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8">
-              Otros servicios en {service.category}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {relatedServices.map((relatedService) => (
-                <div
-                  key={relatedService.id}
-                  onClick={() => navigate(`/services/${relatedService.id}`)}
-                  className="cursor-pointer group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
-                >
-                  <img
-                    src={relatedService.image}
-                    alt={relatedService.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors flex items-end p-4">
-                    <h3 className="text-white font-bold text-lg">
-                      {relatedService.title}
-                    </h3>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+        </div>
+        <div className="mt-20 border-t border-gray-200 pt-12">
+          <Link to="/consultation" className="inline-flex rounded-full bg-cyan-500 px-8 py-4 text-lg font-bold text-white transition hover:bg-cyan-600">Solicitar consultoría</Link>
+        </div>
       </div>
     </div>
   );

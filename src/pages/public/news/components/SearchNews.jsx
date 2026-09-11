@@ -1,171 +1,94 @@
-import { Search, X } from 'lucide-react';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { Search, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { listarCategorias } from "@/services/categoriasService";
+import { listarNoticiasPublicas } from "@/services/noticiasService";
+import { formatDate, getImageUrl } from "@/lib/content";
+import { PublicError, PublicLoading } from "@/components/PublicLoading";
 
-const SearchNews = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('Todas las categorías');
+const PAGE_SIZE = 9;
 
-    const handleClearSearch = () => {
-        setSearchTerm('');
+export default function SearchNews() {
+    const [articles, setArticles] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [page, setPage] = useState(0);
+    const [totalPages, setTotalPages] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const loadNews = async () => {
+        setLoading(true);
+        setError("");
+        try {
+            const [newsPage, categoryData] = await Promise.all([
+                listarNoticiasPublicas({ page, size: PAGE_SIZE, idCategoria: selectedCategory || undefined }),
+                page === 0 ? listarCategorias() : Promise.resolve(categories),
+            ]);
+            setArticles(newsPage?.content || []);
+            setTotalPages(newsPage?.totalPages || 0);
+            if (page === 0 && Array.isArray(categoryData)) {
+                setCategories(categoryData.filter((category) => category.tipo === "NOTICIA"));
+            }
+        } catch (loadError) {
+            setError(loadError.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
-    // Datos de ejemplo de noticias
-    const noticias = [
-        {
-            id: 1,
-            titulo: "Conoce el nuevo reglamento para boticas 2026",
-            descripcion: "DIGEMID actualiza los requisitos obligatorios para la apertura de nuevas boticas y farmacias a nivel nacional. Evita multas revisando estos cambios.",
-            imagen: "images/imageNews2.jpg",
-            categoria: "Normativa",
-            fecha: "02 Mar 2026"
-        },
-        {
-            id: 2,
-            titulo: "Alerta por circulación de lotes falsificados",
-            descripcion: "Autoridades advierten sobre el incremento de lotes falsificados en el mercado. Aprende a identificar y reportar estos productos en tu establecimiento.",
-            imagen: "images/imageNews3.jpg",
-            categoria: "Alerta Sanitaria",
-            fecha: "28 Feb 2026"
-        },
-        {
-            id: 3,
-            titulo: "Claves principales para superar auditorías BPA",
-            descripcion: "Superar una inspección de Buenas Prácticas de Almacenamiento requiere preparación. Conoce los tres errores más comunes que debes evitar.",
-            imagen: "images/imageNews4.jpg",
-            categoria: "Calidad",
-            fecha: "20 Feb 2026"
-        },
-        {
-            id: 4,
-            titulo: "Guía para digitalizar tus recetas médicas",
-            descripcion: "La receta electrónica avanza en Perú. Descubre cómo adaptar el sistema de tu farmacia para cumplir con este nuevo estándar digital.",
-            imagen: "images/imageNews5.jpg",
-            categoria: "Tecnología",
-            fecha: "15 Feb 2026"
-        },
-        {
-            id: 5,
-            titulo: "Evita duras sanciones por publicidad indebida",
-            descripcion: "Indecopi y DIGEMID intensifican fiscalización sobre la publicidad de productos farmacéuticos no autorizados. Protege la reputación de tu negocio.",
-            imagen: "images/imageNews6.jpg",
-            categoria: "Tecnología",
-            fecha: "10 Feb 2026"
-        },
-        {
-            id: 6,
-            titulo: "Trámites para importar tus dispositivos médicos",
-            descripcion: "Guía paso a paso para agilizar los trámites aduaneros y obtener tu registro sanitario de equipos médicos sin demoras ni reprocesos.",
-            imagen: "images/imageNews7.jpg",
-            categoria: "Tecnología",
-            fecha: "05 Feb 2026"
-        }
-    ];
+    useEffect(() => {
+        loadNews();
+    }, [page, selectedCategory]);
 
-    // Filtrar noticias según búsqueda y categoría
-    const noticiasFiltradas = noticias.filter(noticia => {
-        const coincideTexto = noticia.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            noticia.descripcion.toLowerCase().includes(searchTerm.toLowerCase());
-        const coincideCategoria = selectedCategory === 'Todas las categorías' ||
-            noticia.categoria.toLowerCase() === selectedCategory.toLowerCase();
-        return coincideTexto && coincideCategoria;
-    });
+    const filteredArticles = useMemo(() => {
+        const term = searchTerm.trim().toLowerCase();
+        if (!term) return articles;
+        return articles.filter((article) => `${article.titulo} ${article.descripcion}`.toLowerCase().includes(term));
+    }, [articles, searchTerm]);
 
-    return (<>
-        <section className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
-            {/* Barra de búsqueda y filtros */}
+    const handleCategoryChange = (value) => {
+        setSelectedCategory(value);
+        setPage(0);
+    };
+
+    return (
+        <section className="px-8 py-12 md:px-16 lg:px-32 2xl:px-44">
             <div className="flex flex-col gap-8">
-                <div className="flex flex-col md:flex-row gap-4 w-full">
-                    <div className="flex-1 relative">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
-                            <Search size={20} />
-                        </div>
-                        {/* Input de búsqueda */}
-                        <input
-                            type="text"
-                            placeholder="Busca alguna noticia"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-12 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
-                        />
-
-                        {searchTerm && (
-                            <button
-                                onClick={handleClearSearch}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-                            >
-                                <X size={18} />
-                            </button>
-                        )}
-
+                <div className="flex flex-col gap-4 md:flex-row">
+                    <div className="relative flex-1">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                        <input type="search" placeholder="Busca alguna noticia" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-10 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-cyan-400" />
+                        {searchTerm ? <button type="button" onClick={() => setSearchTerm("")} aria-label="Limpiar búsqueda" className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"><X size={18} /></button> : null}
                     </div>
-                    {/* Select de categorías */}
-                    <select
-                        value={selectedCategory}
-                        onChange={(e) => setSelectedCategory(e.target.value)}
-                        className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent min-w-56 bg-white cursor-pointer hover:border-gray-400 transition-colors"
-                    >
-                        <option>Todas las categorías</option>
-                        <option>Normativa</option>
-                        <option>Alerta Sanitaria</option>
-                        <option>Calidad</option>
-                        <option>Tecnología</option>
-                        <option>Gestión</option>
-                        <option>Comercio</option>
-                        <option>Seguridad</option>
-                        <option>Manufactura</option>
-                        <option>E-commerce</option>
+                    <select value={selectedCategory} onChange={(event) => handleCategoryChange(event.target.value)} className="min-w-56 cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-3">
+                        <option value="">Todas las categorías</option>
+                        {categories.map((category) => <option key={category.idCategoria} value={category.idCategoria}>{category.nombre}</option>)}
                     </select>
                 </div>
 
-                {/* Grid de noticias */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {noticiasFiltradas.map((noticia, index) => (
-                        <motion.div
-                            key={noticia.id}
-                            className="flex flex-col rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer"
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: (index % 6) * 0.12, ease: 'easeOut' }}
-                            viewport={{ once: true, amount: 0.2 }}
-                        >
-                            {/* Imagen con badge superpuesto */}
-                            <div className="w-full h-48 bg-gray-300 overflow-hidden relative">
-                                <img
-                                    src={noticia.imagen}
-                                    alt={noticia.titulo}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                />
-                                {/* Badge de categoría */}
-                                <div className="absolute top-4 left-0">
-                                    <span className=" bg-[#1699BC] inline-block px-2.5 py-1 text-white font-semibold text-sm shadow-sm">
-                                        {noticia.categoria}
-                                    </span>
-                                </div>
+                {loading ? <PublicLoading label="Cargando noticias..." /> : null}
+                {error && !loading ? <PublicError message={error} onRetry={loadNews} /> : null}
+                {!loading && !error ? (
+                    filteredArticles.length ? (
+                        <>
+                            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                                {filteredArticles.map((article) => (
+                                    <Link key={article.idNoticia} to={`/news/${article.idNoticia}`} className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-sm transition hover:shadow-md">
+                                        <div className="relative h-48 overflow-hidden bg-slate-200">
+                                            {article.imagen ? <img src={getImageUrl(article.imagen)} alt={article.titulo} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" /> : null}
+                                            <span className="absolute left-0 top-4 bg-[#1699BC] px-2.5 py-1 text-sm font-semibold text-white">{article.nombreCategoria || "Noticias"}</span>
+                                        </div>
+                                        <div className="flex flex-1 flex-col gap-4 p-4"><div className="flex-1"><h3 className="mb-2 text-lg font-bold text-gray-800">{article.titulo}</h3><p className="line-clamp-3 text-sm text-gray-600">{article.descripcion}</p></div><p className="text-xs text-gray-500">{formatDate(article.fechaPublicacion)}</p></div>
+                                    </Link>
+                                ))}
                             </div>
-
-                            {/* Contenido */}
-                            <div className="flex flex-col flex-1 p-4 gap-5 bg-white">
-                                {/* Descripción y título */}
-                                <div className="flex-1">
-                                    <h3 className="font-bold text-lg text-gray-800 mb-2">{noticia.titulo}</h3>
-                                    <p className="text-gray-600 text-sm line-clamp-3">{noticia.descripcion}</p>
-                                </div>
-                                <p className="text-gray-500 text-xs">- {noticia.fecha}</p>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Mensaje si no hay noticias */}
-                {noticiasFiltradas.length === 0 && (
-                    <div className="text-center py-12">
-                        <p className="text-gray-500 text-lg">No se encontraron noticias con esos criterios</p>
-                    </div>
-                )}
+                            {totalPages > 1 ? <div className="flex justify-center gap-2">{Array.from({ length: totalPages }, (_, pageNumber) => <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600"}`}>{pageNumber + 1}</button>)}</div> : null}
+                        </>
+                    ) : <div className="py-12 text-center text-gray-500">No se encontraron noticias con esos criterios.</div>
+                ) : null}
             </div>
         </section>
-    </>);
-};
-
-export default SearchNews;
+    );
+}

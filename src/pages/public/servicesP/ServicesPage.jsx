@@ -1,96 +1,50 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BannerMain from "./components/BannerMain";
 import SearchServices from "./components/SearchServices";
 import ServicesList from "@/components/ServicesList";
-import imageServices1 from "/images/imageServices2.jpg";
-import imageServices2 from "/images/imageServices3.jpg";
-import imageServices3 from "/images/imageServices4.jpg";
-import imageServices4 from "/images/imageServices5.jpg";
-import imageServices5 from "/images/imageServices6.jpg";
-import imageServices6 from "/images/imageServices7.jpg";
-
-const servicesData = [
-  {
-    id: 'registros-sanitarios',
-    category: 'Regulatorio',
-    title: 'Registros Sanitarios',
-    description: 'Inscripción y renovación de productos médicos.',
-    features: [
-      'Inscripción en DIGEMID',
-      'Renovación de certificados',
-      'Modificaciones técnicas'
-    ],
-    image: imageServices1,
-  },
-  {
-    id: 'certificaciones-bpa',
-    category: 'Calidad',
-    title: 'Certificaciones BPA',
-    description: 'Implementación de Buenas Prácticas de Almacenamiento.',
-    features: [
-      'Manuales de calidad',
-      'Auditorías preventivas',
-      'Capacitación al personal'
-    ],
-    image: imageServices2,
-  },
-  {
-    id: 'autorizacion-local',
-    category: 'Gestión',
-    title: 'Autorización de Local',
-    description: 'Apertura y traslado de establecimientos farmacéuticos.',
-    features: [
-      'Revisión de planos',
-      'Trámites de apertura',
-      'Dirección técnica'
-    ],
-    image: imageServices3,
-  },
-  {
-    id: 'certificaciones-bpm',
-    category: 'Calidad',
-    title: 'Certificaciones BPM',
-    description: 'Aseguramos las Buenas Prácticas de Manufactura.',
-    features: [
-      'Control de procesos',
-      'Validación de equipos',
-      'Gestión de riesgos'
-    ],
-    image: imageServices4,
-  },
-  {
-    id: 'farmacovigilancia',
-    category: 'Regulatorio',
-    title: 'Farmacovigilancia',
-    description: 'Monitoreo continuo de seguridad en medicamentos.',
-    features: [
-      'Reporte de reacciones',
-      'Planes de gestión',
-      'Auditorías de seguridad'
-    ],
-    image: imageServices5,
-  },
-  {
-    id: 'apertura-drogerias',
-    category: 'Gestión',
-    title: 'Apertura de Droguerías',
-    description: 'Asesoría integral para iniciar operaciones comerciales.',
-    features: [
-      'Licencias de funcionamiento',
-      'Inspecciones previas',
-      'Asesoría municipal'
-    ],
-    image: imageServices6,
-  },
-];
+import { listarServiciosPublicos } from "@/services/serviciosService";
+import { PublicError, PublicLoading } from "@/components/PublicLoading";
 
 const ServicesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [services, setServices] = useState([]);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  // Extraer categorías únicas de los datos
-  const categories = [...new Set(servicesData.map(service => service.category))];
+  const loadServices = async () => {
+    setIsLoading(true);
+    setError("");
+    try {
+      const data = await listarServiciosPublicos({ page, size: 6 });
+      setServices((data?.content || []).map((service) => ({
+        id: service.idServicio,
+        category: service.nombreCategoria || "Servicio",
+        title: service.titulo,
+        description: service.descripcion,
+        content: service.contenido,
+        image: service.imagen,
+      })));
+      setTotalPages(data?.totalPages || 0);
+    } catch (loadError) {
+      setError(loadError.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadServices();
+  }, [page]);
+
+  const categories = [...new Set(services.map((service) => service.category))];
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setPage(0);
+  };
 
   return (
     <>
@@ -100,15 +54,25 @@ const ServicesPage = () => {
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
+          onCategoryChange={handleCategoryChange}
           categories={categories}
         />
-        <ServicesList
-          services={servicesData}
-          searchTerm={searchTerm}
-          selectedCategory={selectedCategory}
-          isLoading={isLoading}
-        />
+        {isLoading ? <PublicLoading label="Cargando servicios..." /> : null}
+        {error && !isLoading ? <PublicError message={error} onRetry={loadServices} /> : null}
+        {!isLoading && !error ? (
+          <>
+            <ServicesList services={services} searchTerm={searchTerm} selectedCategory={selectedCategory} />
+            {totalPages > 1 ? (
+              <div className="flex justify-center gap-2 px-6">
+                {Array.from({ length: totalPages }, (_, pageNumber) => (
+                  <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600 hover:border-cyan-400"}`}>
+                    {pageNumber + 1}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </>
+        ) : null}
       </div>
     </>
   );

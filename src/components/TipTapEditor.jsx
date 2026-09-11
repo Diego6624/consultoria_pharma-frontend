@@ -41,6 +41,7 @@ import {
   Scissors,
 } from "lucide-react";
 import { uploadImage } from "@/services/uploadService";
+import { toast } from "@heroui/react";
 
 const FONT_SIZES = [
   { label: "Pequeño", value: "12px" },
@@ -72,8 +73,8 @@ export default function TipTapEditor({ value, onChange }) {
     extensions: [
       StarterKit.configure({ horizontalRule: false, link: false, underline: false, }),
       Underline,
-      Link.configure({ openOnClick: false }),
-      Image.configure({ allowBase64: true }),
+      Link.configure({ openOnClick: false, protocols: ["http", "https", "mailto"] }),
+      Image.configure({ allowBase64: false }),
       TextStyle,
       Color,
       FontSize,
@@ -152,7 +153,7 @@ export default function TipTapEditor({ value, onChange }) {
     const file = e.target.files?.[0];
     if (!file || !editor) return;
     if (!file.type.startsWith("image/")) {
-      alert("Por favor selecciona un archivo de imagen válido.");
+      toast.warning("Selecciona un archivo de imagen válido.");
       return;
     }
     setIsUploading(true);
@@ -162,11 +163,10 @@ export default function TipTapEditor({ value, onChange }) {
       if (imageUrl) {
         editor.chain().focus().setImage({ src: imageUrl }).run();
       } else {
-        alert("Error al subir la imagen");
+        toast.danger("No se pudo obtener la URL de la imagen.");
       }
     } catch (error) {
-      console.error("Error subiendo imagen:", error);
-      alert("No se pudo subir la imagen. Intenta de nuevo.");
+      toast.danger(error.message || "No se pudo subir la imagen. Intenta de nuevo.");
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";

@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { toast } from "@heroui/react";
 import { listarConsultasAdmin, obtenerConsultaAdmin } from "@/services/consultasService";
 
 export default function ConsultationsPage() {
@@ -10,6 +12,7 @@ export default function ConsultationsPage() {
   const [selectedId, setSelectedId] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [search, setSearch] = useState("");
 
   const loadConsultations = async (currentPage = page) => {
     setLoading(true);
@@ -21,7 +24,7 @@ export default function ConsultationsPage() {
         setSelectedId(data.content[0].idConsulta);
       }
     } catch (error) {
-      console.error(error);
+      toast.danger(error.message || "No se pudieron cargar las consultas");
       setMessage({ type: "error", text: error.message || "No se pudieron cargar las consultas" });
     } finally {
       setLoading(false);
@@ -45,6 +48,7 @@ export default function ConsultationsPage() {
         const detail = await obtenerConsultaAdmin(selectedId);
         setSelectedItem(detail);
       } catch (error) {
+        toast.danger(error.message || "No se pudo cargar el detalle de la consulta");
         setMessage({ type: "error", text: error.message || "No se pudo cargar el detalle de la consulta" });
       }
     };
@@ -57,6 +61,11 @@ export default function ConsultationsPage() {
     return Array.from({ length: count }, (_, index) => index);
   }, [total]);
 
+  const filteredConsultations = consultations.filter((item) => {
+    const term = search.trim().toLowerCase();
+    return !term || `${item.nombre} ${item.correo} ${item.nombreServicio || ""}`.toLowerCase().includes(term);
+  });
+
   return (
     <div className="space-y-6">
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -66,6 +75,8 @@ export default function ConsultationsPage() {
             <p className="text-sm text-slate-600">Revisa las solicitudes recibidas desde la página pública.</p>
           </div>
         </div>
+
+        <div className="mt-6"><Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre, correo o servicio" /></div>
 
         {message.text ? (
           <div className={`mt-4 rounded-xl px-3 py-2 text-sm ${message.type === "error" ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}`}>
@@ -86,10 +97,10 @@ export default function ConsultationsPage() {
               <tbody>
                 {loading ? (
                   <tr><td colSpan="3" className="px-4 py-8 text-center text-slate-500">Cargando consultas...</td></tr>
-                ) : consultations.length === 0 ? (
+                ) : filteredConsultations.length === 0 ? (
                   <tr><td colSpan="3" className="px-4 py-8 text-center text-slate-500">No hay consultas registradas.</td></tr>
                 ) : (
-                  consultations.map((item) => (
+                  filteredConsultations.map((item) => (
                     <tr key={item.idConsulta} className={`cursor-pointer border-t border-slate-200 ${selectedId === item.idConsulta ? "bg-slate-50" : "hover:bg-slate-50"}`} onClick={() => setSelectedId(item.idConsulta)}>
                       <td className="px-4 py-3 font-medium">{item.nombre}</td>
                       <td className="px-4 py-3">{item.correo}</td>

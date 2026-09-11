@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "@heroui/react";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import {
   actualizarCategoria,
@@ -26,6 +27,9 @@ export default function CategoriesPage() {
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [search, setSearch] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [deletingId, setDeletingId] = useState(null);
 
   const loadCategories = async () => {
     setLoading(true);
@@ -33,7 +37,7 @@ export default function CategoriesPage() {
       const data = await listarCategoriasAdmin();
       setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
-      console.error(error);
+      toast.danger(error.message || "No se pudieron cargar las categorías");
       setMessage({ type: "error", text: error.message || "No se pudieron cargar las categorías" });
     } finally {
       setLoading(false);
@@ -70,8 +74,10 @@ export default function CategoriesPage() {
       }
 
       resetForm();
+      toast.success(editingId ? "Categoría actualizada" : "Categoría creada");
       loadCategories();
     } catch (error) {
+      toast.danger(error.message || "No se pudo guardar la categoría");
       setMessage({ type: "error", text: error.message || "No se pudo guardar la categoría" });
     } finally {
       setSubmitting(false);
@@ -89,14 +95,23 @@ export default function CategoriesPage() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Deseas eliminar esta categoría?")) return;
+    setDeletingId(id);
     try {
       await eliminarCategoria(id);
-      setMessage({ type: "success", text: "Categoría eliminada" });
+      toast.success("Categoría eliminada");
       loadCategories();
     } catch (error) {
+      toast.danger(error.message || "No se pudo eliminar la categoría");
       setMessage({ type: "error", text: error.message || "No se pudo eliminar la categoría" });
+    } finally {
+      setDeletingId(null);
     }
   };
+
+  const filteredCategories = categories.filter((category) => {
+    const term = search.trim().toLowerCase();
+    return (!term || category.nombre.toLowerCase().includes(term)) && (!typeFilter || category.tipo === typeFilter);
+  });
 
   return (
     <div className="space-y-6">
@@ -150,6 +165,10 @@ export default function CategoriesPage() {
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mb-4 grid gap-3 md:grid-cols-[1fr_220px]">
+          <Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por nombre" />
+          <NativeSelect value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}><NativeSelectOption value="">Todos los tipos</NativeSelectOption><NativeSelectOption value="NOTICIA">Noticia</NativeSelectOption><NativeSelectOption value="SERVICIO">Servicio</NativeSelectOption></NativeSelect>
+        </div>
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-left text-slate-600">
@@ -166,14 +185,14 @@ export default function CategoriesPage() {
                     Cargando categorías...
                   </td>
                 </tr>
-              ) : categories.length === 0 ? (
+              ) : filteredCategories.length === 0 ? (
                 <tr>
                   <td colSpan="3" className="px-4 py-8 text-center text-slate-500">
                     No hay categorías registradas.
                   </td>
                 </tr>
               ) : (
-                categories.map((category) => (
+                filteredCategories.map((category) => (
                   <tr key={category.idCategoria} className="border-t border-slate-200">
                     <td className="px-4 py-3 font-medium">{category.nombre}</td>
                     <td className="px-4 py-3">
@@ -194,9 +213,10 @@ export default function CategoriesPage() {
                       <Button
                         variant="destructive"
                         size="sm"
+                        disabled={deletingId === category.idCategoria}
                         onClick={() => handleDelete(category.idCategoria)}
                       >
-                        Eliminar
+                        {deletingId === category.idCategoria ? "Eliminando..." : "Eliminar"}
                       </Button>
                     </td>
                   </tr>

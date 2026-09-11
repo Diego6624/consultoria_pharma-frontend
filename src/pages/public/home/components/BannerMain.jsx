@@ -1,18 +1,14 @@
 import AnimateBoton from "@/components/AnimateBoton";
 import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
+import PublicBannerImage from "@/components/PublicBannerImage";
 
 const BannerMain = () => {
     return (
         <section className="relative w-full h-svh overflow-hidden">
 
             {/* Imagen — entra de arriba a abajo */}
-            <motion.div
-                className="bg-[url(/images/imageHome.jpg)] absolute inset-0 w-full h-full bg-cover bg-position-[70%_center] md:bg-center"
-                initial={{ opacity: 0, y: -40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
-            />
+            <PublicBannerImage src="/images/imageHome.jpg" className="bg-position-[70%_center] md:bg-center" />
 
             {/* Gradiente overlay */}
             <div className="absolute inset-0 bg-linear-to-r from-black/80 md:via-black/10 md:to-transparent" />

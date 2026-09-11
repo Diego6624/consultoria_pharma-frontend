@@ -1,10 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const ArticleCard = ({ title, subtitle, image, navigate }) => {
+const ArticleCard = ({ title, subtitle, image, navigate: target }) => {
   return (
     <Link
-      to={navigate}
+      to={target}
       className="relative w-full h-full overflow-hidden group rounded-2xl block"
     >
       {/* Imagen */}

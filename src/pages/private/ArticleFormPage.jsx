@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import DOMPurify from "dompurify";
+import { sanitizeHtml, sanitizeText } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "@heroui/react";
 import TipTapEditor from "@/components/TipTapEditor";
 import {
   crearNoticiaConImagen,
@@ -55,7 +56,8 @@ export default function ArticleFormPage() {
           });
         }
       } catch (error) {
-        console.error(error);
+        setError(error.message || "No se pudo cargar el formulario");
+        toast.danger(error.message || "No se pudo cargar el formulario");
       } finally {
         setLoading(false);
       }
@@ -123,9 +125,9 @@ export default function ArticleFormPage() {
     setError("");
 
     const formData = new FormData();
-    formData.append("titulo", form.titulo);
-    formData.append("descripcion", form.descripcion);
-    formData.append("contenido", DOMPurify.sanitize(form.contenido));
+    formData.append("titulo", sanitizeText(form.titulo));
+    formData.append("descripcion", sanitizeText(form.descripcion));
+    formData.append("contenido", sanitizeHtml(form.contenido));
     formData.append("imagen", form.imagen || "");
     formData.append("idCategoria", form.idCategoria.toString());
 
@@ -152,15 +154,21 @@ export default function ArticleFormPage() {
         });
       }
       setUploadProgress(100);
+      toast.success(id ? "Artículo actualizado" : "Artículo creado");
       navigate("/admin/noticias", { replace: true });
     } catch (error) {
       setError(error.message || "Error al guardar el artículo");
+      toast.danger(error.message || "No se pudo guardar el artículo");
     } finally {
       setSaving(false);
     }
   };
 
   const currentImage = previewImageUrl || form.imagen;
+
+  if (loading) {
+    return <div className="flex min-h-64 items-center justify-center gap-3 rounded-3xl border border-border bg-white p-6 text-sm text-slate-500"><span className="size-5 animate-spin rounded-full border-2 border-slate-200 border-t-cyan-500" /> Cargando formulario...</div>;
+  }
 
   return (
     <div className="rounded-3xl border border-border bg-white p-6 shadow-sm shadow-slate-200/40">

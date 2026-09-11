@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "@heroui/react";
 import {
   crearUbicacionAdmin,
   eliminarUbicacionAdmin,
@@ -24,6 +25,8 @@ export default function LocationsPage() {
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [search, setSearch] = useState("");
+  const [deletingId, setDeletingId] = useState(null);
 
   const loadLocations = async (currentPage = page) => {
     setLoading(true);
@@ -32,7 +35,7 @@ export default function LocationsPage() {
       setLocations(data.content || []);
       setTotal(data.totalElements ?? 0);
     } catch (error) {
-      console.error(error);
+      toast.danger(error.message || "No se pudieron cargar las ubicaciones");
       setMessage({ type: "error", text: error.message || "No se pudieron cargar las ubicaciones" });
     } finally {
       setLoading(false);
@@ -66,8 +69,10 @@ export default function LocationsPage() {
 
       setForm(emptyForm);
       setEditingId(null);
+      toast.success(editingId ? "Ubicación actualizada" : "Ubicación creada");
       loadLocations(page);
     } catch (error) {
+      toast.danger(error.message || "No se pudo guardar la ubicación");
       setMessage({ type: "error", text: error.message || "No se pudo guardar la ubicación" });
     } finally {
       setSubmitting(false);
@@ -87,12 +92,16 @@ export default function LocationsPage() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Deseas eliminar esta ubicación?")) return;
+    setDeletingId(id);
     try {
       await eliminarUbicacionAdmin(id);
-      setMessage({ type: "success", text: "Ubicación eliminada" });
+      toast.success("Ubicación eliminada");
       loadLocations(page);
     } catch (error) {
+      toast.danger(error.message || "No se pudo eliminar la ubicación");
       setMessage({ type: "error", text: error.message || "No se pudo eliminar la ubicación" });
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -100,6 +109,11 @@ export default function LocationsPage() {
     const count = Math.max(1, Math.ceil(total / 10));
     return Array.from({ length: count }, (_, index) => index);
   }, [total]);
+
+  const filteredLocations = locations.filter((location) => {
+    const term = search.trim().toLowerCase();
+    return !term || `${location.nombre} ${location.descripcion || ""}`.toLowerCase().includes(term);
+  });
 
   return (
     <div className="space-y-6">
@@ -143,6 +157,7 @@ export default function LocationsPage() {
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mb-4"><Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o descripción" /></div>
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-left text-slate-600">
@@ -156,17 +171,17 @@ export default function LocationsPage() {
             <tbody>
               {loading ? (
                 <tr><td colSpan="4" className="px-4 py-8 text-center text-slate-500">Cargando ubicaciones...</td></tr>
-              ) : locations.length === 0 ? (
+              ) : filteredLocations.length === 0 ? (
                 <tr><td colSpan="4" className="px-4 py-8 text-center text-slate-500">No hay ubicaciones registradas.</td></tr>
               ) : (
-                locations.map((location) => (
+                filteredLocations.map((location) => (
                   <tr key={location.idUbicacion} className="border-t border-slate-200">
                     <td className="px-4 py-3 font-medium">{location.nombre}</td>
                     <td className="px-4 py-3">{location.latitud}, {location.longitud}</td>
                     <td className="px-4 py-3">{location.descripcion || "-"}</td>
                     <td className="px-4 py-3 space-x-2">
                       <Button variant="outline" size="sm" onClick={() => handleEdit(location)}>Editar</Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDelete(location.idUbicacion)}>Eliminar</Button>
+                      <Button variant="destructive" size="sm" disabled={deletingId === location.idUbicacion} onClick={() => handleDelete(location.idUbicacion)}>{deletingId === location.idUbicacion ? "Eliminando..." : "Eliminar"}</Button>
                     </td>
                   </tr>
                 ))

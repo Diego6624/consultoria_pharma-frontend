@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
+@import "@heroui/styles";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -128,6 +129,158 @@
   html {
     @apply font-sans;
     }
+}
+
+@layer components {
+  .admin-shell {
+    --admin-primary: #0DB3DE;
+    --admin-secondary: #1F4C7F;
+    --admin-tertiary: #52C7E5;
+    --admin-surface: #EBEDEE;
+    background: var(--admin-surface);
+    color: #16324f;
+  }
+
+  .admin-shell__content {
+    background: var(--admin-surface);
+  }
+
+  .admin-shell__content > main {
+    width: 100%;
+    max-width: 1540px;
+    margin: 0 auto;
+  }
+
+  .admin-shell__mobile-header {
+    background: var(--admin-secondary);
+    box-shadow: 0 4px 18px rgb(31 76 127 / 18%);
+  }
+
+  .admin-shell__topbar {
+    background: rgb(255 255 255 / 86%);
+    border-color: rgb(31 76 127 / 12%);
+    backdrop-filter: blur(12px);
+  }
+
+  .admin-sidebar {
+    --sidebar: #1F4C7F;
+    --sidebar-foreground: #ffffff;
+    --sidebar-primary: #0DB3DE;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: rgb(82 199 229 / 16%);
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: rgb(82 199 229 / 22%);
+    --sidebar-ring: #52C7E5;
+    background: var(--admin-secondary) !important;
+    border-color: rgb(82 199 229 / 20%) !important;
+    color: white;
+  }
+
+  .admin-sidebar [data-sidebar="sidebar-inner"],
+  .admin-sidebar [data-sidebar="sidebar"] {
+    background: var(--admin-secondary) !important;
+    color: white !important;
+  }
+
+  .admin-sidebar [data-sidebar="menu-button"] {
+    color: #cfe8f1;
+    border-radius: 10px;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .admin-sidebar [data-sidebar="menu-button"]:hover {
+    background: rgb(82 199 229 / 16%);
+    color: white;
+  }
+
+  .admin-sidebar [data-sidebar="menu-button"][data-active="true"] {
+    background: var(--admin-primary);
+    color: white;
+    box-shadow: 0 8px 18px rgb(13 179 222 / 24%);
+  }
+
+  .admin-sidebar [data-sidebar="menu-button"][data-active="true"] svg,
+  .admin-sidebar [data-sidebar="menu-button"] svg {
+    color: currentColor;
+  }
+
+  .admin-sidebar__brand-mark {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: var(--admin-primary);
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .admin-sidebar__logout {
+    background: rgb(82 199 229 / 16%) !important;
+    color: white !important;
+    border: 1px solid rgb(82 199 229 / 28%);
+  }
+
+  .admin-sidebar__logout:hover {
+    background: var(--admin-primary) !important;
+  }
+
+  .admin-shell__content main .bg-white {
+    border-color: rgb(31 76 127 / 12%);
+    box-shadow: 0 10px 28px rgb(31 76 127 / 8%);
+  }
+
+  .admin-shell__content main .bg-slate-50 {
+    background: rgb(235 237 238 / 62%);
+  }
+
+  .admin-shell__content main .bg-slate-100 {
+    background: rgb(82 199 229 / 13%);
+  }
+
+  .admin-shell__content main .border-slate-200,
+  .admin-shell__content main .border-gray-200 {
+    border-color: rgb(31 76 127 / 14%);
+  }
+
+  .admin-shell__content main input,
+  .admin-shell__content main select,
+  .admin-shell__content main textarea {
+    border-color: rgb(31 76 127 / 22%);
+  }
+
+  .admin-shell__content main input:focus,
+  .admin-shell__content main select:focus,
+  .admin-shell__content main textarea:focus {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px rgb(13 179 222 / 16%);
+    outline: none;
+  }
+
+  .admin-shell__content main button[data-slot="button"]:not([data-variant="destructive"]) {
+    background: var(--admin-primary);
+    color: white;
+  }
+
+  .admin-shell__content main button[data-slot="button"]:not([data-variant="destructive"]):hover {
+    background: #099bc1;
+  }
+
+  .admin-shell__content main button[data-variant="outline"] {
+    background: white;
+    color: var(--admin-secondary);
+    border-color: var(--admin-tertiary);
+  }
+
+  .admin-shell__content main button[data-variant="secondary"] {
+    background: var(--admin-secondary);
+    color: white;
+  }
+
+  .admin-shell__content main button[data-variant="destructive"] {
+    background: rgb(190 56 56 / 10%);
+  }
 }
 
 /* TipTap Editor Styles */

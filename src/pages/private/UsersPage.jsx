@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "@heroui/react";
 import {
   cambiarEstadoUsuarioAdmin,
   crearUsuarioAdmin,
@@ -31,6 +32,9 @@ export default function UsersPage() {
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [actionId, setActionId] = useState(null);
 
   const loadUsers = async (currentPage = page) => {
     setLoading(true);
@@ -39,7 +43,7 @@ export default function UsersPage() {
       setUsers(data.content || []);
       setTotal(data.totalElements ?? 0);
     } catch (error) {
-      console.error(error);
+      toast.danger(error.message || "No se pudieron cargar los usuarios");
       setMessage({ type: "error", text: error.message || "No se pudieron cargar los usuarios" });
     } finally {
       setLoading(false);
@@ -79,8 +83,10 @@ export default function UsersPage() {
 
       setForm(emptyForm);
       setEditingId(null);
+      toast.success(editingId ? "Usuario actualizado" : "Usuario creado");
       loadUsers(page);
     } catch (error) {
+      toast.danger(error.message || "No se pudo guardar el usuario");
       setMessage({ type: "error", text: error.message || "No se pudo guardar el usuario" });
     } finally {
       setSubmitting(false);
@@ -98,23 +104,31 @@ export default function UsersPage() {
   };
 
   const handleToggle = async (user) => {
+    setActionId(user.idUsuario);
     try {
       await cambiarEstadoUsuarioAdmin(user.idUsuario, !user.estado);
-      setMessage({ type: "success", text: "Estado actualizado" });
+      toast.success("Estado actualizado");
       loadUsers(page);
     } catch (error) {
+      toast.danger(error.message || "No se pudo actualizar el estado");
       setMessage({ type: "error", text: error.message || "No se pudo actualizar el estado" });
+    } finally {
+      setActionId(null);
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Deseas eliminar este usuario?")) return;
+    setActionId(id);
     try {
       await eliminarUsuarioAdmin(id);
-      setMessage({ type: "success", text: "Usuario eliminado" });
+      toast.success("Usuario eliminado");
       loadUsers(page);
     } catch (error) {
+      toast.danger(error.message || "No se pudo eliminar el usuario");
       setMessage({ type: "error", text: error.message || "No se pudo eliminar el usuario" });
+    } finally {
+      setActionId(null);
     }
   };
 
@@ -123,9 +137,12 @@ export default function UsersPage() {
     return Array.from({ length: count }, (_, index) => index);
   }, [total]);
 
-  const filteredUsers = users.filter(
-    (user) => user.idUsuario !== currentUser?.idUsuario
-  );
+  const filteredUsers = users.filter((user) => {
+    const term = search.trim().toLowerCase();
+    const matchesText = !term || `${user.nombre} ${user.email}`.toLowerCase().includes(term);
+    const matchesStatus = !statusFilter || String(Boolean(user.estado)) === statusFilter;
+    return user.idUsuario !== currentUser?.idUsuario && matchesText && matchesStatus;
+  });
 
   return (
     <div className="space-y-6">
@@ -163,6 +180,14 @@ export default function UsersPage() {
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="mb-4 grid gap-3 md:grid-cols-[1fr_180px]">
+          <Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o correo" />
+          <select value={statusFilter} onChange={(event) => { setStatusFilter(event.target.value); setPage(0); }} className="h-9 rounded-md border border-input bg-white px-3 text-sm">
+            <option value="">Todos los estados</option>
+            <option value="true">Activos</option>
+            <option value="false">Inactivos</option>
+          </select>
+        </div>
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-left text-slate-600">
@@ -194,11 +219,11 @@ export default function UsersPage() {
                       <Button variant="outline" size="sm" onClick={() => handleEdit(user)}>
                         Editar
                       </Button>
-                      <Button variant="secondary" size="sm" onClick={() => handleToggle(user)}>
-                        {user.estado ? "Desactivar" : "Activar"}
+                      <Button variant="secondary" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleToggle(user)}>
+                        {actionId === user.idUsuario ? "Procesando..." : user.estado ? "Desactivar" : "Activar"}
                       </Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDelete(user.idUsuario)}>
-                        Eliminar
+                      <Button variant="destructive" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleDelete(user.idUsuario)}>
+                        {actionId === user.idUsuario ? "Eliminando..." : "Eliminar"}
                       </Button>
                     </td>
                   </tr>

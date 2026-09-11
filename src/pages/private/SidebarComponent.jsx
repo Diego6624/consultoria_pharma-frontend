@@ -39,11 +39,12 @@ export default function SidebarComponent() {
   };
 
   return (
-    <Sidebar className="bg-white shadow-sm" variant="floating" collapsible="icon">
+    <Sidebar className="admin-sidebar shadow-sm" variant="floating" collapsible="icon">
       <SidebarHeader>
-        <div className="space-y-2 px-2 py-4">
-          <div className="text-sm font-semibold text-slate-900">Panel privado</div>
-          <div className="text-xs text-slate-500">{user?.nombre ?? "Administrador"}</div>
+        <div className="admin-sidebar__brand space-y-2 px-3 py-5">
+          <div className="flex items-center gap-2 text-sm font-bold"><span className="admin-sidebar__brand-mark">Y</span> YLPHARMA</div>
+          <div className="text-xs text-slate-300">Panel administrativo</div>
+          <div className="text-xs font-medium text-cyan-200">{user?.nombre ?? "Administrador"}</div>
         </div>
       </SidebarHeader>
 
@@ -57,7 +58,7 @@ export default function SidebarComponent() {
             return (
               <SidebarMenuItem key={item.path}>
                 <SidebarMenuButton asChild isActive={location.pathname.startsWith(item.path)} className="w-full">
-                  <NavLink to={item.path} className={({ isActive }) => classNames("w-full text-left", isActive ? "font-semibold text-slate-900" : "text-slate-600")}>
+                  <NavLink to={item.path} className={({ isActive }) => classNames("w-full text-left", isActive ? "font-semibold text-white" : "text-slate-300")}>
                     <span className="flex items-center gap-2">
                       <Icon className="h-4 w-4" />
                       <span>{item.label}</span>
@@ -71,7 +72,7 @@ export default function SidebarComponent() {
       </SidebarContent>
 
       <SidebarFooter className="px-2 py-4">
-        <Button variant="secondary" className="w-full" onClick={handleLogout}>
+        <Button className="admin-sidebar__logout w-full" onClick={handleLogout}>
           <LogOut className="mr-2 h-4 w-4" />
           Salir
         </Button>

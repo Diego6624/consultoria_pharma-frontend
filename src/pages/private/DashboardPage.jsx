@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { toast } from "@heroui/react";
 import { listarNoticiasAdmin } from "@/services/noticiasService";
 import { listarServiciosAdmin } from "@/services/serviciosService";
 
@@ -21,7 +22,7 @@ export default function DashboardPage() {
           services: servicesPage?.totalElements ?? 0,
         });
       } catch (error) {
-        console.error(error);
+        toast.danger(error.message || "No se pudo cargar el resumen del panel");
       } finally {
         setLoading(false);
       }
@@ -46,7 +47,7 @@ export default function DashboardPage() {
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="rounded-3xl border border-border bg-slate-50 p-6">
               <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Artículos</p>
-              <p className="mt-4 text-5xl font-semibold text-slate-900">{loading ? "..." : summary.articles}</p>
+              <p className="mt-4 flex h-14 items-center text-5xl font-semibold text-slate-900">{loading ? <span className="size-8 animate-spin rounded-full border-4 border-slate-200 border-t-cyan-500" aria-label="Cargando artículos" /> : summary.articles}</p>
               <p className="mt-2 text-sm text-slate-600">Total de noticias disponibles</p>
               <Link to="/admin/noticias" className="mt-6 inline-block">
                 <Button>Administrar artículos</Button>
@@ -55,7 +56,7 @@ export default function DashboardPage() {
 
             <div className="rounded-3xl border border-border bg-slate-50 p-6">
               <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Servicios</p>
-              <p className="mt-4 text-5xl font-semibold text-slate-900">{loading ? "..." : summary.services}</p>
+              <p className="mt-4 flex h-14 items-center text-5xl font-semibold text-slate-900">{loading ? <span className="size-8 animate-spin rounded-full border-4 border-slate-200 border-t-cyan-500" aria-label="Cargando servicios" /> : summary.services}</p>
               <p className="mt-2 text-sm text-slate-600">Total de servicios disponibles</p>
               <Link to="/admin/servicios" className="mt-6 inline-block">
                 <Button>Administrar servicios</Button>

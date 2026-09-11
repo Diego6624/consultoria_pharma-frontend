@@ -6,6 +6,7 @@ import ServicesPage from "../pages/public/servicesP/ServicesPage";
 import ServiceDetailPage from "../pages/public/servicesP/components/ServiceDetailPage";
 import AboutUsPage from "../pages/public/aboutUs/AboutUsPage";
 import NewsPage from "../pages/public/news/NewsPage";
+import NewsDetailPage from "../pages/public/news/NewsDetailPage";
 import ConsultationPage from "@/pages/public/consultation/ConsultationPage";
 import LoginPage from "@/pages/private/LoginPage";
 import AdminShell from "@/pages/private/AdminShell";
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<App />} errorElement={<NotFoundComponent />}>
         <Route index element={<HomePage />} />
         <Route path="news" element={<NewsPage />} />
+        <Route path="news/:id" element={<NewsDetailPage />} />
         <Route path="aboutUs" element={<AboutUsPage />} />
         <Route path="services" element={<ServicesPage />} />
         <Route path="services/:id" element={<ServiceDetailPage />} />
