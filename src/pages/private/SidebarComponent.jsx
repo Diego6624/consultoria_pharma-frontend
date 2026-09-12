@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Sidebar, SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, SidebarSeparator } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, SidebarTrigger } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import useAuth from "@/hooks/useAuth";
 import { BriefcaseBusiness, LayoutDashboard, LogOut, MapPinned, MessageSquareText, Newspaper, Tags, Users } from "lucide-react";
 
@@ -39,43 +39,77 @@ export default function SidebarComponent() {
   };
 
   return (
-    <Sidebar className="admin-sidebar shadow-sm" variant="floating" collapsible="icon">
-      <SidebarHeader>
-        <div className="admin-sidebar__brand space-y-2 px-3 py-5">
-          <div className="flex items-center gap-2 text-sm font-bold"><span className="admin-sidebar__brand-mark">Y</span> YLPHARMA</div>
-          <div className="text-xs text-slate-300">Panel administrativo</div>
-          <div className="text-xs font-medium text-cyan-200">{user?.nombre ?? "Administrador"}</div>
+    <Sidebar
+      collapsible="icon"
+      className="border-r border-[#52C7E5]/20 shadow-sm"
+      style={{ "--sidebar": "#1F4C7F", "--sidebar-foreground": "#ffffff" }}
+    >
+      {/* Header */}
+      <SidebarHeader className="bg-[#1F4C7F]">
+        <div className="px-3 group-data-[collapsible=icon]:px-0 py-3 group-data-[collapsible=icon]:py-1">
+          <div className="flex items-center gap-2 text-sm font-bold text-white">
+            {/* Brand mark — siempre visible */}
+            <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#0DB3DE] text-white text-sm font-bold group-data-[collapsible=icon]:hidden">
+              YL
+            </span>
+            <span className="group-data-[collapsible=icon]:hidden text-white">
+              YLPHARMA
+            </span>
+            <SidebarTrigger className="ml-auto hidden md:flex group-data-[collapsible=icon]:mx-auto text-white hover:bg-[#52C7E5]/20 cursor-pointer" />
+          </div>
+          <div className="text-xs text-slate-300 mt-2 group-data-[collapsible=icon]:hidden">
+            Panel administrativo
+          </div>
+          <div className="text-xs font-medium text-cyan-200 mt-0.5 group-data-[collapsible=icon]:hidden">
+            {user?.nombre ?? "Administrador"}
+          </div>
         </div>
       </SidebarHeader>
 
-      <SidebarSeparator />
+      <hr className="border-[#52C7E5]/22" />
 
-      <SidebarContent className="px-2 py-4">
-        <SidebarMenu>
-          {menuItems.map((item) => {
-            const Icon = item.icon;
+      {/* Nav items */}
+      <SidebarContent className="bg-[#1F4C7F] px-2 py-4">
+        <TooltipProvider delayDuration={300}>
+          <SidebarMenu>
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname.startsWith(item.path);
 
-            return (
-              <SidebarMenuItem key={item.path}>
-                <SidebarMenuButton asChild isActive={location.pathname.startsWith(item.path)} className="w-full">
-                  <NavLink to={item.path} className={({ isActive }) => classNames("w-full text-left", isActive ? "font-semibold text-white" : "text-slate-300")}>
-                    <span className="flex items-center gap-2">
-                      <Icon className="h-4 w-4" />
+              return (
+                <SidebarMenuItem key={item.path}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive}
+                    tooltip={item.label}
+                    className={classNames(
+                      "w-full rounded-[10px] transition-colors duration-150",
+                      isActive
+                        ? "bg-[#0DB3DE] text-white shadow-[0_8px_18px_rgb(13_179_222/24%)] hover:bg-[#0DB3DE]"
+                        : "text-[#cfe8f1] hover:bg-[#52C7E5]/16 hover:text-white"
+                    )}
+                  >
+                    <NavLink to={item.path} className="flex items-center gap-2 w-full">
+                      <Icon className="h-4 w-4 shrink-0" />
                       <span>{item.label}</span>
-                    </span>
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            );
-          })}
-        </SidebarMenu>
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
+          </SidebarMenu>
+        </TooltipProvider>
       </SidebarContent>
 
-      <SidebarFooter className="px-2 py-4">
-        <Button className="admin-sidebar__logout w-full" onClick={handleLogout}>
-          <LogOut className="mr-2 h-4 w-4" />
-          Salir
-        </Button>
+      {/* Footer — botón salir */}
+      <SidebarFooter className="bg-[#1F4C7F] px-2 py-4">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#0DB3DE]/80 px-3 py-2 text-sm font-semibold text-white transition-colors duration-150 hover:bg-[#0DB3DE] cursor-pointer group-data-[collapsible=icon]:px-0"
+        >
+          <LogOut className="h-4 w-4 shrink-0" />
+          <span className="group-data-[collapsible=icon]:hidden">Cerrar sesión</span>
+        </button>
       </SidebarFooter>
     </Sidebar>
   );

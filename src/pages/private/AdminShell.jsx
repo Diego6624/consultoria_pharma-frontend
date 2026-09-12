@@ -27,14 +27,14 @@ const AdminShell = () => {
         <SidebarComponent />
 
         {/* Contenido principal */}
-        <div className="admin-shell__content flex min-w-0 flex-1 flex-col">
+        <div className=" flex min-w-0 flex-1 flex-col">
 
           {/* Header Mobile */}
-          <header className="admin-shell__mobile-header flex items-center justify-between px-4 py-3 md:hidden">
+          <header className="bg-[#1F4C7F] flex items-center justify-between px-4 py-3 md:hidden">
             <SidebarTrigger className="p-2 rounded-lg hover:bg-white/20 transition text-white" />
             <div className="flex items-center gap-2">
-              <LayoutDashboard size={18} />
-              <h1 className="text-base font-bold">Panel Administrativo</h1>
+              <LayoutDashboard size={18} className="text-white"/>
+              <h1 className="text-base font-bold text-white">Panel Administrativo</h1>
             </div>
             {/* Spacer para centrar el título */}
             <div className="w-9" />
@@ -51,7 +51,7 @@ const AdminShell = () => {
             </div>
           </header>
 
-          <main className="p-4 sm:p-6 flex-1">
+          <main className="p-4 sm:p-6 flex-1 bg-gray-100">
             <Outlet />
           </main>
 

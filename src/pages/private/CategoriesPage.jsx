@@ -26,7 +26,6 @@ export default function CategoriesPage() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [deletingId, setDeletingId] = useState(null);
@@ -38,7 +37,6 @@ export default function CategoriesPage() {
       setCategories(Array.isArray(data) ? data : []);
     } catch (error) {
       toast.danger(error.message || "No se pudieron cargar las categorías");
-      setMessage({ type: "error", text: error.message || "No se pudieron cargar las categorías" });
     } finally {
       setLoading(false);
     }
@@ -51,13 +49,11 @@ export default function CategoriesPage() {
   const resetForm = () => {
     setEditingId(null);
     setForm(emptyForm);
-    setMessage({ type: "", text: "" });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
-    setMessage({ type: "", text: "" });
 
     try {
       const payload = {
@@ -67,10 +63,8 @@ export default function CategoriesPage() {
 
       if (editingId) {
         await actualizarCategoria(editingId, payload);
-        setMessage({ type: "success", text: "Categoría actualizada" });
       } else {
         await crearCategoria(payload);
-        setMessage({ type: "success", text: "Categoría creada" });
       }
 
       resetForm();
@@ -78,7 +72,6 @@ export default function CategoriesPage() {
       loadCategories();
     } catch (error) {
       toast.danger(error.message || "No se pudo guardar la categoría");
-      setMessage({ type: "error", text: error.message || "No se pudo guardar la categoría" });
     } finally {
       setSubmitting(false);
     }
@@ -90,7 +83,6 @@ export default function CategoriesPage() {
       nombre: category.nombre || "",
       tipo: category.tipo || "NOTICIA",
     });
-    setMessage({ type: "", text: "" });
   };
 
   const handleDelete = async (id) => {
@@ -102,7 +94,6 @@ export default function CategoriesPage() {
       loadCategories();
     } catch (error) {
       toast.danger(error.message || "No se pudo eliminar la categoría");
-      setMessage({ type: "error", text: error.message || "No se pudo eliminar la categoría" });
     } finally {
       setDeletingId(null);
     }
@@ -123,13 +114,13 @@ export default function CategoriesPage() {
               Administra las categorías para artículos y servicios.
             </p>
           </div>
-          <Button variant="outline" onClick={resetForm}>
+          <Button variant="outline" onClick={resetForm} className={"hidden md:flex"}>
             Limpiar formulario
           </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
-          <div>
+          <div className="">
             <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
             <Input
               value={form.nombre}
@@ -137,6 +128,7 @@ export default function CategoriesPage() {
               placeholder="Nombre de la categoría"
               maxLength={100}
               required
+              className="w-full text-sm"
             />
           </div>
           <div>
@@ -147,27 +139,28 @@ export default function CategoriesPage() {
               onChange={(event) => setForm({ ...form, tipo: event.target.value })}
               required
             >
-              <NativeSelectOption value="NOTICIA">Noticia</NativeSelectOption>
-              <NativeSelectOption value="SERVICIO">Servicio</NativeSelectOption>
+              <option value="NOTICIA">Noticia</option>
+              <option value="SERVICIO">Servicio</option>
             </NativeSelect>
           </div>
           <div className="md:col-span-2 flex items-center gap-3">
-            <Button type="submit" disabled={submitting}>
+            <Button type="submit" disabled={submitting} className={"w-full md:w-auto cursor-pointer"}>
               {editingId ? "Guardar cambios" : "Crear categoría"}
             </Button>
-            {message.text ? (
-              <span className={`text-sm ${message.type === "error" ? "text-red-600" : "text-emerald-600"}`}>
-                {message.text}
-              </span>
-            ) : null}
           </div>
         </form>
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-4 grid gap-3 md:grid-cols-[1fr_220px]">
-          <Input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por nombre" />
-          <NativeSelect value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}><NativeSelectOption value="">Todos los tipos</NativeSelectOption><NativeSelectOption value="NOTICIA">Noticia</NativeSelectOption><NativeSelectOption value="SERVICIO">Servicio</NativeSelectOption></NativeSelect>
+        <div className="mb-6 grid gap-3 md:grid-cols-[1fr_220px]">
+          <input className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por nombre" />
+          <select className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}>
+            <option value="">
+              Todos los tipos
+            </option>
+            <option value="NOTICIA">Noticia</option>
+            <option value="SERVICIO">Servicio</option>
+          </select>
         </div>
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
           <table className="min-w-full text-sm">
@@ -197,11 +190,10 @@ export default function CategoriesPage() {
                     <td className="px-4 py-3 font-medium">{category.nombre}</td>
                     <td className="px-4 py-3">
                       <span
-                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                          category.tipo === "SERVICIO"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-emerald-100 text-emerald-700"
-                        }`}
+                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${category.tipo === "SERVICIO"
+                          ? "bg-blue-100 text-blue-700"
+                          : "bg-emerald-100 text-emerald-700"
+                          }`}
                       >
                         {TIPO_LABELS[category.tipo] || category.tipo}
                       </span>

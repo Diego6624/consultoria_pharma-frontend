@@ -76,7 +76,9 @@ export default function ConsultationsPage() {
           </div>
         </div>
 
-        <div className="mt-6"><Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre, correo o servicio" /></div>
+        <div className="mt-6">
+          <Input className="text-sm" value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre, correo o servicio" />
+        </div>
 
         {message.text ? (
           <div className={`mt-4 rounded-xl px-3 py-2 text-sm ${message.type === "error" ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}`}>

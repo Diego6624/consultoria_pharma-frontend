@@ -49,9 +49,7 @@ const FooterComponent = () => {
                     <Link to="/" className="text-white hover:underline text-sm">Calidad</Link>
                 </div>
 
-                {/* Col 4 — Contacto + Horarios
-                    En mobile: ocupa 2 columnas y se divide internamente en 2 columnas (Contacto | Horarios)
-                    En desktop: columna normal */}
+                {/* Col 4 — Contacto + Horarios */}
                 <div className="col-span-2 md:col-span-1 grid grid-cols-2 md:grid-cols-1 gap-4 md:gap-4">
                     <div className="flex flex-col gap-2">
                         <p className="font-bold text-base">Contacto</p>
@@ -89,7 +87,7 @@ const FooterComponent = () => {
             </div>
 
             {/* Divider */}
-            <hr className="border-[#1F4C7F] my-1 border-2" />
+            <hr className="border-[#1F4C7F] my-1 border" />
 
             {/* Copyright & Policies */}
             <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs md:text-sm text-white/90  text-center">

@@ -32,13 +32,13 @@ export default function DashboardPage() {
   }, []);
 
   return (
-    <div className="space-y-8">
-      <div className="space-y-2">
-        <div>
-          <h2 className="text-3xl font-semibold">Panel privado</h2>
-          <p className="text-sm text-slate-600">Administra el contenido de artículos y servicios desde el panel de administración.</p>
+    <div className="space-y-6">
+      
+        <div className="space-y-1 md:space-y-2">
+          <h2 className="text-xl md:text-3xl font-semibold">Panel privado</h2>
+          <p className="text-sm md:text-base text-slate-600">Administra el contenido de artículos y servicios desde el panel de administración.</p>
         </div>
-      </div>
+      
 
       <div className="grid gap-6 xl:grid-cols-[1.5fr_1fr]">
         <div className="rounded-3xl border border-border bg-white p-6 shadow-sm shadow-slate-200/40">
@@ -47,7 +47,12 @@ export default function DashboardPage() {
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             <div className="rounded-3xl border border-border bg-slate-50 p-6">
               <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Artículos</p>
-              <p className="mt-4 flex h-14 items-center text-5xl font-semibold text-slate-900">{loading ? <span className="size-8 animate-spin rounded-full border-4 border-slate-200 border-t-cyan-500" aria-label="Cargando artículos" /> : summary.articles}</p>
+              <p className="mt-4 flex h-14 items-center text-5xl font-semibold text-slate-900">
+                {loading ?
+                  <span className="size-8 animate-spin rounded-full border-4 border-slate-200 border-t-cyan-500" aria-label="Cargando artículos" />
+                  :
+                  summary.articles}
+              </p>
               <p className="mt-2 text-sm text-slate-600">Total de noticias disponibles</p>
               <Link to="/admin/noticias" className="mt-6 inline-block">
                 <Button>Administrar artículos</Button>
@@ -56,7 +61,11 @@ export default function DashboardPage() {
 
             <div className="rounded-3xl border border-border bg-slate-50 p-6">
               <p className="text-sm uppercase tracking-[0.2em] text-slate-500">Servicios</p>
-              <p className="mt-4 flex h-14 items-center text-5xl font-semibold text-slate-900">{loading ? <span className="size-8 animate-spin rounded-full border-4 border-slate-200 border-t-cyan-500" aria-label="Cargando servicios" /> : summary.services}</p>
+              <p className="mt-4 flex h-14 items-center text-5xl font-semibold text-slate-900">
+                {loading ?
+                  <span className="size-8 animate-spin rounded-full border-4 border-slate-200 border-t-cyan-500" aria-label="Cargando servicios" />
+                  : summary.services}
+              </p>
               <p className="mt-2 text-sm text-slate-600">Total de servicios disponibles</p>
               <Link to="/admin/servicios" className="mt-6 inline-block">
                 <Button>Administrar servicios</Button>

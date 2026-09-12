@@ -24,7 +24,6 @@ export default function LocationsPage() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
   const [search, setSearch] = useState("");
   const [deletingId, setDeletingId] = useState(null);
 
@@ -36,7 +35,6 @@ export default function LocationsPage() {
       setTotal(data.totalElements ?? 0);
     } catch (error) {
       toast.danger(error.message || "No se pudieron cargar las ubicaciones");
-      setMessage({ type: "error", text: error.message || "No se pudieron cargar las ubicaciones" });
     } finally {
       setLoading(false);
     }
@@ -49,7 +47,6 @@ export default function LocationsPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
-    setMessage({ type: "", text: "" });
 
     try {
       const payload = {
@@ -61,10 +58,8 @@ export default function LocationsPage() {
 
       if (editingId) {
         await actualizarUbicacionAdmin(editingId, payload);
-        setMessage({ type: "success", text: "Ubicación actualizada" });
       } else {
         await crearUbicacionAdmin(payload);
-        setMessage({ type: "success", text: "Ubicación creada" });
       }
 
       setForm(emptyForm);
@@ -73,7 +68,6 @@ export default function LocationsPage() {
       loadLocations(page);
     } catch (error) {
       toast.danger(error.message || "No se pudo guardar la ubicación");
-      setMessage({ type: "error", text: error.message || "No se pudo guardar la ubicación" });
     } finally {
       setSubmitting(false);
     }
@@ -87,7 +81,6 @@ export default function LocationsPage() {
       longitud: location.longitud ?? "",
       descripcion: location.descripcion || "",
     });
-    setMessage({ type: "", text: "" });
   };
 
   const handleDelete = async (id) => {
@@ -99,7 +92,6 @@ export default function LocationsPage() {
       loadLocations(page);
     } catch (error) {
       toast.danger(error.message || "No se pudo eliminar la ubicación");
-      setMessage({ type: "error", text: error.message || "No se pudo eliminar la ubicación" });
     } finally {
       setDeletingId(null);
     }
@@ -123,7 +115,7 @@ export default function LocationsPage() {
             <h2 className="text-xl font-semibold text-slate-900">Ubicaciones</h2>
             <p className="text-sm text-slate-600">Administra los puntos de atención y sucursales.</p>
           </div>
-          <Button variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setMessage({ type: "", text: "" }); }}>
+          <Button className={"hidden md:flex"} variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setMessage({ type: "", text: "" }); }}>
             Limpiar formulario
           </Button>
         </div>
@@ -131,12 +123,12 @@ export default function LocationsPage() {
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
-            <Input value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre de la ubicación" required />
+            <Input className="text-sm" value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre de la ubicación" required />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700">Latitud</label>
-              <Input type="number" step="any" value={form.latitud} onChange={(event) => setForm({ ...form, latitud: event.target.value })} required />
+              <Input className="text-sm" type="number" step="any" value={form.latitud} onChange={(event) => setForm({ ...form, latitud: event.target.value })} required />
             </div>
             <div>
               <label className="mb-1 block text-sm font-medium text-slate-700">Longitud</label>
@@ -148,16 +140,17 @@ export default function LocationsPage() {
             <textarea className="min-h-24 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" value={form.descripcion} onChange={(event) => setForm({ ...form, descripcion: event.target.value })} placeholder="Detalles de la ubicación" />
           </div>
           <div className="md:col-span-2 flex items-center gap-3">
-            <Button type="submit" disabled={submitting}>{editingId ? "Guardar cambios" : "Crear ubicación"}</Button>
-            {message.text ? (
-              <span className={`text-sm ${message.type === "error" ? "text-red-600" : "text-emerald-600"}`}>{message.text}</span>
-            ) : null}
+            <Button type="submit" disabled={submitting} className={"w-full md:w-auto cursor-pointer"}>
+              {editingId ? "Guardar cambios" : "Crear ubicación"}
+            </Button>
           </div>
         </form>
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="mb-4"><Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o descripción" /></div>
+        <div className="mb-4">
+          <Input className={"text-sm"} value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o descripción" />
+        </div>
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-left text-slate-600">

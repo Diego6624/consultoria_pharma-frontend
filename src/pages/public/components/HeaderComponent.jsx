@@ -28,6 +28,7 @@ const HeaderComponent = () => {
                 bg-white md:bg-[#FFFFFFD4] md:backdrop-blur-sm
                 px-4 py-3
                 md:mx-auto md:my-4 md:px-6 md:py-4 md:rounded-full md:border-0 border-b
+                shadow-xs
             ">
                 {/* 🔹 MOBILE HEADER */}
                 <div className="flex w-full items-center justify-between md:hidden gap-8">

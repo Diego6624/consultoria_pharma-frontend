@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { obtenerServicioPublico } from "@/services/serviciosService";
 import { getImageUrl, sanitizeHtml } from "@/lib/content";
-import { PublicError, PublicLoading } from "@/components/PublicLoading";
+import { PublicLoading } from "@/components/PublicLoading";
 
 const ServiceDetailPage = () => {
 
@@ -43,19 +43,8 @@ const ServiceDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header con botón volver */}
-      <div className="sticky top-0 z-50 bg-white border-b border-gray-200 px-8 md:px-16 lg:px-32 2xl:px-44 py-4">
-        <button
-          onClick={() => navigate('/services')}
-          className="flex items-center gap-2 text-cyan-400 hover:text-cyan-500 font-semibold transition-colors"
-        >
-          <ArrowLeft size={20} />
-          Volver a servicios
-        </button>
-      </div>
-
       {/* Contenido principal */}
-      <div className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
+      <div className="px-8 md:px-16 lg:px-32 2xl:px-44 pt-28 md:pt-36 pb-12">
         {/* Hero section con imagen */}
         <div className="mb-12">
           <img
@@ -70,10 +59,14 @@ const ServiceDetailPage = () => {
           {/* Columna principal */}
           <div className="lg:col-span-2">
             {/* Badge de categoría */}
-            <div className="mb-6">
-                <span className="inline-block rounded-full bg-cyan-500 px-4 py-2 font-semibold text-white">
+            <div className="mb-6 flex justify-between items-center gap-4">
+              <span className="text-sm inline-block rounded-full bg-cyan-500 px-4 py-2 font-semibold text-white">
                 {service.nombreCategoria || "Servicio"}
               </span>
+              <Link to="/services" className="inline-flex items-center gap-2 font-semibold text-gray-400 hover:text-cyan-700 text-sm">
+                <ArrowLeft size={18} />
+                Volver a servicios
+              </Link>
             </div>
 
             {/* Título */}
@@ -89,33 +82,25 @@ const ServiceDetailPage = () => {
               {service.descripcion}
             </p>
             <div className="prose prose-slate mb-12 max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.contenido) }} />
-
-            {/* CTA */}
-            <div className="mb-12">
-              <button className="bg-cyan-400 hover:bg-cyan-500 text-white font-bold px-8 py-4 rounded-full text-lg transition-colors">
-                Solicitar consultoría
-              </button>
-            </div>
           </div>
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
             {/* Box de contacto */}
-            <div className="bg-gray-50 rounded-2xl p-8 sticky top-24">
+            <div className="bg-gray-50 rounded-2xl p-8 sticky top-32 shadow-xs">
               <h3 className="text-xl font-bold text-gray-900 mb-4">
                 ¿Necesitas más información?
               </h3>
               <p className="text-gray-600 mb-6">
                 Contacta con nuestro equipo para una consultoría personalizada.
               </p>
-              <button className="w-full bg-cyan-400 hover:bg-cyan-500 text-white font-semibold px-6 py-3 rounded-full transition-colors">
-                Contáctanos
-              </button>
+              <Link to="/consultation" className="w-full h-full">
+                <button className="w-full bg-cyan-400 hover:bg-cyan-500 text-white font-semibold px-6 py-3 rounded-full transition-colors cursor-pointer">
+                  Contáctanos
+                </button>
+              </Link>
             </div>
           </div>
-        </div>
-        <div className="mt-20 border-t border-gray-200 pt-12">
-          <Link to="/consultation" className="inline-flex rounded-full bg-cyan-500 px-8 py-4 text-lg font-bold text-white transition hover:bg-cyan-600">Solicitar consultoría</Link>
         </div>
       </div>
     </div>
