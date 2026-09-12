@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { motion } from "framer-motion";
 import { obtenerServicioPublico } from "@/services/serviciosService";
 import { getImageUrl, sanitizeHtml } from "@/lib/content";
 import { PublicLoading } from "@/components/PublicLoading";
+import PublicBannerImage from "@/components/PublicBannerImage";
 
 const ServiceDetailPage = () => {
-
   const { id } = useParams();
   const navigate = useNavigate();
   const [service, setService] = useState(null);
@@ -43,50 +44,68 @@ const ServiceDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Contenido principal */}
-      <div className="px-8 md:px-16 lg:px-32 2xl:px-44 pt-28 md:pt-36 pb-12">
-        {/* Hero section con imagen */}
-        <div className="mb-12">
-          <img
-            src={getImageUrl(service.imagen)}
-            alt={service.titulo}
-            className="w-full h-96 object-cover rounded-2xl shadow-lg"
-          />
-        </div>
 
-        {/* Contenido */}
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-          {/* Columna principal */}
-          <div className="lg:col-span-2">
-            {/* Badge de categoría */}
-            <div className="mb-6 flex justify-between items-center gap-4">
-              <span className="text-sm inline-block rounded-full bg-cyan-500 px-4 py-2 font-semibold text-white">
-                {service.nombreCategoria || "Servicio"}
-              </span>
-              <Link to="/services" className="inline-flex items-center gap-2 font-semibold text-gray-400 hover:text-cyan-700 text-sm">
-                <ArrowLeft size={18} />
-                Volver a servicios
-              </Link>
-            </div>
+      {/* HERO — igual que BannerMain */}
+      <section className="relative w-full h-svh overflow-hidden">
+
+        <PublicBannerImage
+          src={service.imagen ? getImageUrl(service.imagen) : "/images/imageServices.jpg"}
+          alt={service.titulo}
+        />
+
+        <div className="absolute inset-0 bg-linear-to-r from-black/80 md:via-black/10 md:to-transparent" />
+
+        <motion.div
+          className="relative flex md:items-center w-full h-full pb-6 sm:pb-16 md:pb-0 pt-24 md:pt-0"
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="flex flex-col justify-center md:items-start px-6 sm:px-10 md:px-16 lg:px-32 xl:px-48 2xl:px-64 md:gap-6">
+
+            {/* Categoría */}
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#0DB3DE] bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full border border-[#0DB3DE]/40 self-start">
+              {service.nombreCategoria || "Servicio"}
+            </span>
 
             {/* Título */}
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              {service.titulo}
-            </h1>
+            <div className="flex flex-col font-bold text-white gap-1 text-4xl sm:text-5xl md:text-6xl lg:text-7xl max-w-sm md:max-w-xl py-2 md:py-0">
+              <p className="leading-tight">{service.titulo}</p>
+            </div>
 
+            {/* Descripción */}
+            <div className="text-white max-w-sm md:max-w-2xl text-lg md:text-xl lg:text-2xl py-2 md:py-0">
+              <p>{service.descripcion}</p>
+            </div>
+
+            {/* Volver */}
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/70 hover:text-white transition-colors py-1"
+            >
+              <ArrowLeft size={16} />
+              Volver a servicios
+            </Link>
+
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Contenido + Sidebar */}
+      <div className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
+          
+          {/* Columna principal */}
+          <div className="lg:col-span-2">
             {/* Línea divisora */}
             <div className="h-1 w-20 rounded-full bg-cyan-400 mb-8" />
-
-            {/* Descripción principal */}
-            <p className="text-xl leading-8 text-gray-700 mb-12">
-              {service.descripcion}
-            </p>
-            <div className="prose prose-slate mb-12 max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.contenido) }} />
+            <div className="prose prose-slate mb-12 max-w-none"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.contenido) }}
+            />
           </div>
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            {/* Box de contacto */}
             <div className="bg-gray-50 rounded-2xl p-8 sticky top-32 shadow-xs">
               <h3 className="text-xl font-bold text-gray-900 mb-4">
                 ¿Necesitas más información?
@@ -101,6 +120,7 @@ const ServiceDetailPage = () => {
               </Link>
             </div>
           </div>
+
         </div>
       </div>
     </div>

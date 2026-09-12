@@ -60,11 +60,21 @@ export default function SearchNews() {
                     <div className="relative flex-1">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
                         <input type="search" placeholder="Busca alguna noticia" value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} className="w-full rounded-lg border border-gray-300 py-3 pl-12 pr-10 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-cyan-400" />
-                        {searchTerm ? <button type="button" onClick={() => setSearchTerm("")} aria-label="Limpiar búsqueda" className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"><X size={18} /></button> : null}
+                        {searchTerm ?
+                            <button type="button" onClick={() => setSearchTerm("")} aria-label="Limpiar búsqueda" className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+                                <X size={18} />
+                            </button>
+                            :
+                            null
+                        }
                     </div>
                     <select value={selectedCategory} onChange={(event) => handleCategoryChange(event.target.value)} className="min-w-56 cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-3">
                         <option value="">Todas las categorías</option>
-                        {categories.map((category) => <option key={category.idCategoria} value={category.idCategoria}>{category.nombre}</option>)}
+                        {categories.map((category) =>
+                            <option key={category.idCategoria} value={category.idCategoria}>
+                                {category.nombre}
+                            </option>
+                        )}
                     </select>
                 </div>
 
@@ -77,16 +87,45 @@ export default function SearchNews() {
                                 {filteredArticles.map((article) => (
                                     <Link key={article.idNoticia} to={`/news/${article.idNoticia}`} className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-sm transition hover:shadow-md">
                                         <div className="relative h-48 overflow-hidden bg-slate-200">
-                                            {article.imagen ? <img src={getImageUrl(article.imagen)} alt={article.titulo} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" /> : null}
-                                            <span className="absolute left-0 top-4 bg-[#1699BC] px-2.5 py-1 text-sm font-semibold text-white">{article.nombreCategoria || "Noticias"}</span>
+                                            {article.imagen ?
+                                                <img src={getImageUrl(article.imagen)} alt={article.titulo} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                                                :
+                                                null
+                                            }
+                                            <span className="absolute left-0 top-4 bg-[#1699BC] px-2.5 py-1 text-sm font-semibold text-white">
+                                                {article.nombreCategoria || "Noticias"}
+                                            </span>
                                         </div>
-                                        <div className="flex flex-1 flex-col gap-4 p-4"><div className="flex-1"><h3 className="mb-2 text-lg font-bold text-gray-800">{article.titulo}</h3><p className="line-clamp-3 text-sm text-gray-600">{article.descripcion}</p></div><p className="text-xs text-gray-500">{formatDate(article.fechaPublicacion)}</p></div>
+                                        <div className="flex flex-1 flex-col gap-4 p-4">
+                                            <div className="flex-1">
+                                                <h3 className="mb-2 text-lg font-bold text-gray-800">
+                                                    {article.titulo}
+                                                </h3>
+                                                <p className="line-clamp-3 text-sm text-gray-600">
+                                                    {article.descripcion}
+                                                </p>
+                                            </div>
+                                            <p className="text-xs text-gray-500">
+                                                {formatDate(article.fechaPublicacion)}
+                                            </p>
+                                        </div>
                                     </Link>
                                 ))}
                             </div>
-                            {totalPages > 1 ? <div className="flex justify-center gap-2">{Array.from({ length: totalPages }, (_, pageNumber) => <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600"}`}>{pageNumber + 1}</button>)}</div> : null}
+                            {totalPages > 1
+                                ? <div className="flex justify-center gap-2">
+                                    {Array.from({ length: totalPages }, (_, pageNumber) =>
+                                        <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600"}`}>
+                                            {pageNumber + 1}
+                                        </button>
+                                    )}
+                                </div>
+                                : null
+                            }
                         </>
-                    ) : <div className="py-12 text-center text-gray-500">No se encontraron noticias con esos criterios.</div>
+                    ) : <div className="py-12 text-center text-gray-500">
+                        No se encontraron noticias con esos criterios.
+                    </div>
                 ) : null}
             </div>
         </section>

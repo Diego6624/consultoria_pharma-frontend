@@ -6,7 +6,7 @@ import ServicesPage from "../pages/public/servicesP/ServicesPage";
 import ServiceDetailPage from "../pages/public/servicesP/components/ServiceDetailPage";
 import AboutUsPage from "../pages/public/aboutUs/AboutUsPage";
 import NewsPage from "../pages/public/news/NewsPage";
-import NewsDetailPage from "../pages/public/news/NewsDetailPage";
+import NewsDetailPage from "../pages/public/news/components/NewsDetailPage";
 import ConsultationPage from "@/pages/public/consultation/ConsultationPage";
 import LoginPage from "@/pages/private/LoginPage";
 import AdminShell from "@/pages/private/AdminShell";
