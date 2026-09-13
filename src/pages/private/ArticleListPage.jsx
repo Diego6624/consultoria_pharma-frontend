@@ -130,9 +130,9 @@ export default function ArticleListPage() {
                       </td>
                       <td className="space-x-2 px-4 py-3">
                         <Link to={`/admin/noticias/${article.idNoticia}/editar`}>
-                          <Button variant="outline" size="sm" disabled={Boolean(deletingId)}>Editar</Button>
+                          <Button className={"cursor-pointer"} variant="outline" size="sm" disabled={Boolean(deletingId)}>Editar</Button>
                         </Link>
-                        <Button variant="destructive" size="sm" disabled={deletingId === article.idNoticia} onClick={() => handleDelete(article.idNoticia)}>
+                        <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={deletingId === article.idNoticia} onClick={() => handleDelete(article.idNoticia)}>
                           {deletingId === article.idNoticia ? "Eliminando..." : "Eliminar"}
                         </Button>
                       </td>

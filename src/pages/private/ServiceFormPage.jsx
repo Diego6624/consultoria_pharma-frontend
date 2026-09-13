@@ -322,7 +322,7 @@ export default function ServiceFormPage() {
         )}
 
         <div className="flex flex-wrap gap-3 pt-2">
-          <Button type="submit" disabled={saving} className="gap-2">
+          <Button type="submit" disabled={saving} className="gap-2 cursor-pointer">
             {saving ? (
               <>
                 <Loader2 size={16} className="animate-spin" />
@@ -335,6 +335,7 @@ export default function ServiceFormPage() {
           <Button
             variant="outline"
             type="button"
+            className={"cursor-pointer"}
             onClick={() => navigate("/admin/servicios")}
           >
             Cancelar

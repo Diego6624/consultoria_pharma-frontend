@@ -8,23 +8,11 @@ const ServicesCard = ({
   description,
   features = [],
   image,
-  categoryBadgeColor = "#0DB3DE"
 }) => {
 
   const navigate = useNavigate();
 
   const handleNavigate = () => navigate(`/services/${id}`);
-
-  // Mapeo de colores por categoría
-  const getCategoryColor = () => {
-    const colors = {
-      'Regulatorio': 'bg-[#003F45]',
-      'Calidad': 'bg-[#0DB3DE]',
-      'Gestión': 'bg-[#6B0086]'
-    };
-    return colors[category] || categoryBadgeColor;
-  };
-
 
   return (
     <motion.article
@@ -51,7 +39,7 @@ const ServicesCard = ({
       </div>
 
       {/* BADGE */}
-      <div className={`absolute top-4 left-4 ${getCategoryColor()} text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`}>
+      <div className={`absolute top-4 left-4 bg-[#0DB3DE] text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg`}>
         {category}
       </div>
 

@@ -109,11 +109,11 @@ export default function ServiceListPage() {
                       </td>
                       <td className="space-x-2 px-4 py-3">
                         <Link to={`/admin/servicios/${service.idServicio}/editar`}>
-                          <Button variant="outline" size="sm" disabled={Boolean(deletingId)}>
+                          <Button className={"cursor-pointer"} variant="outline" size="sm" disabled={Boolean(deletingId)}>
                             Editar
                           </Button>
                         </Link>
-                        <Button variant="destructive" size="sm" disabled={deletingId === service.idServicio} onClick={() => handleDelete(service.idServicio)}>
+                        <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={deletingId === service.idServicio} onClick={() => handleDelete(service.idServicio)}>
                           {deletingId === service.idServicio ? "Eliminando..." : "Eliminar"}
                         </Button>
                       </td>

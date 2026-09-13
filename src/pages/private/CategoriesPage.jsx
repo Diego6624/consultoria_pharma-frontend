@@ -114,7 +114,7 @@ export default function CategoriesPage() {
               Administra las categorías para artículos y servicios.
             </p>
           </div>
-          <Button variant="outline" onClick={resetForm} className={"hidden md:flex"}>
+          <Button variant="outline" onClick={resetForm} className={"hidden md:flex cursor-pointer"}>
             Limpiar formulario
           </Button>
         </div>
@@ -199,12 +199,13 @@ export default function CategoriesPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 space-x-2">
-                      <Button variant="outline" size="sm" onClick={() => handleEdit(category)}>
+                      <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(category)}>
                         Editar
                       </Button>
                       <Button
                         variant="destructive"
                         size="sm"
+                        className={"cursor-pointer"}
                         disabled={deletingId === category.idCategoria}
                         onClick={() => handleDelete(category.idCategoria)}
                       >

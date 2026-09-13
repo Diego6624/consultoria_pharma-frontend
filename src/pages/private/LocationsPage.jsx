@@ -115,7 +115,7 @@ export default function LocationsPage() {
             <h2 className="text-xl font-semibold text-slate-900">Ubicaciones</h2>
             <p className="text-sm text-slate-600">Administra los puntos de atención y sucursales.</p>
           </div>
-          <Button className={"hidden md:flex"} variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setMessage({ type: "", text: "" }); }}>
+          <Button className={"hidden md:flex cursor-pointer"} variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setMessage({ type: "", text: "" }); }}>
             Limpiar formulario
           </Button>
         </div>
@@ -173,8 +173,8 @@ export default function LocationsPage() {
                     <td className="px-4 py-3">{location.latitud}, {location.longitud}</td>
                     <td className="px-4 py-3">{location.descripcion || "-"}</td>
                     <td className="px-4 py-3 space-x-2">
-                      <Button variant="outline" size="sm" onClick={() => handleEdit(location)}>Editar</Button>
-                      <Button variant="destructive" size="sm" disabled={deletingId === location.idUbicacion} onClick={() => handleDelete(location.idUbicacion)}>{deletingId === location.idUbicacion ? "Eliminando..." : "Eliminar"}</Button>
+                      <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(location)}>Editar</Button>
+                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={deletingId === location.idUbicacion} onClick={() => handleDelete(location.idUbicacion)}>{deletingId === location.idUbicacion ? "Eliminando..." : "Eliminar"}</Button>
                     </td>
                   </tr>
                 ))
