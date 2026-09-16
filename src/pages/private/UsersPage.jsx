@@ -151,15 +151,15 @@ export default function UsersPage() {
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-3">
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
-            <Input value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre completo" required />
+            <Input value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre completo" className={"text-sm"} required />
           </div>
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">Correo</label>
-            <Input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} placeholder="correo@empresa.com" required />
+            <Input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} placeholder="correo@empresa.com" className={"text-sm"} required />
           </div>
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">Contraseña</label>
-            <Input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder={editingId ? "Nueva contraseña" : "Contraseña"} required={!editingId} />
+            <Input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder={editingId ? "Nueva contraseña" : "Contraseña"} className={"text-sm"} required={!editingId} />
           </div>
           <div className="md:col-span-3 flex items-center gap-3">
             <Button className={"cursor-pointer"}  type="submit" disabled={submitting}>{editingId ? "Guardar cambios" : "Crear usuario"}</Button>
@@ -169,7 +169,7 @@ export default function UsersPage() {
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-4 grid gap-3 md:grid-cols-[1fr_180px]">
-          <Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o correo" />
+          <Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o correo" className={"text-sm"} />
           <select value={statusFilter} onChange={(event) => { setStatusFilter(event.target.value); setPage(0); }} className="h-9 rounded-md border border-input bg-white px-3 text-sm">
             <option value="">Todos los estados</option>
             <option value="true">Activos</option>

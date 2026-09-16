@@ -48,7 +48,7 @@ export default function LoginPage() {
         </div>
       </section>
       <section className="flex items-center justify-center px-6 py-12 sm:px-10">
-        <div className="w-full max-w-md">
+        <div className="flex flex-col w-full max-w-md">
           <div className="mb-10 lg:hidden">
             <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">YLPHARMA</p>
           </div>
@@ -68,13 +68,13 @@ export default function LoginPage() {
               <label htmlFor="login-email" className="text-sm font-medium text-slate-200">
                 Correo electrónico
               </label>
-              <Input id="login-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@consultoria.com" className="border-slate-700 bg-slate-900 text-white placeholder:text-slate-500" required /></div>
+              <Input id="login-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="admin@consultoria.com" className="border-none text-sm border-slate-700 bg-slate-900 text-white placeholder:text-slate-500" required /></div>
             <div className="space-y-2">
               <label htmlFor="login-password" className="text-sm font-medium text-slate-200">
                 Contraseña
               </label>
               <div className="relative">
-                <Input id="login-password" type={showPassword ? "text" : "password"} value={password} onChange={(event) => setPassword(event.target.value)} className="border-slate-700 bg-slate-900 pr-12 text-white placeholder:text-slate-500" placeholder="**********" required />
+                <Input id="login-password" type={showPassword ? "text" : "password"} value={password} onChange={(event) => setPassword(event.target.value)} className="border-none text-sm border-slate-700 bg-slate-900 pr-12 text-white placeholder:text-slate-500" placeholder="**********" required />
                 <button type="button" onClick={() => setShowPassword((current) => !current)} aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
                   {showPassword ?
                     <EyeOff size={18} />
@@ -89,7 +89,7 @@ export default function LoginPage() {
                 {error}
               </div> : null
             }
-            <Button type="submit" className="h-11 w-full bg-cyan-400 font-semibold text-black hover:bg-cyan-300 cursor-pointer" disabled={loading}>
+            <Button type="submit" className="h-11 w-full border-none bg-cyan-400 font-semibold text-black hover:bg-cyan-300 cursor-pointer" disabled={loading}>
               {loading ?
                 <span className="flex items-center justify-center gap-2">
                   <span className="size-4 animate-spin rounded-full border-2 border-slate-950/30 border-t-slate-950" />
@@ -97,11 +97,11 @@ export default function LoginPage() {
                 </span> : "Iniciar sesión"
               }
             </Button>
-            <Link to="/" className="inline-flex items-center gap-2 font-semibold text-cyan-700 hover:text-white text-sm">
-              <ArrowLeft size={18} />
-              Volver al inicio
-            </Link>
           </form>
+          <Link to="/" className="mt-6 justify-center md:justify-start inline-flex items-center gap-2 font-semibold text-cyan-700 hover:text-white/80 text-sm">
+            <ArrowLeft size={18} />
+            Volver al inicio
+          </Link>
         </div>
       </section>
     </main>

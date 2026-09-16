@@ -55,7 +55,7 @@ export default function SidebarComponent() {
             <span className="group-data-[collapsible=icon]:hidden text-white">
               YLPHARMA
             </span>
-            <SidebarTrigger className="ml-auto hidden md:flex group-data-[collapsible=icon]:mx-auto text-white hover:bg-[#52C7E5]/20 cursor-pointer" />
+            <SidebarTrigger className="border-none ml-auto hidden md:flex group-data-[collapsible=icon]:mx-auto text-white hover:text-white/70 hover:bg-[#52C7E5]/20 cursor-pointer" />
           </div>
           <div className="text-xs text-slate-300 mt-2 group-data-[collapsible=icon]:hidden">
             Panel administrativo
