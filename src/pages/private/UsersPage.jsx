@@ -31,7 +31,6 @@ export default function UsersPage() {
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  const [message, setMessage] = useState({ type: "", text: "" });
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [actionId, setActionId] = useState(null);
@@ -44,7 +43,6 @@ export default function UsersPage() {
       setTotal(data.totalElements ?? 0);
     } catch (error) {
       toast.danger(error.message || "No se pudieron cargar los usuarios");
-      setMessage({ type: "error", text: error.message || "No se pudieron cargar los usuarios" });
     } finally {
       setLoading(false);
     }
@@ -57,7 +55,6 @@ export default function UsersPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
-    setMessage({ type: "", text: "" });
 
     try {
       const payload = {
@@ -72,13 +69,11 @@ export default function UsersPage() {
 
       if (editingId) {
         await actualizarUsuarioAdmin(editingId, payload);
-        setMessage({ type: "success", text: "Usuario actualizado correctamente" });
       } else {
         if (!form.password.trim()) {
           throw new Error("La contraseña es obligatoria para crear un usuario");
         }
         await crearUsuarioAdmin(payload);
-        setMessage({ type: "success", text: "Usuario creado correctamente" });
       }
 
       setForm(emptyForm);
@@ -87,7 +82,6 @@ export default function UsersPage() {
       loadUsers(page);
     } catch (error) {
       toast.danger(error.message || "No se pudo guardar el usuario");
-      setMessage({ type: "error", text: error.message || "No se pudo guardar el usuario" });
     } finally {
       setSubmitting(false);
     }
@@ -100,7 +94,6 @@ export default function UsersPage() {
       email: user.email || "",
       password: "",
     });
-    setMessage({ type: "", text: "" });
   };
 
   const handleToggle = async (user) => {
@@ -111,7 +104,6 @@ export default function UsersPage() {
       loadUsers(page);
     } catch (error) {
       toast.danger(error.message || "No se pudo actualizar el estado");
-      setMessage({ type: "error", text: error.message || "No se pudo actualizar el estado" });
     } finally {
       setActionId(null);
     }
@@ -126,7 +118,6 @@ export default function UsersPage() {
       loadUsers(page);
     } catch (error) {
       toast.danger(error.message || "No se pudo eliminar el usuario");
-      setMessage({ type: "error", text: error.message || "No se pudo eliminar el usuario" });
     } finally {
       setActionId(null);
     }
@@ -152,7 +143,7 @@ export default function UsersPage() {
             <h2 className="text-xl font-semibold text-slate-900">Gestión de usuarios</h2>
             <p className="text-sm text-slate-600">Crea, edita y controla el acceso de administradores del sistema.</p>
           </div>
-          <Button variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setMessage({ type: "", text: "" }); }}>
+          <Button variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); }}>
             Limpiar formulario
           </Button>
         </div>
@@ -171,10 +162,7 @@ export default function UsersPage() {
             <Input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder={editingId ? "Nueva contraseña" : "Contraseña"} required={!editingId} />
           </div>
           <div className="md:col-span-3 flex items-center gap-3">
-            <Button type="submit" disabled={submitting}>{editingId ? "Guardar cambios" : "Crear usuario"}</Button>
-            {message.text ? (
-              <span className={`text-sm ${message.type === "error" ? "text-red-600" : "text-emerald-600"}`}>{message.text}</span>
-            ) : null}
+            <Button className={"cursor-pointer"}  type="submit" disabled={submitting}>{editingId ? "Guardar cambios" : "Crear usuario"}</Button>
           </div>
         </form>
       </div>
@@ -216,13 +204,13 @@ export default function UsersPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 space-x-2">
-                      <Button variant="outline" size="sm" onClick={() => handleEdit(user)}>
+                      <Button className={"cursor-pointer"}  variant="outline" size="sm" onClick={() => handleEdit(user)}>
                         Editar
                       </Button>
-                      <Button variant="secondary" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleToggle(user)}>
+                      <Button className={"cursor-pointer"}  variant="secondary" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleToggle(user)}>
                         {actionId === user.idUsuario ? "Procesando..." : user.estado ? "Desactivar" : "Activar"}
                       </Button>
-                      <Button variant="destructive" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleDelete(user.idUsuario)}>
+                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleDelete(user.idUsuario)}>
                         {actionId === user.idUsuario ? "Eliminando..." : "Eliminar"}
                       </Button>
                     </td>
