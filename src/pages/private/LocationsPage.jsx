@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@heroui/react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   crearUbicacionAdmin,
   eliminarUbicacionAdmin,
@@ -26,6 +27,7 @@ export default function LocationsPage() {
   const [submitting, setSubmitting] = useState(false);
   const [search, setSearch] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const loadLocations = async (currentPage = page) => {
     setLoading(true);
@@ -64,6 +66,7 @@ export default function LocationsPage() {
 
       setForm(emptyForm);
       setEditingId(null);
+      setDialogOpen(false);
       toast.success(editingId ? "Ubicación actualizada" : "Ubicación creada");
       loadLocations(page);
     } catch (error) {
@@ -81,6 +84,7 @@ export default function LocationsPage() {
       longitud: location.longitud ?? "",
       descripcion: location.descripcion || "",
     });
+    setDialogOpen(true);
   };
 
   const handleDelete = async (id) => {
@@ -115,36 +119,45 @@ export default function LocationsPage() {
             <h2 className="text-xl font-semibold text-slate-900">Ubicaciones</h2>
             <p className="text-sm text-slate-600">Administra los puntos de atención y sucursales.</p>
           </div>
-          <Button className={"hidden md:flex cursor-pointer"} variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setMessage({ type: "", text: "" }); }}>
-            Limpiar formulario
+          <Button className={"cursor-pointer md:w-auto w-full bg-black hover:bg-black/80 text-white hover:text-white"} variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}>
+            Nueva ubicación
           </Button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
-            <Input className="text-sm" value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre de la ubicación" required />
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">Latitud</label>
-              <Input className="text-sm" type="number" step="any" value={form.latitud} onChange={(event) => setForm({ ...form, latitud: event.target.value })} required />
-            </div>
-            <div>
-              <label className="mb-1 block text-sm font-medium text-slate-700">Longitud</label>
-              <Input type="number" step="any" value={form.longitud} onChange={(event) => setForm({ ...form, longitud: event.target.value })} required />
-            </div>
-          </div>
-          <div className="md:col-span-2">
-            <label className="mb-1 block text-sm font-medium text-slate-700">Descripción</label>
-            <textarea className="min-h-24 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" value={form.descripcion} onChange={(event) => setForm({ ...form, descripcion: event.target.value })} placeholder="Detalles de la ubicación" />
-          </div>
-          <div className="md:col-span-2 flex items-center gap-3">
-            <Button type="submit" disabled={submitting} className={"w-full md:w-auto cursor-pointer"}>
-              {editingId ? "Guardar cambios" : "Crear ubicación"}
-            </Button>
-          </div>
-        </form>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent className="sm:max-w-xl">
+            <DialogHeader>
+              <DialogTitle>{editingId ? "Editar ubicación" : "Nueva ubicación"}</DialogTitle>
+              <DialogDescription>
+                Registra los datos del punto de atención.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
+                <Input className="text-sm" value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre de la ubicación" required />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Latitud</label>
+                  <Input className="text-sm" type="number" step="any" value={form.latitud} onChange={(event) => setForm({ ...form, latitud: event.target.value })} required />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-slate-700">Longitud</label>
+                  <Input type="number" step="any" value={form.longitud} onChange={(event) => setForm({ ...form, longitud: event.target.value })} required />
+                </div>
+              </div>
+              <div className="md:col-span-2">
+                <label className="mb-1 block text-sm font-medium text-slate-700">Descripción</label>
+                <textarea className="min-h-24 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm shadow-sm" value={form.descripcion} onChange={(event) => setForm({ ...form, descripcion: event.target.value })} placeholder="Detalles de la ubicación" />
+              </div>
+              <DialogFooter className="md:col-span-2">
+                <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancelar</Button>
+                <Button className={"cursor-pointer"} type="submit" disabled={submitting}>{submitting ? "Guardando..." : editingId ? "Guardar cambios" : "Crear ubicación"}</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -172,7 +185,7 @@ export default function LocationsPage() {
                     <td className="px-4 py-3 font-medium">{location.nombre}</td>
                     <td className="px-4 py-3">{location.latitud}, {location.longitud}</td>
                     <td className="px-4 py-3">{location.descripcion || "-"}</td>
-                    <td className="px-4 py-3 space-x-2">
+                    <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
                       <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(location)}>Editar</Button>
                       <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={deletingId === location.idUbicacion} onClick={() => handleDelete(location.idUbicacion)}>{deletingId === location.idUbicacion ? "Eliminando..." : "Eliminar"}</Button>
                     </td>

@@ -233,7 +233,7 @@ export default function TipTapEditor({ value, onChange }) {
   );
 
   return (
-    <div className="space-y-0">
+    <div className="relative z-20 space-y-0 overflow-visible">
       {/* Hidden file input for image upload */}
       <input
         ref={fileInputRef}
@@ -244,7 +244,7 @@ export default function TipTapEditor({ value, onChange }) {
       />
 
       {/* Toolbar */}
-      <div className="rounded-t-xl border border-border bg-slate-50/80 px-3 py-2 backdrop-blur-sm">
+      <div className="relative z-30 overflow-visible rounded-t-xl border border-border bg-slate-50/80 px-3 py-2 backdrop-blur-sm">
         {/* Fila 1: Formato de texto */}
         <div className="flex flex-wrap items-center gap-1">
           <ToolbarButton
@@ -411,10 +411,10 @@ export default function TipTapEditor({ value, onChange }) {
             )}
           </ToolbarButton>
 
-          <ToolbarDivider />
+          {/* <ToolbarDivider /> */}
 
           {/* Menú de Tablas */}
-          <div className="relative" ref={tableMenuRef}>
+          {/* <div className="relative" ref={tableMenuRef}>
             <ToolbarButton
               onClick={() => setShowTableMenu((v) => !v)}
               active={editor?.isActive("table")}
@@ -424,7 +424,7 @@ export default function TipTapEditor({ value, onChange }) {
             </ToolbarButton>
 
             {showTableMenu && (
-              <div className="absolute left-0 top-10 z-50 w-56 rounded-lg border border-border bg-white p-3 shadow-lg">
+              <div className="absolute left-0 top-full z-[100] mt-1 w-56 rounded-lg border border-border bg-white p-3 shadow-xl">
                 {!editor?.isActive("table") ? (
                   <button
                     type="button"
@@ -548,7 +548,7 @@ export default function TipTapEditor({ value, onChange }) {
                 )}
               </div>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
 

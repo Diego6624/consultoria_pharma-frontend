@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, textHover, bgShadow, textSize }) => {
+const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, textHover, bgShadow, textSize, onNavigate }) => {
     const [hovered, setHovered] = useState(false);
 
     return (<>
@@ -11,6 +11,7 @@ const AnimateBoton = ({ bg, bgIcon, name, icon, navigate, textColor, iconColor, 
         >
             <Link
                 to={navigate}
+                onClick={onNavigate}
                 className={`relative w-min h-min flex items-center p-5 py-3 rounded-full overflow-hidden transition-all duration-300`}
                 style={{ backgroundColor: bg, boxShadow: bgShadow }}
             >

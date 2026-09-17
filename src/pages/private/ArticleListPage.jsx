@@ -89,21 +89,22 @@ export default function ArticleListPage() {
           </Link>
         </div>
         <div className="overflow-x-auto rounded-3xl border border-border bg-slate-50">
-          <table className="min-w-full border-collapse text-sm"><thead className="bg-slate-100 text-left text-slate-600">
-            <tr>
-              <th className="px-4 py-3">
-                Título
-              </th>
-              <th className="px-4 py-3">
-                Categoría
-              </th>
-              <th className="px-4 py-3">
-                Fecha</th>
-              <th className="px-4 py-3">
-                Acciones
-              </th>
-            </tr>
-          </thead>
+          <table className="min-w-full border-collapse text-sm">
+            <thead className="bg-slate-50 text-left text-slate-600">
+              <tr>
+                <th className="px-4 py-3">
+                  Título
+                </th>
+                <th className="px-4 py-3">
+                  Categoría
+                </th>
+                <th className="px-4 py-3">
+                  Fecha</th>
+                <th className="px-4 py-3">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
             <tbody>
               {loading ?
                 <tr>
@@ -118,7 +119,7 @@ export default function ArticleListPage() {
                     </td>
                   </tr>
                   : visibleArticles.map((article) =>
-                    <tr key={article.idNoticia} className="border-t border-slate-200 last:border-b">
+                    <tr key={article.idNoticia} className="border-t bg-white border-slate-200 last:border-b">
                       <td className="px-4 py-3">
                         {article.titulo}
                       </td>
@@ -128,7 +129,7 @@ export default function ArticleListPage() {
                       <td className="px-4 py-3">
                         {new Date(article.fechaPublicacion).toLocaleDateString()}
                       </td>
-                      <td className="space-x-2 px-4 py-3">
+                      <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
                         <Link to={`/admin/noticias/${article.idNoticia}/editar`}>
                           <Button className={"cursor-pointer"} variant="outline" size="sm" disabled={Boolean(deletingId)}>Editar</Button>
                         </Link>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@heroui/react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import {
   actualizarCategoria,
@@ -29,6 +30,7 @@ export default function CategoriesPage() {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const loadCategories = async () => {
     setLoading(true);
@@ -68,6 +70,7 @@ export default function CategoriesPage() {
       }
 
       resetForm();
+      setDialogOpen(false);
       toast.success(editingId ? "Categoría actualizada" : "Categoría creada");
       loadCategories();
     } catch (error) {
@@ -83,6 +86,7 @@ export default function CategoriesPage() {
       nombre: category.nombre || "",
       tipo: category.tipo || "NOTICIA",
     });
+    setDialogOpen(true);
   };
 
   const handleDelete = async (id) => {
@@ -114,41 +118,52 @@ export default function CategoriesPage() {
               Administra las categorías para artículos y servicios.
             </p>
           </div>
-          <Button variant="outline" onClick={resetForm} className={"hidden md:flex cursor-pointer"}>
-            Limpiar formulario
+          <Button variant="outline" onClick={() => { resetForm(); setDialogOpen(true); }} className={"cursor-pointer md:w-auto w-full bg-black hover:bg-black/80 text-white hover:text-white"}>
+            Nueva categoría
           </Button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-2">
-          <div className="">
-            <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
-            <Input
-              value={form.nombre}
-              onChange={(event) => setForm({ ...form, nombre: event.target.value })}
-              placeholder="Nombre de la categoría"
-              maxLength={100}
-              required
-              className="w-full text-sm"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Tipo</label>
-            <NativeSelect
-              className="w-full"
-              value={form.tipo}
-              onChange={(event) => setForm({ ...form, tipo: event.target.value })}
-              required
-            >
-              <option value="NOTICIA">Noticia</option>
-              <option value="SERVICIO">Servicio</option>
-            </NativeSelect>
-          </div>
-          <div className="md:col-span-2 flex items-center gap-3">
-            <Button type="submit" disabled={submitting} className={"w-full md:w-auto cursor-pointer"}>
-              {editingId ? "Guardar cambios" : "Crear categoría"}
-            </Button>
-          </div>
-        </form>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle className={"cursor-pointer"}>{editingId ? "Editar categoría" : "Nueva categoría"}</DialogTitle>
+              <DialogDescription>
+                Define el nombre y el tipo de contenido.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
+              <div className="">
+                <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
+                <Input
+                  value={form.nombre}
+                  onChange={(event) => setForm({ ...form, nombre: event.target.value })}
+                  placeholder="Nombre de la categoría"
+                  maxLength={100}
+                  required
+                  className="w-full text-sm"
+                />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Tipo</label>
+                <NativeSelect
+                  className="w-full"
+                  value={form.tipo}
+                  onChange={(event) => setForm({ ...form, tipo: event.target.value })}
+                  required
+                >
+                  <option value="NOTICIA">Noticia</option>
+                  <option value="SERVICIO">Servicio</option>
+                </NativeSelect>
+              </div>
+              <DialogFooter className="md:col-span-2">
+                <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button className={"cursor-pointer"} type="submit" disabled={submitting}>{submitting ? "Guardando..." : editingId ? "Guardar cambios" : "Crear categoría"}</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -198,7 +213,7 @@ export default function CategoriesPage() {
                         {TIPO_LABELS[category.tipo] || category.tipo}
                       </span>
                     </td>
-                    <td className="px-4 py-3 space-x-2">
+                    <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
                       <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(category)}>
                         Editar
                       </Button>

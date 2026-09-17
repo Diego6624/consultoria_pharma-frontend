@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@heroui/react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
   cambiarEstadoUsuarioAdmin,
   crearUsuarioAdmin,
@@ -33,7 +34,8 @@ export default function UsersPage() {
   const [submitting, setSubmitting] = useState(false);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
-  const [actionId, setActionId] = useState(null);
+  const [action, setAction] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const loadUsers = async (currentPage = page) => {
     setLoading(true);
@@ -78,6 +80,7 @@ export default function UsersPage() {
 
       setForm(emptyForm);
       setEditingId(null);
+      setDialogOpen(false);
       toast.success(editingId ? "Usuario actualizado" : "Usuario creado");
       loadUsers(page);
     } catch (error) {
@@ -94,10 +97,12 @@ export default function UsersPage() {
       email: user.email || "",
       password: "",
     });
+    setDialogOpen(true);
   };
 
   const handleToggle = async (user) => {
-    setActionId(user.idUsuario);
+    if (action) return;
+    setAction({ id: user.idUsuario, type: "toggle" });
     try {
       await cambiarEstadoUsuarioAdmin(user.idUsuario, !user.estado);
       toast.success("Estado actualizado");
@@ -105,13 +110,14 @@ export default function UsersPage() {
     } catch (error) {
       toast.danger(error.message || "No se pudo actualizar el estado");
     } finally {
-      setActionId(null);
+      setAction(null);
     }
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("¿Deseas eliminar este usuario?")) return;
-    setActionId(id);
+    if (action) return;
+    setAction({ id, type: "delete" });
     try {
       await eliminarUsuarioAdmin(id);
       toast.success("Usuario eliminado");
@@ -119,7 +125,7 @@ export default function UsersPage() {
     } catch (error) {
       toast.danger(error.message || "No se pudo eliminar el usuario");
     } finally {
-      setActionId(null);
+      setAction(null);
     }
   };
 
@@ -143,12 +149,18 @@ export default function UsersPage() {
             <h2 className="text-xl font-semibold text-slate-900">Gestión de usuarios</h2>
             <p className="text-sm text-slate-600">Crea, edita y controla el acceso de administradores del sistema.</p>
           </div>
-          <Button variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); }}>
-            Limpiar formulario
+          <Button className={"cursor-pointer md:w-auto w-full bg-black hover:bg-black/80 text-white hover:text-white"} variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}>
+            Nuevo usuario
           </Button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 grid gap-4 md:grid-cols-3">
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+          <DialogContent className="sm:max-w-xl">
+            <DialogHeader>
+              <DialogTitle>{editingId ? "Editar usuario" : "Nuevo usuario"}</DialogTitle>
+              <DialogDescription>Completa los datos del administrador.</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
           <div>
             <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
             <Input value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre completo" className={"text-sm"} required />
@@ -161,10 +173,13 @@ export default function UsersPage() {
             <label className="mb-1 block text-sm font-medium text-slate-700">Contraseña</label>
             <Input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder={editingId ? "Nueva contraseña" : "Contraseña"} className={"text-sm"} required={!editingId} />
           </div>
-          <div className="md:col-span-3 flex items-center gap-3">
-            <Button className={"cursor-pointer"}  type="submit" disabled={submitting}>{editingId ? "Guardar cambios" : "Crear usuario"}</Button>
-          </div>
-        </form>
+              <DialogFooter className="md:col-span-2">
+                <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancelar</Button>
+                <Button className="cursor-pointer" type="submit" disabled={submitting}>{submitting ? "Guardando..." : editingId ? "Guardar cambios" : "Crear usuario"}</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
@@ -203,15 +218,15 @@ export default function UsersPage() {
                         {user.estado ? "Activo" : "Inactivo"}
                       </span>
                     </td>
-                    <td className="px-4 py-3 space-x-2">
+                    <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
                       <Button className={"cursor-pointer"}  variant="outline" size="sm" onClick={() => handleEdit(user)}>
                         Editar
                       </Button>
-                      <Button className={"cursor-pointer"}  variant="secondary" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleToggle(user)}>
-                        {actionId === user.idUsuario ? "Procesando..." : user.estado ? "Desactivar" : "Activar"}
+                      <Button className={"cursor-pointer"}  variant="secondary" size="sm" disabled={Boolean(action)} onClick={() => handleToggle(user)}>
+                        {action?.id === user.idUsuario && action.type === "toggle" ? "Procesando..." : user.estado ? "Desactivar" : "Activar"}
                       </Button>
-                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={actionId === user.idUsuario} onClick={() => handleDelete(user.idUsuario)}>
-                        {actionId === user.idUsuario ? "Eliminando..." : "Eliminar"}
+                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(action)} onClick={() => handleDelete(user.idUsuario)}>
+                        {action?.id === user.idUsuario && action.type === "delete" ? "Eliminando..." : "Eliminar"}
                       </Button>
                     </td>
                   </tr>

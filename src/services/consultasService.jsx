@@ -5,3 +5,5 @@ export const listarConsultasAdmin = ({ page = 0, size = 10 } = {}) => {
 };
 
 export const obtenerConsultaAdmin = (id) => api.get(`/api/admin/consultas/${id}`);
+
+export const marcarConsultaRevisada = (id) => api.patch(`/api/admin/consultas/${id}/revisada`);

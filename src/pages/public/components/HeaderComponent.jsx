@@ -148,6 +148,7 @@ const HeaderComponent = () => {
                                     icon={<LocalPhoneIcon />}
                                     iconColor="#FFFFFF"
                                     navigate="/consultation"
+                                    onNavigate={() => setOpen(false)}
                                 />
                             </div>
                         </motion.div>

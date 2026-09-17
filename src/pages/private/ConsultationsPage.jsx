@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@heroui/react";
-import { listarConsultasAdmin, obtenerConsultaAdmin } from "@/services/consultasService";
+import { listarConsultasAdmin, obtenerConsultaAdmin, marcarConsultaRevisada } from "@/services/consultasService";
 
 export default function ConsultationsPage() {
   const [consultations, setConsultations] = useState([]);
@@ -40,6 +40,14 @@ export default function ConsultationsPage() {
     const current = consultations.find((item) => item.idConsulta === selectedId);
     if (current) {
       setSelectedItem(current);
+      if (!current.revisada) {
+        marcarConsultaRevisada(current.idConsulta)
+          .then(() => {
+            setConsultations((items) => items.map((item) => item.idConsulta === current.idConsulta ? { ...item, revisada: true } : item));
+            setSelectedItem((item) => item ? { ...item, revisada: true } : item);
+          })
+          .catch(() => toast.danger("No se pudo actualizar el estado de la consulta"));
+      }
       return;
     }
 
