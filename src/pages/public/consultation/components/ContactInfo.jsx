@@ -24,12 +24,14 @@ const infoData = [
     },
 ];
 
+const SIN_PREFERENCIA = "sin-preferencia";
+
 const initialForm = {
     nombre: "",
     correo: "",
     telefono: "",
     mensaje: "",
-    idServicio: "",
+    idServicio: SIN_PREFERENCIA,
 };
 
 const ContactInfo = () => {
@@ -55,7 +57,7 @@ const ContactInfo = () => {
     };
 
     const handleServicioChange = (value) => {
-        setForm((prev) => ({ ...prev, idServicio: value === "ninguno" ? "" : value }));
+        setForm((prev) => ({ ...prev, idServicio: value }));
     };
 
     const handleSubmit = async (e) => {
@@ -71,7 +73,7 @@ const ContactInfo = () => {
             };
 
             const idServicio = Number(form.idServicio);
-            if (form.idServicio && !isNaN(idServicio)) {
+            if (form.idServicio !== SIN_PREFERENCIA && form.idServicio && !isNaN(idServicio)) {
                 payload.idServicio = idServicio;
             }
 
@@ -249,14 +251,14 @@ const ContactInfo = () => {
                             <label className="text-white font-semibold text-sm md:text-base">
                                 Tipo de consulta
                             </label>
-                            <Select onValueChange={handleServicioChange} value={form.idServicio || "ninguno"}>
+                            <Select onValueChange={handleServicioChange} value={form.idServicio}>
                                 <SelectTrigger className="w-full bg-white p-3 py-6">
                                     <SelectValue placeholder="Seleccione un servicio" />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
                                         <SelectLabel>Servicios</SelectLabel>
-                                        <SelectItem value="ninguno">Sin preferencia</SelectItem>
+                                        <SelectItem value={SIN_PREFERENCIA}>Sin preferencia</SelectItem>
                                         {servicios.map((servicio) => (
                                             <SelectItem
                                                 key={servicio.idServicio}
