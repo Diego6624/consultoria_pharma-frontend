@@ -5,6 +5,7 @@ import { toast } from "@heroui/react";
 import { Button } from "@/components/ui/button";
 import { obtenerDashboardAdmin } from "@/services/dashboardService";
 import { formatDate } from "@/lib/content";
+import { AdminDashboardSkeleton } from "@/components/admin/AdminSkeletons";
 
 const metrics = [
   { key: "totalConsultas", label: "Consultas recibidas", icon: CalendarDays, tone: "cyan" },
@@ -15,7 +16,7 @@ const metrics = [
 ];
 
 function LoadingBlock() {
-  return <div className="flex min-h-72 items-center justify-center gap-3 text-sm text-slate-500"><span className="size-6 animate-spin rounded-full border-2 border-slate-200 border-t-[#0DB3DE]" /> Cargando dashboard...</div>;
+  return <AdminDashboardSkeleton />;
 }
 
 export default function DashboardPage() {

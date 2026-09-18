@@ -10,6 +10,7 @@ import {
   eliminarCategoria,
   listarCategoriasAdmin,
 } from "@/services/categoriasService";
+import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 
 const emptyForm = {
   nombre: "",
@@ -188,11 +189,7 @@ export default function CategoriesPage() {
             </thead>
             <tbody>
               {loading ? (
-                <tr>
-                  <td colSpan="3" className="px-4 py-8 text-center text-slate-500">
-                    Cargando categorías...
-                  </td>
-                </tr>
+                <AdminTableSkeleton columns={3} />
               ) : filteredCategories.length === 0 ? (
                 <tr>
                   <td colSpan="3" className="px-4 py-8 text-center text-slate-500">

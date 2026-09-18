@@ -10,6 +10,7 @@ import {
   listarConsultasAdmin,
   obtenerConsultaAdmin,
 } from "@/services/consultasService";
+import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 
 function initials(name = "") {
   return name.trim().split(/\s+/).slice(0, 2).map((part) => part[0]?.toUpperCase()).join("") || "?";
@@ -198,11 +199,7 @@ export default function ConsultationsPage() {
               </thead>
               <tbody>
                 {loading ?
-                  <tr>
-                    <td colSpan="5" className="px-4 py-8 text-center text-slate-500">
-                      Cargando consultas...
-                    </td>
-                  </tr>
+                  <AdminTableSkeleton columns={5} />
                   : filteredConsultations.length === 0 ?
                     <tr>
                       <td colSpan="5" className="px-4 py-8 text-center text-slate-500">

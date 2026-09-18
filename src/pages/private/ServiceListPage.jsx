@@ -4,6 +4,7 @@ import { toast } from "@heroui/react";
 import { Button } from "@/components/ui/button";
 import { listarServiciosAdmin, eliminarServicio } from "@/services/serviciosService";
 import { listarCategoriasPorTipo } from "@/services/categoriasService";
+import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 
 export default function ServiceListPage() {
   const [services, setServices] = useState([]);
@@ -90,9 +91,7 @@ export default function ServiceListPage() {
             </thead>
             <tbody>
               {loading ?
-                <tr>
-                  <td colSpan="3" className="px-4 py-6 text-center text-slate-500">Cargando servicios...</td>
-                </tr>
+                <AdminTableSkeleton columns={3} />
                 : visibleServices.length === 0 ?
                   <tr>
                     <td colSpan="3" className="px-4 py-6 text-center text-slate-500">

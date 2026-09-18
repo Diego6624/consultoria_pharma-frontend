@@ -11,6 +11,7 @@ import {
   actualizarUsuarioAdmin,
 } from "@/services/usuariosService";
 import useAuth from "@/hooks/useAuth";
+import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 
 const emptyForm = {
   nombre: "",
@@ -204,7 +205,7 @@ export default function UsersPage() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="5" className="px-4 py-8 text-center text-slate-500">Cargando usuarios...</td></tr>
+                <AdminTableSkeleton columns={5} />
               ) : filteredUsers.length === 0 ? (
                 <tr><td colSpan="5" className="px-4 py-8 text-center text-slate-500">No hay usuarios registrados.</td></tr>
               ) : (

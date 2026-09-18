@@ -9,6 +9,7 @@ import {
   listarUbicacionesAdmin,
   actualizarUbicacionAdmin,
 } from "@/services/ubicacionesService";
+import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 
 const emptyForm = {
   nombre: "",
@@ -176,7 +177,7 @@ export default function LocationsPage() {
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="4" className="px-4 py-8 text-center text-slate-500">Cargando ubicaciones...</td></tr>
+                <AdminTableSkeleton columns={4} />
               ) : filteredLocations.length === 0 ? (
                 <tr><td colSpan="4" className="px-4 py-8 text-center text-slate-500">No hay ubicaciones registradas.</td></tr>
               ) : (

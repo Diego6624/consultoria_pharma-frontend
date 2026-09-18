@@ -42,6 +42,9 @@ import {
 } from "lucide-react";
 import { uploadImage } from "@/services/uploadService";
 import { toast } from "@heroui/react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const FONT_SIZES = [
   { label: "Pequeño", value: "12px" },
@@ -65,6 +68,9 @@ export default function TipTapEditor({ value, onChange }) {
   const [isUploading, setIsUploading] = useState(false);
   const [showHighlightPicker, setShowHighlightPicker] = useState(false);
   const [showTableMenu, setShowTableMenu] = useState(false);
+  const [linkDialogOpen, setLinkDialogOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState("");
+  const linkSelectionRef = useRef(null);
   const fileInputRef = useRef(null);
   const highlightRef = useRef(null);
   const tableMenuRef = useRef(null);
@@ -133,15 +139,22 @@ export default function TipTapEditor({ value, onChange }) {
 
   const addLink = () => {
     if (!editor) return;
-    const url = window.prompt("Ingresa la URL del enlace");
-    if (url) {
-      editor
-        .chain()
-        .focus()
-        .extendMarkRange("link")
-        .setLink({ href: url })
-        .run();
-    }
+    linkSelectionRef.current = {
+      from: editor.state.selection.from,
+      to: editor.state.selection.to,
+    };
+    setLinkUrl(editor.getAttributes("link").href || "");
+    setLinkDialogOpen(true);
+  };
+
+  const saveLink = () => {
+    const url = linkUrl.trim();
+    if (!editor || !url) return;
+    const selection = linkSelectionRef.current;
+    if (selection) editor.commands.setTextSelection(selection);
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+    setLinkDialogOpen(false);
+    setLinkUrl("");
   };
 
   const handleImageButtonClick = () => {
@@ -554,6 +567,39 @@ export default function TipTapEditor({ value, onChange }) {
 
       {/* Editor */}
       <EditorContent editor={editor} />
+
+      <Dialog open={linkDialogOpen} onOpenChange={setLinkDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Agregar enlace</DialogTitle>
+            <DialogDescription>
+              Selecciona una palabra o frase y escribe la URL que quieres vincular.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <label htmlFor="tiptap-link-url" className="text-sm font-medium text-slate-700">
+              URL del enlace
+            </label>
+            <Input
+              id="tiptap-link-url"
+              type="url"
+              value={linkUrl}
+              onChange={(event) => setLinkUrl(event.target.value)}
+              onKeyDown={(event) => event.key === "Enter" && saveLink()}
+              placeholder="https://ejemplo.com"
+              autoFocus
+            />
+          </div>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => setLinkDialogOpen(false)}>
+              Cancelar
+            </Button>
+            <Button type="button" onClick={saveLink} disabled={!linkUrl.trim()}>
+              Insertar enlace
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

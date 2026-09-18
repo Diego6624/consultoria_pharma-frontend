@@ -4,6 +4,7 @@ import { toast } from "@heroui/react";
 import { Button } from "@/components/ui/button";
 import { listarNoticiasAdmin, eliminarNoticia } from "@/services/noticiasService";
 import { listarCategoriasPorTipo } from "@/services/categoriasService";
+import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 
 export default function ArticleListPage() {
   const [articles, setArticles] = useState([]);
@@ -107,11 +108,7 @@ export default function ArticleListPage() {
             </thead>
             <tbody>
               {loading ?
-                <tr>
-                  <td colSpan="4" className="px-4 py-6 text-center text-slate-500">
-                    Cargando artículos...
-                  </td>
-                </tr>
+                <AdminTableSkeleton columns={4} />
                 : visibleArticles.length === 0 ?
                   <tr>
                     <td colSpan="4" className="px-4 py-6 text-center text-slate-500">

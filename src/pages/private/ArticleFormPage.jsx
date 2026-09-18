@@ -12,6 +12,7 @@ import {
 } from "@/services/noticiasService";
 import { listarCategoriasPorTipo } from "@/services/categoriasService";
 import { UploadCloud, X, Loader2 } from "lucide-react";
+import { AdminFormSkeleton } from "@/components/admin/AdminSkeletons";
 
 const initialForm = {
   titulo: "",
@@ -167,7 +168,7 @@ export default function ArticleFormPage() {
   const currentImage = previewImageUrl || form.imagen;
 
   if (loading) {
-    return <div className="flex min-h-64 items-center justify-center gap-3 rounded-3xl border border-border bg-white p-6 text-sm text-slate-500"><span className="size-5 animate-spin rounded-full border-2 border-slate-200 border-t-cyan-500" /> Cargando formulario...</div>;
+    return <AdminFormSkeleton />;
   }
 
   return (
