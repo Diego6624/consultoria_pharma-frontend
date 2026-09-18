@@ -7,7 +7,7 @@ const BannerMain = () => {
     return (
         <section className="relative w-full h-svh overflow-hidden">
 
-            {/* Imagen — entra de arriba a abajo */}
+            {/* Imagen — ocupa el espacio de la pantalla */}
             <PublicBannerImage
                 src="/images/imageHome.jpg"
                 imageClassName="object-[70%_center] md:object-center"
