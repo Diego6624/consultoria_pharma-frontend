@@ -2,7 +2,7 @@ import { Check, ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 const ServicesCard = ({
-  id,
+  slug,
   category,
   title,
   description,
@@ -12,7 +12,7 @@ const ServicesCard = ({
 
   const navigate = useNavigate();
 
-  const handleNavigate = () => navigate(`/services/${id}`);
+  const handleNavigate = () => navigate(`/services/${slug}`);
 
   return (
     <motion.article

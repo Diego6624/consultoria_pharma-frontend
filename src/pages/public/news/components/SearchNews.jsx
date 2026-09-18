@@ -85,7 +85,7 @@ export default function SearchNews() {
                         <>
                             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                                 {filteredArticles.map((article) => (
-                                    <Link key={article.idNoticia} to={`/news/${article.idNoticia}`} className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-sm transition hover:shadow-md">
+                                    <Link key={article.idNoticia} to={`/news/${article.slug}`} className="group flex flex-col overflow-hidden rounded-lg bg-white shadow-sm transition hover:shadow-md">
                                         <div className="relative h-48 overflow-hidden bg-slate-200">
                                             {article.imagen ?
                                                 <img src={getImageUrl(article.imagen)} alt={article.titulo} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />

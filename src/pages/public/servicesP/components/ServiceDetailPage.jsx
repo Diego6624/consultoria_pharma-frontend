@@ -8,7 +8,7 @@ import { PublicLoading } from "@/components/PublicLoading";
 import PublicBannerImage from "@/components/PublicBannerImage";
 
 const ServiceDetailPage = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [service, setService] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,12 +18,12 @@ const ServiceDetailPage = () => {
     let active = true;
     setLoading(true);
     setError("");
-    obtenerServicioPublico(id)
+    obtenerServicioPublico(slug)
       .then((data) => active && setService(data))
       .catch((loadError) => active && setError(loadError.message))
       .finally(() => active && setLoading(false));
     return () => { active = false; };
-  }, [id]);
+  }, [slug]);
 
   if (loading) return <PublicLoading label="Cargando servicio..." />;
   if (!service || error) {

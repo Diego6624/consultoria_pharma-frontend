@@ -8,7 +8,7 @@ import { PublicError, PublicLoading } from "@/components/PublicLoading";
 import PublicBannerImage from "@/components/PublicBannerImage";
 
 export default function NewsDetailPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -17,12 +17,12 @@ export default function NewsDetailPage() {
     let active = true;
     setLoading(true);
     setError("");
-    obtenerNoticiaPublica(id)
+    obtenerNoticiaPublica(slug)
       .then((data) => active && setArticle(data))
       .catch((loadError) => active && setError(loadError.message))
       .finally(() => active && setLoading(false));
     return () => { active = false; };
-  }, [id]);
+  }, [slug]);
 
   if (loading) return <PublicLoading label="Cargando noticia..." />;
   if (error || !article) return <PublicError message={error || "Noticia no encontrada."} />;

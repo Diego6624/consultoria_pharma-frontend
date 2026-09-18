@@ -21,6 +21,7 @@ const ServicesPage = () => {
       const data = await listarServiciosPublicos({ page, size: 6 });
       setServices((data?.content || []).map((service) => ({
         id: service.idServicio,
+        slug: service.slug,
         category: service.nombreCategoria || "Servicio",
         title: service.titulo,
         description: service.descripcion,

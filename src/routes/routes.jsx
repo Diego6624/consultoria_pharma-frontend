@@ -30,10 +30,10 @@ const router = createBrowserRouter(
       <Route path="/" element={<App />} errorElement={<NotFoundComponent />}>
         <Route index element={<HomePage />} />
         <Route path="news" element={<NewsPage />} />
-        <Route path="news/:id" element={<NewsDetailPage />} />
+        <Route path="news/:slug" element={<NewsDetailPage />} />
         <Route path="aboutUs" element={<AboutUsPage />} />
         <Route path="services" element={<ServicesPage />} />
-        <Route path="services/:id" element={<ServiceDetailPage />} />
+        <Route path="services/:slug" element={<ServiceDetailPage />} />
         <Route path="consultation" element={<ConsultationPage />} />
       </Route>
 

@@ -6,7 +6,7 @@ export const listarNoticiasPublicas = ({ page = 0, size = 10, idCategoria } = {}
   return api.get("/api/public/noticias", { params });
 };
 
-export const obtenerNoticiaPublica = (id) => api.get(`/api/public/noticias/${id}`);
+export const obtenerNoticiaPublica = (slug) => api.get(`/api/public/noticias/slug/${encodeURIComponent(slug)}`);
 
 export const listarNoticiasAdmin = ({ page = 0, size = 10, idCategoria } = {}) => {
   const params = { page, size };
