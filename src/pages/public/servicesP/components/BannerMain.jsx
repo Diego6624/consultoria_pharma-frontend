@@ -6,7 +6,10 @@ const BannerMain = () => {
         <section className="relative w-full h-svh overflow-hidden">
 
             {/* Imagen — entra de derecha a izquierda */}
-            <PublicBannerImage src="/images/imageServices.jpg" />
+            <PublicBannerImage
+                src="/images/imageServices.jpg"
+                imageClassName="object-[52%_center] md:object-center"
+            />
 
             {/* Gradiente overlay */}
             <div className="absolute inset-0 bg-linear-to-r from-black/80 md:via-black/10 md:to-transparent" />

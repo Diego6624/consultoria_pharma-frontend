@@ -5,8 +5,11 @@ const BannerMain = () => {
     return (
         <section className="relative w-full h-svh overflow-hidden">
 
-            <PublicBannerImage src="/images/imageNews.jpg" />
-
+            <PublicBannerImage
+                src="/images/imageNews.jpg"
+                imageClassName="object-[50%_center] md:object-center"
+            />
+            
             <div className="absolute inset-0 bg-linear-to-r from-black/80 md:via-black/10 md:to-transparent" />
 
             <motion.div

@@ -5,7 +5,10 @@ const BannerMain = () => {
     return (
         <section className="relative w-full h-svh overflow-hidden">
 
-            <PublicBannerImage src="/images/imageContact.jpg" className="bg-position-[70%_center] md:bg-center" />
+            <PublicBannerImage
+                src="/images/imageContact.jpg"
+                imageClassName="object-[55%_center] md:object-center"
+            />
 
             <div className="absolute inset-0 bg-linear-to-r from-black/80 md:via-black/10 md:to-transparent" />
 
