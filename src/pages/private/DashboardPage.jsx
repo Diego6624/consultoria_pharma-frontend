@@ -80,22 +80,24 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{metrics.map(({ key, label, icon: Icon, tone }) => <div key={key} className="rounded-2xl border border-[#1F4C7F]/10 bg-white p-5 shadow-sm">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-sm font-medium text-slate-500">
-              {label}
-            </p>
-            <p className="mt-3 text-4xl font-bold text-[#1F4C7F]">
-              {data?.[key] ?? 0}
-            </p>
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {metrics.map(({ key, label, icon: Icon, tone }) =>
+          <div key={key} className="rounded-2xl border border-[#1F4C7F]/10 bg-white p-5 shadow-sm">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm font-medium text-slate-500">
+                  {label}
+                </p>
+                <p className="mt-3 text-4xl font-bold text-[#1F4C7F]">
+                  {data?.[key] ?? 0}
+                </p>
+              </div>
+              <span className={`flex size-11 items-center justify-center rounded-xl ${tone === "cyan" ? "bg-[#0DB3DE]/12 text-[#0DB3DE]" : "bg-[#52C7E5]/20 text-[#1F4C7F]"}`}>
+                <Icon size={21} />
+              </span>
+            </div>
           </div>
-          <span className={`flex size-11 items-center justify-center rounded-xl ${tone === "cyan" ? "bg-[#0DB3DE]/12 text-[#0DB3DE]" : "bg-[#52C7E5]/20 text-[#1F4C7F]"}`}>
-            <Icon size={21} />
-          </span>
-        </div>
-      </div>
-      )}
+        )}
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">

@@ -41,19 +41,19 @@ export function AdminFormSkeleton() {
 
 export function AdminDashboardSkeleton() {
   return (
-    <div className="space-y-6">
-      <Skeleton className="h-52 w-full rounded-3xl" />
+    <div className="min-h-[calc(100vh-9rem)] space-y-6" aria-label="Cargando dashboard" aria-busy="true">
+      <Skeleton className="!bg-slate-200 h-52 w-full rounded-3xl" />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {Array.from({ length: 5 }, (_, index) => <Skeleton key={index} className="h-32 rounded-2xl" />)}
+        {Array.from({ length: 5 }, (_, index) => <Skeleton key={index} className="!bg-slate-200 h-32 rounded-2xl" />)}
       </div>
       <div className="grid gap-4 md:grid-cols-2">
-        {Array.from({ length: 2 }, (_, index) => <Skeleton key={index} className="h-32 rounded-2xl" />)}
+        {Array.from({ length: 2 }, (_, index) => <Skeleton key={index} className="!bg-slate-200 h-32 rounded-2xl" />)}
       </div>
       <div className="grid gap-6 xl:grid-cols-[1.4fr_0.6fr]">
-        <Skeleton className="h-72 rounded-2xl" />
-        <Skeleton className="h-72 rounded-2xl" />
+        <Skeleton className="!bg-slate-200 h-72 rounded-2xl" />
+        <Skeleton className="!bg-slate-200 h-72 rounded-2xl" />
       </div>
-      <Skeleton className="h-64 rounded-2xl" />
+      <Skeleton className="!bg-slate-200 h-64 rounded-2xl" />
     </div>
   );
 }
