@@ -16,7 +16,7 @@ const ServicesCard = ({
 
   return (
     <motion.article
-      className="relative w-full flex flex-col lg:flex-row overflow-hidden rounded-2xl shadow-md md:shadow-none"
+      className="relative flex h-auto w-full flex-col overflow-hidden rounded-2xl shadow-md md:shadow-none lg:h-full lg:min-h-[300px] lg:flex-row"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
@@ -25,10 +25,9 @@ const ServicesCard = ({
 
       {/* IMAGEN */}
       <div className="
-        w-full 
-        lg:w-1/2 
+        w-full
         aspect-[4/3] md:aspect-square
-        md:max-h-[100%]
+        lg:h-auto lg:w-1/2 lg:aspect-auto
         overflow-hidden
       ">
         <img
@@ -45,9 +44,10 @@ const ServicesCard = ({
 
       {/* CONTENIDO */}
       <div className="
-        w-full 
-        lg:w-1/2 
-        flex flex-col 
+        w-full
+        lg:w-1/2
+        flex h-auto flex-col
+        lg:h-full
         justify-between
         bg-white 
         px-6 py-6
@@ -65,7 +65,7 @@ const ServicesCard = ({
 
           <div className="h-1 w-12 rounded-full bg-cyan-400" />
 
-          <p className="text-sm text-gray-600 leading-6">
+          <p className="text-sm text-gray-600 leading-6 h-max">
             {description}
           </p>
 
@@ -99,7 +99,7 @@ const ServicesCard = ({
           {/* LÍNEA ANIMADA */}
           <span className="
             absolute 
-            left-1/2 bottom-0
+            left-0 bottom-0
             h-[2px] w-0 
             bg-current
             transition-all duration-300 ease-out

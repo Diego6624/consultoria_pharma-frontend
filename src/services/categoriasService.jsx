@@ -2,6 +2,8 @@ import api from "./apiClient.jsx";
 
 export const listarCategorias = () => api.get(`/api/public/categorias`);
 export const listarCategoriasAdmin = () => api.get(`/api/admin/categorias`);
+export const listarCategoriasAdminPaginadas = ({ page = 0, size = 10, tipo } = {}) =>
+  api.get(`/api/admin/categorias/paged`, { params: { page, size, ...(tipo ? { tipo } : {}) } });
 export const listarCategoriasPorTipo = (tipo) => api.get(`/api/admin/categorias?tipo=${tipo}`); // ✅ Agrega esto
 export const crearCategoria = (payload) => api.post(`/api/admin/categorias`, payload);
 export const actualizarCategoria = (id, payload) => api.put(`/api/admin/categorias/${id}`, payload);

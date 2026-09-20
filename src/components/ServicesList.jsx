@@ -28,10 +28,11 @@ const ServicesList = ({
 
   return (
     <section className="px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8">
         {filteredServices.map((service, index) => (
           <motion.div
             key={service.id}
+            className="h-auto lg:h-full"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.15, ease: 'easeOut' }}

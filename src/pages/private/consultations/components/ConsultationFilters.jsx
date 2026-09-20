@@ -11,7 +11,7 @@ export default function ConsultationFilters({
 }) {
   return (
     <div className="mt-6 grid gap-3 md:grid-cols-[1fr_190px_170px]">
-      <Input value={search} onChange={(event) => onSearchChange(event.target.value)} placeholder="Buscar por nombre, correo o servicio" />
+      <Input value={search} onChange={(event) => onSearchChange(event.target.value)} placeholder="Buscar por ID, nombre, correo o servicio" />
 
       <select value={serviceFilter} onChange={(event) => onServiceChange(event.target.value)} className="h-9 rounded-md border border-input bg-white px-3 text-sm">
         <option value="">Todos los servicios</option>

@@ -24,7 +24,7 @@ export default function ServiceListPage() {
   const loadServices = async () => {
     setLoading(true);
     try {
-      const data = await listarServiciosAdmin({ page, size: 20 });
+      const data = await listarServiciosAdmin({ page, size: 10 });
       setServices(data?.content || []);
       setTotal(data?.totalElements ?? 0);
     } catch (error) {
@@ -56,9 +56,9 @@ export default function ServiceListPage() {
 
   const visibleServices = services.filter((service) => {
     const term = search.trim().toLowerCase();
-    return (!term || `${service.titulo} ${service.descripcion}`.toLowerCase().includes(term)) && (!category || String(service.idCategoria) === category);
+    return (!term || `${service.idServicio} ${service.titulo} ${service.descripcion}`.toLowerCase().includes(term)) && (!category || String(service.idCategoria) === category);
   });
-  const pages = useMemo(() => Array.from({ length: Math.ceil(total / 20) }, (_, index) => index), [total]);
+  const pages = useMemo(() => Array.from({ length: Math.ceil(total / 10) }, (_, index) => index), [total]);
 
   return (
     <div className="space-y-6">

@@ -24,7 +24,7 @@ export default function ArticleListPage() {
   const loadArticles = async () => {
     setLoading(true);
     try {
-      const data = await listarNoticiasAdmin({ page, size: 20 });
+      const data = await listarNoticiasAdmin({ page, size: 10 });
       setArticles(data?.content || []);
       setTotal(data?.totalElements ?? 0);
     } catch (error) {
@@ -56,9 +56,9 @@ export default function ArticleListPage() {
 
   const visibleArticles = articles.filter((article) => {
     const term = search.trim().toLowerCase();
-    return (!term || `${article.titulo} ${article.descripcion}`.toLowerCase().includes(term)) && (!category || String(article.idCategoria) === category);
+    return (!term || `${article.idNoticia} ${article.titulo} ${article.descripcion}`.toLowerCase().includes(term)) && (!category || String(article.idCategoria) === category);
   });
-  const pages = useMemo(() => Array.from({ length: Math.ceil(total / 20) }, (_, index) => index), [total]);
+  const pages = useMemo(() => Array.from({ length: Math.ceil(total / 10) }, (_, index) => index), [total]);
 
   return (
     <div className="space-y-6">

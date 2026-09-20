@@ -7,7 +7,7 @@ export default function ArticleFilters({ search, category, categories, onSearchC
       <input
         value={search}
         onChange={(event) => onSearchChange(event.target.value)}
-        placeholder="Buscar por título o descripción"
+        placeholder="Buscar por ID, título o descripción"
         className="h-10 rounded-md border border-slate-300 px-3 text-sm"
       />
       <select

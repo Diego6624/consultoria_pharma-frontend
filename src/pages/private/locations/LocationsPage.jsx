@@ -114,7 +114,7 @@ export default function LocationsPage() {
 
   const filteredLocations = locations.filter((location) => {
     const term = search.trim().toLowerCase();
-    return !term || `${location.nombre} ${location.descripcion || ""}`.toLowerCase().includes(term);
+    return !term || `${location.idUbicacion} ${location.nombre} ${location.descripcion || ""}`.toLowerCase().includes(term);
   });
 
   return (
@@ -164,12 +164,13 @@ export default function LocationsPage() {
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-4">
-          <Input className={"text-sm"} value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o descripción" />
+          <Input className={"text-sm"} value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por ID, nombre o descripción" />
         </div>
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
           <table className="min-w-full text-sm">
             <thead className="bg-slate-50 text-left text-slate-600">
               <tr>
+                <th className="px-4 py-3">ID</th>
                 <th className="px-4 py-3">Nombre</th>
                 <th className="px-4 py-3">Coordenadas</th>
                 <th className="px-4 py-3">Descripción</th>
@@ -178,12 +179,13 @@ export default function LocationsPage() {
             </thead>
             <tbody>
               {loading ? (
-                <AdminTableSkeleton columns={4} />
+                <AdminTableSkeleton columns={5} />
               ) : filteredLocations.length === 0 ? (
-                <tr><td colSpan="4" className="px-4 py-8 text-center text-slate-500">No hay ubicaciones registradas.</td></tr>
+                <tr><td colSpan="5" className="px-4 py-8 text-center text-slate-500">No hay ubicaciones registradas.</td></tr>
               ) : (
                 filteredLocations.map((location) => (
                   <tr key={location.idUbicacion} className="border-t border-slate-200">
+                    <td className="px-4 py-3 font-mono text-xs text-slate-500">{location.idUbicacion}</td>
                     <td className="px-4 py-3 font-medium">{location.nombre}</td>
                     <td className="px-4 py-3">{location.latitud}, {location.longitud}</td>
                     <td className="px-4 py-3">{location.descripcion || "-"}</td>

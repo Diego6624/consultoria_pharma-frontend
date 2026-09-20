@@ -8,7 +8,7 @@ export default function ConsultationTable({
   loading,
   onOpenDetail,
   onRequestDelete,
-  dialogLoading,
+  dialogLoadingId,
   revisionActionId,
   deleteActionId,
   exporting,
@@ -20,7 +20,7 @@ export default function ConsultationTable({
       <table className="min-w-[760px] w-full text-sm">
         <thead className="bg-slate-50 text-left text-slate-600">
           <tr>
-            <th className="min-w-[210px] whitespace-nowrap px-4 py-3">Contacto</th>
+            <th className="whitespace-nowrap px-4 py-3">ID</th><th className="min-w-[210px] whitespace-nowrap px-4 py-3">Contacto</th>
             <th className="min-w-[170px] whitespace-nowrap px-4 py-3">Servicio</th>
             <th className="min-w-[145px] whitespace-nowrap px-4 py-3">Fecha</th>
             <th className="min-w-[125px] whitespace-nowrap px-4 py-3">Estado</th>
@@ -28,11 +28,11 @@ export default function ConsultationTable({
           </tr>
         </thead>
         <tbody>
-          {loading ? <AdminTableSkeleton columns={5} /> : consultations.length === 0 ? (
-            <tr><td colSpan="5" className="px-4 py-8 text-center text-slate-500">No hay consultas que coincidan.</td></tr>
+          {loading ? <AdminTableSkeleton columns={6} /> : consultations.length === 0 ? (
+            <tr><td colSpan="6" className="px-4 py-8 text-center text-slate-500">No hay consultas que coincidan.</td></tr>
           ) : consultations.map((item) => (
             <tr key={item.idConsulta} className="border-t border-slate-200 transition-colors hover:bg-slate-50">
-              <td className="px-4 py-3">
+              <td className="px-4 py-3 font-mono text-xs text-slate-500">{item.idConsulta}</td><td className="px-4 py-3">
                 <div className="flex items-center gap-3">
                   <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-[#52C7E5]/30 font-bold text-[#1F4C7F]">{initials(item.nombre)}</span>
                   <div className="min-w-0">
@@ -58,9 +58,9 @@ export default function ConsultationTable({
               </td>
               <td className="px-4 py-3">
                 <div className="flex gap-1">
-                  <Button className="cursor-pointer" variant="outline" size="sm" title="Ver detalle" disabled={dialogLoading || busy || exporting} onClick={() => onOpenDetail(item)}>
-                    {dialogLoading ? <Loader2 size={14} className="animate-spin" /> : <Eye size={14} />}
-                    {dialogLoading ? "Cargando..." : "Ver"}
+                  <Button className="cursor-pointer" variant="outline" size="sm" title="Ver detalle" disabled={Boolean(dialogLoadingId) || busy || exporting} onClick={() => onOpenDetail(item)}>
+                    {dialogLoadingId === item.idConsulta ? <Loader2 size={14} className="animate-spin" /> : <Eye size={14} />}
+                    {dialogLoadingId === item.idConsulta ? "Cargando..." : "Ver"}
                   </Button>
                   <Button className="cursor-pointer" variant="destructive" size="sm" title="Eliminar" disabled={busy} onClick={(event) => onRequestDelete(item.idConsulta, event)}>
                     {deleteActionId === item.idConsulta ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}

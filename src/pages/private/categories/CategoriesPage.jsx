@@ -8,10 +8,11 @@ import {
   actualizarCategoria,
   crearCategoria,
   eliminarCategoria,
-  listarCategoriasAdmin,
+  listarCategoriasAdminPaginadas,
 } from "@/services/categoriasService";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
+import AdminPagination from "@/pages/private/components/AdminPagination";
 import CategoryTable from "./components/CategoryTable";
 
 const emptyForm = {
@@ -22,6 +23,8 @@ const emptyForm = {
 export default function CategoriesPage() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(0);
+  const [total, setTotal] = useState(0);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -34,8 +37,9 @@ export default function CategoriesPage() {
   const loadCategories = async () => {
     setLoading(true);
     try {
-      const data = await listarCategoriasAdmin();
-      setCategories(Array.isArray(data) ? data : []);
+      const data = await listarCategoriasAdminPaginadas({ page, size: 10, tipo: typeFilter || undefined });
+      setCategories(data?.content || []);
+      setTotal(data?.totalElements ?? 0);
     } catch (error) {
       toast.danger(error.message || "No se pudieron cargar las categorías");
     } finally {
@@ -45,7 +49,7 @@ export default function CategoriesPage() {
 
   useEffect(() => {
     loadCategories();
-  }, []);
+  }, [page, typeFilter]);
 
   const resetForm = () => {
     setEditingId(null);
@@ -105,8 +109,9 @@ export default function CategoriesPage() {
 
   const filteredCategories = categories.filter((category) => {
     const term = search.trim().toLowerCase();
-    return (!term || category.nombre.toLowerCase().includes(term)) && (!typeFilter || category.tipo === typeFilter);
+    return !term || `${category.idCategoria} ${category.nombre}`.toLowerCase().includes(term);
   });
+  const pages = Array.from({ length: Math.ceil(total / 10) }, (_, index) => index);
 
   return (
     <div className="space-y-6">
@@ -162,8 +167,8 @@ export default function CategoriesPage() {
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6 grid gap-3 md:grid-cols-[1fr_220px]">
-          <input className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Buscar por nombre" />
-          <select className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={typeFilter} onChange={(event) => setTypeFilter(event.target.value)}>
+          <input className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por ID o nombre" />
+          <select className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={typeFilter} onChange={(event) => { setTypeFilter(event.target.value); setPage(0); }}>
             <option value="">
               Todos los tipos
             </option>
@@ -172,6 +177,7 @@ export default function CategoriesPage() {
           </select>
         </div>
         <CategoryTable categories={filteredCategories} loading={loading} deletingId={deletingId} onEdit={handleEdit} onDelete={requestDelete} />
+        <AdminPagination pages={pages} currentPage={page} onPageChange={setPage} disabled={loading || Boolean(deletingId)} />
       </div>
       <DeleteConfirmDialog
         open={Boolean(deleteTarget)}

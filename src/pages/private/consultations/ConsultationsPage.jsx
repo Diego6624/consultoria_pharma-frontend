@@ -25,6 +25,7 @@ export default function ConsultationsPage() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogLoading, setDialogLoading] = useState(false);
+  const [dialogLoadingId, setDialogLoadingId] = useState(null);
   const [search, setSearch] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [dateFilter, setDateFilter] = useState("");
@@ -54,6 +55,7 @@ export default function ConsultationsPage() {
     setSelectedItem(null);
     setDialogOpen(true);
     setDialogLoading(true);
+    setDialogLoadingId(item.idConsulta);
     try {
       setSelectedItem(await obtenerConsultaAdmin(item.idConsulta));
     } catch (error) {
@@ -61,6 +63,7 @@ export default function ConsultationsPage() {
       toast.danger(error.message || "No se pudo cargar el detalle");
     } finally {
       setDialogLoading(false);
+      setDialogLoadingId(null);
     }
   };
 
@@ -143,7 +146,7 @@ export default function ConsultationsPage() {
     startOfWeek.setDate(now.getDate() - ((now.getDay() + 6) % 7));
     startOfWeek.setHours(0, 0, 0, 0);
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const matchesText = !term || `${item.nombre} ${item.correo} ${item.nombreServicio || ""}`.toLowerCase().includes(term);
+    const matchesText = !term || `${item.idConsulta} ${item.nombre} ${item.correo} ${item.nombreServicio || ""}`.toLowerCase().includes(term);
     const matchesService = !serviceFilter || item.nombreServicio === serviceFilter;
     const matchesDate = !dateFilter || (dateFilter === "week" ? itemDate >= startOfWeek : itemDate >= startOfMonth);
     return matchesText && matchesService && matchesDate;
@@ -179,7 +182,7 @@ export default function ConsultationsPage() {
           loading={loading}
           onOpenDetail={openDetail}
           onRequestDelete={requestDelete}
-          dialogLoading={dialogLoading}
+          dialogLoadingId={dialogLoadingId}
           revisionActionId={revisionActionId}
           deleteActionId={deleteActionId}
           exporting={exporting}
