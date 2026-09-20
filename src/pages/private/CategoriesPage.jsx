@@ -11,6 +11,7 @@ import {
   listarCategoriasAdmin,
 } from "@/services/categoriasService";
 import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
+import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 
 const emptyForm = {
   nombre: "",
@@ -32,6 +33,7 @@ export default function CategoriesPage() {
   const [typeFilter, setTypeFilter] = useState("");
   const [deletingId, setDeletingId] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const loadCategories = async () => {
     setLoading(true);
@@ -91,7 +93,6 @@ export default function CategoriesPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Deseas eliminar esta categoría?")) return;
     setDeletingId(id);
     try {
       await eliminarCategoria(id);
@@ -103,6 +104,8 @@ export default function CategoriesPage() {
       setDeletingId(null);
     }
   };
+
+  const requestDelete = (category) => setDeleteTarget(category);
 
   const filteredCategories = categories.filter((category) => {
     const term = search.trim().toLowerCase();
@@ -218,8 +221,8 @@ export default function CategoriesPage() {
                         variant="destructive"
                         size="sm"
                         className={"cursor-pointer"}
-                        disabled={deletingId === category.idCategoria}
-                        onClick={() => handleDelete(category.idCategoria)}
+                        disabled={Boolean(deletingId)}
+                        onClick={() => requestDelete(category)}
                       >
                         {deletingId === category.idCategoria ? "Eliminando..." : "Eliminar"}
                       </Button>
@@ -231,6 +234,18 @@ export default function CategoriesPage() {
           </table>
         </div>
       </div>
+      <DeleteConfirmDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        title="¿Eliminar esta categoría?"
+        description="La categoría se eliminará permanentemente. Esta acción no se puede deshacer."
+        loading={Boolean(deletingId)}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          await handleDelete(deleteTarget.idCategoria);
+          setDeleteTarget(null);
+        }}
+      />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import {
   actualizarUbicacionAdmin,
 } from "@/services/ubicacionesService";
 import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
+import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 
 const emptyForm = {
   nombre: "",
@@ -29,6 +30,7 @@ export default function LocationsPage() {
   const [search, setSearch] = useState("");
   const [deletingId, setDeletingId] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const loadLocations = async (currentPage = page) => {
     setLoading(true);
@@ -89,7 +91,6 @@ export default function LocationsPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Deseas eliminar esta ubicación?")) return;
     setDeletingId(id);
     try {
       await eliminarUbicacionAdmin(id);
@@ -101,6 +102,8 @@ export default function LocationsPage() {
       setDeletingId(null);
     }
   };
+
+  const requestDelete = (location) => setDeleteTarget(location);
 
   const pages = useMemo(() => {
     const count = Math.max(1, Math.ceil(total / 10));
@@ -188,7 +191,7 @@ export default function LocationsPage() {
                     <td className="px-4 py-3">{location.descripcion || "-"}</td>
                     <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
                       <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(location)}>Editar</Button>
-                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={deletingId === location.idUbicacion} onClick={() => handleDelete(location.idUbicacion)}>{deletingId === location.idUbicacion ? "Eliminando..." : "Eliminar"}</Button>
+                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(deletingId)} onClick={() => requestDelete(location)}>{deletingId === location.idUbicacion ? "Eliminando..." : "Eliminar"}</Button>
                     </td>
                   </tr>
                 ))
@@ -205,6 +208,18 @@ export default function LocationsPage() {
           ))}
         </div>
       </div>
+      <DeleteConfirmDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        title="¿Eliminar esta ubicación?"
+        description="La ubicación se eliminará permanentemente del sistema. Esta acción no se puede deshacer."
+        loading={Boolean(deletingId)}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          await handleDelete(deleteTarget.idUbicacion);
+          setDeleteTarget(null);
+        }}
+      />
     </div>
   );
 }

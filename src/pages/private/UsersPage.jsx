@@ -12,6 +12,7 @@ import {
 } from "@/services/usuariosService";
 import useAuth from "@/hooks/useAuth";
 import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
+import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 
 const emptyForm = {
   nombre: "",
@@ -37,6 +38,7 @@ export default function UsersPage() {
   const [statusFilter, setStatusFilter] = useState("");
   const [action, setAction] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const loadUsers = async (currentPage = page) => {
     setLoading(true);
@@ -116,7 +118,6 @@ export default function UsersPage() {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Deseas eliminar este usuario?")) return;
     if (action) return;
     setAction({ id, type: "delete" });
     try {
@@ -129,6 +130,8 @@ export default function UsersPage() {
       setAction(null);
     }
   };
+
+  const requestDelete = (user) => setDeleteTarget(user);
 
   const pages = useMemo(() => {
     const count = Math.max(1, Math.ceil(total / 10));
@@ -226,7 +229,7 @@ export default function UsersPage() {
                       <Button className={"cursor-pointer"}  variant="secondary" size="sm" disabled={Boolean(action)} onClick={() => handleToggle(user)}>
                         {action?.id === user.idUsuario && action.type === "toggle" ? "Procesando..." : user.estado ? "Desactivar" : "Activar"}
                       </Button>
-                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(action)} onClick={() => handleDelete(user.idUsuario)}>
+                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(action)} onClick={() => requestDelete(user)}>
                         {action?.id === user.idUsuario && action.type === "delete" ? "Eliminando..." : "Eliminar"}
                       </Button>
                     </td>
@@ -245,6 +248,18 @@ export default function UsersPage() {
           ))}
         </div>
       </div>
+      <DeleteConfirmDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        title="¿Eliminar este usuario?"
+        description="El usuario perderá el acceso al panel administrativo. Esta acción no se puede deshacer."
+        loading={action?.type === "delete"}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          await handleDelete(deleteTarget.idUsuario);
+          setDeleteTarget(null);
+        }}
+      />
     </div>
   );
 }

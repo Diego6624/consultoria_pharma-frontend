@@ -31,7 +31,7 @@ const AdminShell = () => {
 
           {/* Header Mobile */}
           <header className="bg-[#1F4C7F] flex items-center justify-between px-4 py-3 md:hidden">
-            <SidebarTrigger className="p-2 rounded-lg hover:bg-white/20 transition text-white" />
+            <SidebarTrigger className="p-2 border-none hover:bg-white/50 transition text-white cursor-pointer" />
             <div className="flex items-center gap-2">
               <LayoutDashboard size={18} className="text-white"/>
               <h1 className="text-base font-bold text-white">Panel Administrativo</h1>

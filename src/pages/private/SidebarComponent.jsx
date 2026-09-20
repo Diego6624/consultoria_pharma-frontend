@@ -1,5 +1,5 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { Sidebar, SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, SidebarTrigger } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import useAuth from "@/hooks/useAuth";
 import { BriefcaseBusiness, LayoutDashboard, LogOut, MapPinned, MessageSquareText, Newspaper, Tags, Users } from "lucide-react";
@@ -12,6 +12,7 @@ export default function SidebarComponent() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { isMobile, setOpen, setOpenMobile } = useSidebar();
 
   const normalizeRole = (role) => {
     if (!role) return "";
@@ -36,6 +37,14 @@ export default function SidebarComponent() {
   const handleLogout = () => {
     logout();
     navigate("/login", { replace: true });
+  };
+
+  const handleNavigation = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    } else {
+      setOpen(false);
+    }
   };
 
   return (
@@ -89,7 +98,7 @@ export default function SidebarComponent() {
                         : "text-[#cfe8f1] hover:bg-[#52C7E5]/16 hover:text-white"
                     )}
                   >
-                    <NavLink to={item.path} className="flex items-center gap-2 w-full">
+                    <NavLink to={item.path} onClick={handleNavigation} className="flex items-center gap-2 w-full">
                       <Icon className="h-4 w-4 shrink-0" />
                       <span>{item.label}</span>
                     </NavLink>

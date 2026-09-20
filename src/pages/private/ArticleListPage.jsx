@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { listarNoticiasAdmin, eliminarNoticia } from "@/services/noticiasService";
 import { listarCategoriasPorTipo } from "@/services/categoriasService";
 import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
+import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 
 export default function ArticleListPage() {
   const [articles, setArticles] = useState([]);
@@ -15,6 +16,7 @@ export default function ArticleListPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const loadArticles = async () => {
     setLoading(true);
@@ -35,7 +37,6 @@ export default function ArticleListPage() {
   }, []);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Eliminar este artículo?")) return;
     setDeletingId(id);
     try {
       await eliminarNoticia(id);
@@ -47,6 +48,8 @@ export default function ArticleListPage() {
       setDeletingId(null);
     }
   };
+
+  const requestDelete = (article) => setDeleteTarget(article);
 
   const visibleArticles = articles.filter((article) => {
     const term = search.trim().toLowerCase();
@@ -130,7 +133,7 @@ export default function ArticleListPage() {
                         <Link to={`/admin/noticias/${article.idNoticia}/editar`}>
                           <Button className={"cursor-pointer"} variant="outline" size="sm" disabled={Boolean(deletingId)}>Editar</Button>
                         </Link>
-                        <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={deletingId === article.idNoticia} onClick={() => handleDelete(article.idNoticia)}>
+                        <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(deletingId)} onClick={() => requestDelete(article)}>
                           {deletingId === article.idNoticia ? "Eliminando..." : "Eliminar"}
                         </Button>
                       </td>
@@ -146,6 +149,18 @@ export default function ArticleListPage() {
           </Button>)}
         </div>
       </div>
+      <DeleteConfirmDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        title="¿Eliminar este artículo?"
+        description="El artículo se eliminará permanentemente y dejará de estar disponible. Esta acción no se puede deshacer."
+        loading={Boolean(deletingId)}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          await handleDelete(deleteTarget.idNoticia);
+          setDeleteTarget(null);
+        }}
+      />
     </div>
   );
 }

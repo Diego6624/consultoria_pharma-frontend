@@ -39,6 +39,38 @@ export function AdminFormSkeleton() {
   );
 }
 
+export function ConsultationDialogSkeleton() {
+  return (
+    <div className="space-y-5" aria-label="Cargando detalle de la consulta" aria-busy="true">
+      <div className="flex items-center gap-3">
+        <Skeleton className="size-12 rounded-full !bg-slate-200" />
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-36 !bg-slate-200" />
+          <Skeleton className="h-3 w-28 !bg-slate-200" />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-6 rounded-xl border border-slate-100 p-4">
+        {Array.from({ length: 4 }, (_, index) => (
+          <div key={index} className="space-y-2">
+            <Skeleton className="h-3 w-20 !bg-slate-200" />
+            <Skeleton className="h-4 w-full !bg-slate-200" />
+          </div>
+        ))}
+      </div>
+      <div className="space-y-2 rounded-xl border border-slate-200 p-4">
+        <Skeleton className="h-3 w-16 !bg-slate-200" />
+        <Skeleton className="h-4 w-full !bg-slate-200" />
+        <Skeleton className="h-4 w-4/5 !bg-slate-200" />
+        <Skeleton className="h-4 w-3/5 !bg-slate-200" />
+      </div>
+      <div className="flex justify-end gap-2">
+        <Skeleton className="h-8 w-28 !bg-slate-200" />
+        <Skeleton className="h-8 w-24 !bg-slate-200" />
+      </div>
+    </div>
+  );
+}
+
 export function AdminDashboardSkeleton() {
   return (
     <div className="min-h-[calc(100vh-9rem)] space-y-6" aria-label="Cargando dashboard" aria-busy="true">

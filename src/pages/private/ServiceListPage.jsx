@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { listarServiciosAdmin, eliminarServicio } from "@/services/serviciosService";
 import { listarCategoriasPorTipo } from "@/services/categoriasService";
 import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
+import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 
 export default function ServiceListPage() {
   const [services, setServices] = useState([]);
@@ -15,6 +16,7 @@ export default function ServiceListPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const loadServices = async () => {
     setLoading(true);
@@ -35,7 +37,6 @@ export default function ServiceListPage() {
   }, []);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("¿Eliminar este servicio?")) return;
     setDeletingId(id);
     try {
       await eliminarServicio(id);
@@ -47,6 +48,8 @@ export default function ServiceListPage() {
       setDeletingId(null);
     }
   };
+
+  const requestDelete = (service) => setDeleteTarget(service);
 
   const visibleServices = services.filter((service) => {
     const term = search.trim().toLowerCase();
@@ -112,7 +115,7 @@ export default function ServiceListPage() {
                             Editar
                           </Button>
                         </Link>
-                        <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={deletingId === service.idServicio} onClick={() => handleDelete(service.idServicio)}>
+                        <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(deletingId)} onClick={() => requestDelete(service)}>
                           {deletingId === service.idServicio ? "Eliminando..." : "Eliminar"}
                         </Button>
                       </td>
@@ -129,6 +132,18 @@ export default function ServiceListPage() {
           )}
         </div>
       </div>
+      <DeleteConfirmDialog
+        open={Boolean(deleteTarget)}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+        title="¿Eliminar este servicio?"
+        description="El servicio se eliminará permanentemente del catálogo público. Esta acción no se puede deshacer."
+        loading={Boolean(deletingId)}
+        onConfirm={async () => {
+          if (!deleteTarget) return;
+          await handleDelete(deleteTarget.idServicio);
+          setDeleteTarget(null);
+        }}
+      />
     </div>
   );
 }
