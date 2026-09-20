@@ -89,22 +89,27 @@ const MapsLocation = () => {
           />
 
           {/* Botones sobre el mapa — solo visible en md+ */}
-          <div className="hidden md:flex absolute left-10 top-1/2 -translate-y-1/2 flex-col gap-3 z-10">
-            {locations.map((location, index) => (
-              <button
-                key={location.id}
-                onClick={() => setActiveLocation(index)}
-                className={`w-56 px-5 py-3 rounded-lg font-semibold text-left text-sm shadow-lg
-        transition-all duration-300 hover:translate-x-2
-        ${activeLocation === index
-                    ? "bg-[#0DB3DE] text-white translate-x-2"
-                    : "bg-[#268EA9] text-white"
-                  }`}
-              >
-                <p className="font-bold leading-tight line-clamp-1">{location.name}</p>
-                <p className="text-xs opacity-90 mt-0.5 line-clamp-1">{location.description}</p>
-              </button>
-            ))}
+          <div className="absolute left-10 top-1/2 z-10 hidden max-h-[500px] -translate-y-1/2 overflow-hidden md:flex">
+            <div className="max-h-[500px] overflow-y-auto overscroll-contain pr-3">
+              <div className="flex flex-col gap-3">
+                {locations.map((location, index) => (
+                  <button
+                    key={location.id}
+                    onClick={() => setActiveLocation(index)}
+                    className={`w-56 rounded-lg px-5 py-3 text-left text-sm font-semibold shadow-lg transition-all duration-300 hover:translate-x-2
+            ${activeLocation === index
+                        ? "translate-x-2 bg-[#0DB3DE] text-white"
+                        : "bg-[#268EA9] text-white"
+                      }`}
+                  >
+                    <p className="font-bold leading-tight line-clamp-1">{location.name}</p>
+                    <p className="mt-0.5 text-xs opacity-90 line-clamp-1">{location.description}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-10 bg-gradient-to-b from-black/35 via-black/15 to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-10 bg-gradient-to-t from-black/35 via-black/15 to-transparent" />
           </div>
         </div>
       </motion.div>

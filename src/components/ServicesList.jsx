@@ -17,7 +17,7 @@ const ServicesList = ({
 
   if (filteredServices.length === 0) {
     return (
-      <section className="px-8 md:px-16 lg:px-32 2xl:px-44 py-12">
+      <section className="px-8 py-12 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
         <div className="flex flex-col items-center justify-center min-h-96 gap-4">
           <p className="text-lg text-gray-600">No se encontraron servicios que coincidan con tu búsqueda.</p>
           <p className="text-sm text-gray-500">Intenta con otros términos o categorías.</p>
@@ -27,7 +27,7 @@ const ServicesList = ({
   }
 
   return (
-    <section className="px-8 md:px-16 lg:px-32 2xl:px-44">
+    <section className="px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {filteredServices.map((service, index) => (
           <motion.div

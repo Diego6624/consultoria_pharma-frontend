@@ -62,7 +62,7 @@ const QuestionsSection = () => {
 
                 {/* Imagen — debajo en mobile */}
                 <motion.div
-                    className="w-full flex items-center justify-center order-last md:order-none"
+                    className="order-last flex w-full items-center justify-center md:order-none md:justify-self-center"
                     initial={{ opacity: 0, x: 40 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
@@ -71,8 +71,7 @@ const QuestionsSection = () => {
                     <img
                         src="/images/imageHome2.jpg"
                         alt="image"
-                        className="w-full h-56 sm:h-72 md:h-[420px] lg:h-[500px]
-                                   object-cover rounded-2xl md:rounded-b-full shadow-md"
+                        className="h-56 w-full max-w-none object-cover rounded-2xl shadow-md sm:h-72 md:h-[420px] md:max-w-[420px] md:rounded-b-full lg:h-[500px] lg:max-w-[480px]"
                     />
                 </motion.div>
             </div>

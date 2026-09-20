@@ -12,7 +12,7 @@ const stats = [
 const GuaranteedResults = () => {
     return (<>
         {/* overflow-hidden aquí corta el desborde del x: 40 durante la animación */}
-        <section className="overflow-hidden py-10 md:py-16 px-6 sm:px-10 md:px-16 lg:px-32 2xl:px-44 bg-[#1F4C7F]">
+        <section className="overflow-hidden bg-[#1F4C7F] px-6 py-10 sm:px-10 md:px-16 md:py-16 lg:px-32 xl:px-48 2xl:px-64">
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-10 items-center text-white">
 
                 {/* Imagen */}
@@ -56,10 +56,10 @@ const GuaranteedResults = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-2">
                         {stats.map(({ label, value }, i) => (
                             <div key={i}
-                                className="flex flex-col gap-1 bg-white/10 rounded-xl p-3 md:p-2 md:bg-transparent md:rounded-none">
+                                className="flex flex-col gap-1 bg-white/10 rounded-xl p-3 md:p-1 md:bg-transparent md:rounded-none">
                                 <p className="font-semibold text-sm md:text-base lg:text-lg">{label}</p>
                                 <p className="text-xs md:text-sm lg:text-base text-white/70">{value}</p>
                             </div>

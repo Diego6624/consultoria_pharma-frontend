@@ -13,7 +13,7 @@ const GRID_LAYOUTS = {
   3: ["col-span-12 md:col-span-3", "col-span-12 md:col-span-4", "col-span-12 md:col-span-5"],
   4: ["col-span-12 md:col-span-3", "col-span-12 md:col-span-4", "col-span-12 md:col-span-5", "col-span-12 md:col-span-12"],
   5: ["col-span-12 md:col-span-3", "col-span-12 md:col-span-4", "col-span-12 md:col-span-5", "col-span-12 md:col-span-6", "col-span-12 md:col-span-6"],
-  6: ["col-span-12 md:col-span-3", "col-span-12 md:col-span-4", "col-span-12 md:col-span-5", "col-span-12 md:col-span-6", "col-span-12 md:col-span-3", "col-span-12 md:col-span-3"],
+  6: ["col-span-12 md:col-span-3", "col-span-12 md:col-span-4", "col-span-12 md:col-span-5", "col-span-12 md:col-span-5", "col-span-12 md:col-span-4", "col-span-12 md:col-span-3"],
 };
 
 const RegulatoryCurrent = () => {
@@ -42,7 +42,7 @@ const RegulatoryCurrent = () => {
   const layout = GRID_LAYOUTS[articles.length] || GRID_LAYOUTS[6];
 
   return (
-    <section className="bg-gray-100 px-8 py-14 md:px-16 lg:px-32 2xl:px-44">
+    <section className="bg-gray-100 px-8 py-14 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
       <div className="mb-10 flex flex-col items-center gap-3">
         <h2 className="text-center text-3xl font-bold text-gray-900">Actualidad Regulatoria</h2>
         <p className="text-center text-lg text-gray-600">
@@ -68,7 +68,7 @@ const RegulatoryCurrent = () => {
                 className={layout[index]}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.12, ease: "easeOut" }}
+                transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
                 viewport={{ once: true, amount: 0.2 }}
               >
                 <ArticleCard
@@ -89,9 +89,10 @@ const RegulatoryCurrent = () => {
               return (
                 <motion.div
                   key={article.idNoticia}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: index * 0.08 }}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+                  viewport={{ once: true, amount: 0.2 }}
                   className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
                 >
                   <button

@@ -96,7 +96,7 @@ const ContactInfo = () => {
     };
 
     return (
-        <section className="py-10 px-6 sm:px-10 md:px-16 lg:px-32 2xl:px-44">
+        <section className="px-6 py-10 sm:px-10 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
 
             {/* Modal de resultado */}
             <Dialog open={modal.open} onOpenChange={(open) => setModal((prev) => ({ ...prev, open }))}>

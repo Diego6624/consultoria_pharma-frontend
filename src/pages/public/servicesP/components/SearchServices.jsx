@@ -1,5 +1,7 @@
 import { Search, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const SearchServices = ({
   searchTerm,
@@ -13,7 +15,7 @@ const SearchServices = ({
   };
 
   return (
-    <section className="px-8 md:px-16 lg:px-32 2xl:px-44">
+    <section className="px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
       <motion.div
         className="flex flex-col gap-6"
         initial={{ opacity: 0, y: 30 }}
@@ -28,12 +30,12 @@ const SearchServices = ({
             <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
               <Search size={20} />
             </div>
-            <input
+            <Input
               type="text"
               placeholder="Busca un servicio..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full pl-12 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent"
+              className="h-12 rounded-lg border-gray-300 py-0 pl-12 pr-10 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-cyan-400"
             />
             {searchTerm && (
               <button
@@ -46,18 +48,22 @@ const SearchServices = ({
           </div>
 
           {/* Select de categorías */}
-          <select
-            value={selectedCategory}
-            onChange={(e) => onCategoryChange(e.target.value)}
-            className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent min-w-56 bg-white cursor-pointer hover:border-gray-400 transition-colors"
+          <Select
+            value={selectedCategory || "all"}
+            onValueChange={(value) => onCategoryChange(value === "all" ? "" : value)}
           >
-            <option value="">Todas las categorías</option>
+            <SelectTrigger className="!h-12 min-w-56 rounded-lg border-gray-300 bg-white px-4 py-0 hover:border-gray-400 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-cyan-400">
+              <SelectValue placeholder="Todas las categorías" />
+            </SelectTrigger>
+            <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)] min-w-56">
+              <SelectItem value="all">Todas las categorías</SelectItem>
             {categories.map((category) => (
-              <option key={category} value={category}>
+              <SelectItem key={category} value={category}>
                 {category}
-              </option>
+              </SelectItem>
             ))}
-          </select>
+            </SelectContent>
+          </Select>
         </div>
       </motion.div>
     </section>
