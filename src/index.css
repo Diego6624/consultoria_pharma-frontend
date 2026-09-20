@@ -5,6 +5,23 @@
 @import "@heroui/styles";
 @plugin "@tailwindcss/typography";
 
+/* Cierre de los toasts de HeroUI: contraste claro y consistente. */
+.toast__close-button {
+  background-color: #000 !important;
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+.toast__close-button:hover {
+  background-color: #1f2937 !important;
+  color: #fff !important;
+}
+
+.toast__close-button svg {
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
