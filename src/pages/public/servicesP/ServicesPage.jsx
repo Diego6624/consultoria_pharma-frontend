@@ -3,7 +3,8 @@ import BannerMain from "./components/BannerMain";
 import SearchServices from "./components/SearchServices";
 import ServicesList from "@/components/ServicesList";
 import { listarServiciosPublicos } from "@/services/serviciosService";
-import { PublicError, PublicLoading } from "@/components/PublicLoading";
+import { PublicError } from "@/components/PublicLoading";
+import { ServiceCardsSkeleton } from "@/components/PublicCardSkeletons";
 
 const ServicesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +19,7 @@ const ServicesPage = () => {
     setIsLoading(true);
     setError("");
     try {
-      const data = await listarServiciosPublicos({ page, size: 6 });
+      const data = await listarServiciosPublicos({ page, size: 12 });
       setServices((data?.content || []).map((service) => ({
         id: service.idServicio,
         slug: service.slug,
@@ -58,7 +59,7 @@ const ServicesPage = () => {
           onCategoryChange={handleCategoryChange}
           categories={categories}
         />
-        {isLoading ? <PublicLoading label="Cargando servicios..." /> : null}
+        {isLoading ? <ServiceCardsSkeleton count={12} /> : null}
         {error && !isLoading ? <PublicError message={error} onRetry={loadServices} /> : null}
         {!isLoading && !error ? (
           <>

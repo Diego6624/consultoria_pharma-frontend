@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import { listarCategorias } from "@/services/categoriasService";
 import { listarNoticiasPublicas } from "@/services/noticiasService";
 import { formatDate, getImageUrl } from "@/lib/content";
-import { PublicError, PublicLoading } from "@/components/PublicLoading";
+import { PublicError } from "@/components/PublicLoading";
+import { ArticleCardsSkeleton } from "@/components/PublicCardSkeletons";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-const PAGE_SIZE = 9;
+const PAGE_SIZE = 12;
 
 export default function SearchNews() {
     const [articles, setArticles] = useState([]);
@@ -86,7 +87,7 @@ export default function SearchNews() {
                     </Select>
                 </div>
 
-                {loading ? <PublicLoading label="Cargando noticias..." /> : null}
+                {loading ? <ArticleCardsSkeleton count={12} /> : null}
                 {error && !loading ? <PublicError message={error} onRetry={loadNews} /> : null}
                 {!loading && !error ? (
                     filteredArticles.length ? (

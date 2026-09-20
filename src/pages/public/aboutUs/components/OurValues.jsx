@@ -21,7 +21,7 @@ const OurValues = () => {
     ];
 
     return (
-        <section className="overflow-hidden p-15 px-8 md:px-16 lg:px-32 2xl:px-44">
+        <section className="overflow-hidden p-15 px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64">
             <div className="grid md:grid-cols-2 gap-8 items-center">
                 {/* Text Responsive */}
                 <motion.div
