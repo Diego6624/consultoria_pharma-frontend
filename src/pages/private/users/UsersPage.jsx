@@ -13,6 +13,8 @@ import {
 import useAuth from "@/hooks/useAuth";
 import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
+import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
+import AdminPagination from "@/pages/private/components/AdminPagination";
 
 const emptyForm = {
   nombre: "",
@@ -148,15 +150,11 @@ export default function UsersPage() {
   return (
     <div className="space-y-6">
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-semibold text-slate-900">Gestión de usuarios</h2>
-            <p className="text-sm text-slate-600">Crea, edita y controla el acceso de administradores del sistema.</p>
-          </div>
-          <Button className={"cursor-pointer md:w-auto w-full bg-black hover:bg-black/80 text-white hover:text-white"} variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}>
-            Nuevo usuario
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Gestión de usuarios"
+          description="Crea, edita y controla el acceso de administradores del sistema."
+          actions={<Button className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto" variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}>Nuevo usuario</Button>}
+        />
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="sm:max-w-xl">
@@ -240,13 +238,7 @@ export default function UsersPage() {
           </table>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {pages.map((pageNumber) => (
-            <Button key={pageNumber} variant={page === pageNumber ? "secondary" : "outline"} size="sm" onClick={() => setPage(pageNumber)}>
-              {pageNumber + 1}
-            </Button>
-          ))}
-        </div>
+        <AdminPagination pages={pages} currentPage={page} onPageChange={setPage} disabled={loading || Boolean(action)} />
       </div>
       <DeleteConfirmDialog
         open={Boolean(deleteTarget)}

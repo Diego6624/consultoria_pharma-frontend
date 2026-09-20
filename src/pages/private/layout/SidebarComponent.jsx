@@ -12,7 +12,7 @@ export default function SidebarComponent() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const { isMobile, setOpen, setOpenMobile } = useSidebar();
+  const { isMobile, setOpenMobile } = useSidebar();
 
   const normalizeRole = (role) => {
     if (!role) return "";
@@ -42,8 +42,6 @@ export default function SidebarComponent() {
   const handleNavigation = () => {
     if (isMobile) {
       setOpenMobile(false);
-    } else {
-      setOpen(false);
     }
   };
 

@@ -10,17 +10,13 @@ import {
   eliminarCategoria,
   listarCategoriasAdmin,
 } from "@/services/categoriasService";
-import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
+import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
+import CategoryTable from "./components/CategoryTable";
 
 const emptyForm = {
   nombre: "",
   tipo: "NOTICIA",
-};
-
-const TIPO_LABELS = {
-  NOTICIA: "Noticia",
-  SERVICIO: "Servicio",
 };
 
 export default function CategoriesPage() {
@@ -115,17 +111,11 @@ export default function CategoriesPage() {
   return (
     <div className="space-y-6">
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-semibold text-slate-900">Categorías</h2>
-            <p className="text-sm text-slate-600">
-              Administra las categorías para artículos y servicios.
-            </p>
-          </div>
-          <Button variant="outline" onClick={() => { resetForm(); setDialogOpen(true); }} className={"cursor-pointer md:w-auto w-full bg-black hover:bg-black/80 text-white hover:text-white"}>
-            Nueva categoría
-          </Button>
-        </div>
+        <AdminPageHeader
+          title="Categorías"
+          description="Administra las categorías para artículos y servicios."
+          actions={<Button variant="outline" onClick={() => { resetForm(); setDialogOpen(true); }} className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto">Nueva categoría</Button>}
+        />
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="sm:max-w-lg">
@@ -181,58 +171,7 @@ export default function CategoriesPage() {
             <option value="SERVICIO">Servicio</option>
           </select>
         </div>
-        <div className="overflow-x-auto rounded-2xl border border-slate-200">
-          <table className="min-w-full text-sm">
-            <thead className="bg-slate-50 text-left text-slate-600">
-              <tr>
-                <th className="px-4 py-3">Nombre</th>
-                <th className="px-4 py-3">Tipo</th>
-                <th className="px-4 py-3">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <AdminTableSkeleton columns={3} />
-              ) : filteredCategories.length === 0 ? (
-                <tr>
-                  <td colSpan="3" className="px-4 py-8 text-center text-slate-500">
-                    No hay categorías registradas.
-                  </td>
-                </tr>
-              ) : (
-                filteredCategories.map((category) => (
-                  <tr key={category.idCategoria} className="border-t border-slate-200">
-                    <td className="px-4 py-3 font-medium">{category.nombre}</td>
-                    <td className="px-4 py-3">
-                      <span
-                        className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${category.tipo === "SERVICIO"
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-emerald-100 text-emerald-700"
-                          }`}
-                      >
-                        {TIPO_LABELS[category.tipo] || category.tipo}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
-                      <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(category)}>
-                        Editar
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        size="sm"
-                        className={"cursor-pointer"}
-                        disabled={Boolean(deletingId)}
-                        onClick={() => requestDelete(category)}
-                      >
-                        {deletingId === category.idCategoria ? "Eliminando..." : "Eliminar"}
-                      </Button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+        <CategoryTable categories={filteredCategories} loading={loading} deletingId={deletingId} onEdit={handleEdit} onDelete={requestDelete} />
       </div>
       <DeleteConfirmDialog
         open={Boolean(deleteTarget)}
