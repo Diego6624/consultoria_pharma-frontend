@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
+import { Pencil, Trash2 } from "lucide-react";
 
 export default function ArticleTable({ articles, loading, deletingId, onDelete }) {
   return (
@@ -19,11 +20,11 @@ export default function ArticleTable({ articles, loading, deletingId, onDelete }
               <td className="px-4 py-3">{article.nombreCategoria || "-"}</td>
               <td className="px-4 py-3">{new Date(article.fechaPublicacion).toLocaleDateString()}</td>
               <td className="flex flex-col gap-2 space-x-2 px-4 py-3 md:flex-row md:gap-0">
-                <Link to={`/admin/noticias/${article.idNoticia}/editar`}>
-                  <Button variant="outline" size="sm" disabled={Boolean(deletingId)}>Editar</Button>
+                <Link to={`/admin/noticias/${article.idNoticia}/editar`} className="w-min">
+                  <Button variant="outline" size="sm" disabled={Boolean(deletingId)} className={"cursor-pointer w-full"}><Pencil size={14} />Editar</Button>
                 </Link>
-                <Button variant="destructive" size="sm" disabled={Boolean(deletingId)} onClick={() => onDelete(article)}>
-                  {deletingId === article.idNoticia ? "Eliminando..." : "Eliminar"}
+                <Button variant="destructive" size="sm" disabled={Boolean(deletingId)} onClick={() => onDelete(article)} className={"cursor-pointer"}>
+                  {deletingId === article.idNoticia ? "Eliminando..." : <><Trash2 size={14} />Eliminar</>}
                 </Button>
               </td>
             </tr>

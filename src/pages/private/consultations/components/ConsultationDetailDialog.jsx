@@ -49,7 +49,7 @@ export default function ConsultationDetailDialog({
 
               <div className="flex items-center justify-end gap-3">
                 <Button className="cursor-pointer" variant="outline" size="sm" disabled={busy} onClick={onUpdateRevision}>
-                  {revisionActionId === item.idConsulta ? <><Loader2 size={14} className="animate-spin" /> Guardando...</> : item.revisada ? "Marcar no leída" : "Marcar leída"}
+                  {revisionActionId === item.idConsulta ? <><Loader2 size={14} className="animate-spin" /> Guardando...</> : <><Check size={14} />{item.revisada ? "Marcar no leída" : "Marcar leída"}</>}
                 </Button>
                 <Button className="cursor-pointer" variant="destructive" size="sm" disabled={busy} onClick={(event) => onRequestDelete(item.idConsulta, event)}>
                   {deleteActionId === item.idConsulta ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}

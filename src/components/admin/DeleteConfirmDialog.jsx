@@ -1,4 +1,4 @@
-import { AlertTriangle, Loader2 } from "lucide-react";
+import { AlertTriangle, Loader2, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -32,7 +32,7 @@ export default function DeleteConfirmDialog({
           </Button>
           <Button type="button" variant="destructive" className="cursor-pointer" onClick={onConfirm} disabled={loading}>
             {loading ? <Loader2 size={16} className="animate-spin" /> : null}
-            {loading ? "Eliminando..." : "Eliminar"}
+            {loading ? "Eliminando..." : <><Trash2 size={16} />Eliminar</>}
           </Button>
         </DialogFooter>
       </DialogContent>

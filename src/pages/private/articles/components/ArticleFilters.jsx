@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 export default function ArticleFilters({ search, category, categories, onSearchChange, onCategoryChange }) {
   return (
@@ -21,7 +22,7 @@ export default function ArticleFilters({ search, category, categories, onSearchC
         ))}
       </select>
       <Link to="/admin/noticias/nuevo" className="flex w-full md:hidden">
-        <Button className="w-full">Crear artículo</Button>
+        <Button className="w-full"><Plus size={16} />Crear artículo</Button>
       </Link>
     </div>
   );

@@ -13,6 +13,7 @@ import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
 import AdminPagination from "@/pages/private/components/AdminPagination";
+import { Pencil, Plus, Save, Trash2 } from "lucide-react";
 
 const emptyForm = {
   nombre: "",
@@ -123,7 +124,7 @@ export default function LocationsPage() {
         <AdminPageHeader
           title="Ubicaciones"
           description="Administra los puntos de atención y sucursales."
-          actions={<Button className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto" variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}>Nueva ubicación</Button>}
+          actions={<Button className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto" variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}><Plus size={16} />Nueva ubicación</Button>}
         />
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -155,7 +156,7 @@ export default function LocationsPage() {
               </div>
               <DialogFooter className="md:col-span-2">
                 <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancelar</Button>
-                <Button className={"cursor-pointer"} type="submit" disabled={submitting}>{submitting ? "Guardando..." : editingId ? "Guardar cambios" : "Crear ubicación"}</Button>
+                <Button className={"cursor-pointer"} type="submit" disabled={submitting}>{submitting ? "Guardando..." : <><Save size={16} />{editingId ? "Guardar cambios" : "Crear ubicación"}</>}</Button>
               </DialogFooter>
             </form>
           </DialogContent>
@@ -190,8 +191,8 @@ export default function LocationsPage() {
                     <td className="px-4 py-3">{location.latitud}, {location.longitud}</td>
                     <td className="px-4 py-3">{location.descripcion || "-"}</td>
                     <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
-                      <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(location)}>Editar</Button>
-                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(deletingId)} onClick={() => requestDelete(location)}>{deletingId === location.idUbicacion ? "Eliminando..." : "Eliminar"}</Button>
+                      <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(location)}><Pencil size={14} />Editar</Button>
+                      <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(deletingId)} onClick={() => requestDelete(location)}>{deletingId === location.idUbicacion ? "Eliminando..." : <><Trash2 size={14} />Eliminar</>}</Button>
                     </td>
                   </tr>
                 ))

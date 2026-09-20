@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 export default function ServiceFilters({ search, category, categories, onSearchChange, onCategoryChange }) {
   return (
@@ -9,7 +10,7 @@ export default function ServiceFilters({ search, category, categories, onSearchC
         <option value="">Todas las categorías</option>
         {categories.map((item) => <option key={item.idCategoria} value={item.idCategoria}>{item.nombre}</option>)}
       </select>
-      <Link to="/admin/servicios/nuevo" className="flex w-full md:hidden"><Button className="w-full">Crear servicio</Button></Link>
+      <Link to="/admin/servicios/nuevo" className="flex w-full md:hidden"><Button className="w-full"><Plus size={16} />Crear servicio</Button></Link>
     </div>
   );
 }

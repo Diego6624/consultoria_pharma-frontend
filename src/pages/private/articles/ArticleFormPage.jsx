@@ -11,7 +11,7 @@ import {
   actualizarNoticiaConImagen,
 } from "@/services/noticiasService";
 import { listarCategoriasPorTipo } from "@/services/categoriasService";
-import { UploadCloud, X, Loader2 } from "lucide-react";
+import { Loader2, Save, UploadCloud, X } from "lucide-react";
 import { AdminFormSkeleton } from "@/components/admin/AdminSkeletons";
 
 const initialForm = {
@@ -327,7 +327,7 @@ export default function ArticleFormPage() {
                 Guardando...
               </>
             ) : (
-              "Guardar artículo"
+              <><Save size={16} />Guardar artículo</>
             )}
           </Button>
           <Button

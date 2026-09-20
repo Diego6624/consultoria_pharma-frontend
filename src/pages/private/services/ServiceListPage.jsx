@@ -7,6 +7,7 @@ import { listarCategoriasPorTipo } from "@/services/categoriasService";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
 import AdminPagination from "@/pages/private/components/AdminPagination";
+import { Plus } from "lucide-react";
 import ServiceFilters from "./components/ServiceFilters";
 import ServiceTable from "./components/ServiceTable";
 
@@ -67,7 +68,7 @@ export default function ServiceListPage() {
           <AdminPageHeader
             title="Servicios"
             description="Administra los servicios que se muestran en el sitio."
-            actions={<Link to="/admin/servicios/nuevo" className="hidden md:flex"><Button className="cursor-pointer">Crear servicio</Button></Link>}
+            actions={<Link to="/admin/servicios/nuevo" className="hidden md:flex"><Button className="cursor-pointer"><Plus size={16} />Crear servicio</Button></Link>}
           />
         </div>
         <ServiceFilters search={search} category={category} categories={categories} onSearchChange={(value) => { setSearch(value); setPage(0); }} onCategoryChange={(value) => { setCategory(value); setPage(0); }} />

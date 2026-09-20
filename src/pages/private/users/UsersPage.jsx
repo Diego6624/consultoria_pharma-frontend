@@ -15,6 +15,7 @@ import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
 import AdminPagination from "@/pages/private/components/AdminPagination";
+import { Pencil, Plus, Power, Save, Trash2 } from "lucide-react";
 
 const emptyForm = {
   nombre: "",
@@ -153,7 +154,7 @@ export default function UsersPage() {
         <AdminPageHeader
           title="Gestión de usuarios"
           description="Crea, edita y controla el acceso de administradores del sistema."
-          actions={<Button className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto" variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}>Nuevo usuario</Button>}
+          actions={<Button className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto" variant="outline" onClick={() => { setEditingId(null); setForm(emptyForm); setDialogOpen(true); }}><Plus size={16} />Nuevo usuario</Button>}
         />
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -177,7 +178,7 @@ export default function UsersPage() {
           </div>
               <DialogFooter className="md:col-span-2">
                 <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancelar</Button>
-                <Button className="cursor-pointer" type="submit" disabled={submitting}>{submitting ? "Guardando..." : editingId ? "Guardar cambios" : "Crear usuario"}</Button>
+                <Button className="cursor-pointer" type="submit" disabled={submitting}>{submitting ? "Guardando..." : <><Save size={16} />{editingId ? "Guardar cambios" : "Crear usuario"}</>}</Button>
               </DialogFooter>
             </form>
           </DialogContent>
@@ -222,13 +223,13 @@ export default function UsersPage() {
                     </td>
                     <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
                       <Button className={"cursor-pointer"}  variant="outline" size="sm" onClick={() => handleEdit(user)}>
-                        Editar
+                        <><Pencil size={14} />Editar</>
                       </Button>
                       <Button className={"cursor-pointer"}  variant="secondary" size="sm" disabled={Boolean(action)} onClick={() => handleToggle(user)}>
-                        {action?.id === user.idUsuario && action.type === "toggle" ? "Procesando..." : user.estado ? "Desactivar" : "Activar"}
+                        {action?.id === user.idUsuario && action.type === "toggle" ? "Procesando..." : <><Power size={14} />{user.estado ? "Desactivar" : "Activar"}</>}
                       </Button>
                       <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(action)} onClick={() => requestDelete(user)}>
-                        {action?.id === user.idUsuario && action.type === "delete" ? "Eliminando..." : "Eliminar"}
+                        {action?.id === user.idUsuario && action.type === "delete" ? "Eliminando..." : <><Trash2 size={14} />Eliminar</>}
                       </Button>
                     </td>
                   </tr>

@@ -14,6 +14,7 @@ import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
 import AdminPagination from "@/pages/private/components/AdminPagination";
 import CategoryTable from "./components/CategoryTable";
+import { Plus, Save } from "lucide-react";
 
 const emptyForm = {
   nombre: "",
@@ -119,7 +120,11 @@ export default function CategoriesPage() {
         <AdminPageHeader
           title="Categorías"
           description="Administra las categorías para artículos y servicios."
-          actions={<Button variant="outline" onClick={() => { resetForm(); setDialogOpen(true); }} className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto">Nueva categoría</Button>}
+          actions={
+            <Button variant="outline" onClick={() => { resetForm(); setDialogOpen(true); }} className="cursor-pointer w-full bg-black text-white hover:bg-black/80 hover:text-white md:w-auto">
+              <Plus size={16} />Nueva categoría
+            </Button>
+          }
         />
 
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -158,7 +163,9 @@ export default function CategoriesPage() {
                 <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>
                   Cancelar
                 </Button>
-                <Button className={"cursor-pointer"} type="submit" disabled={submitting}>{submitting ? "Guardando..." : editingId ? "Guardar cambios" : "Crear categoría"}</Button>
+                <Button className={"cursor-pointer"} type="submit" disabled={submitting}>
+                  {submitting ? "Guardando..." : <><Save size={16} />{editingId ? "Guardar cambios" : "Crear categoría"}</>}
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>
