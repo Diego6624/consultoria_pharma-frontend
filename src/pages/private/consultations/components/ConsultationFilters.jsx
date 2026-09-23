@@ -1,4 +1,5 @@
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function ConsultationFilters({
   search,
@@ -11,18 +12,24 @@ export default function ConsultationFilters({
 }) {
   return (
     <div className="mt-6 grid gap-3 md:grid-cols-[1fr_190px_170px]">
-      <Input value={search} onChange={(event) => onSearchChange(event.target.value)} placeholder="Buscar por ID, nombre, correo o servicio" />
+      <Input value={search} onChange={(event) => onSearchChange(event.target.value)} placeholder="Buscar por ID, nombre, correo o servicio" className="h-10 w-full" />
 
-      <select value={serviceFilter} onChange={(event) => onServiceChange(event.target.value)} className="h-9 rounded-md border border-input bg-white px-3 text-sm">
-        <option value="">Todos los servicios</option>
-        {services.map((service) => <option key={service} value={service}>{service}</option>)}
-      </select>
+      <Select value={serviceFilter || "all"} onValueChange={(value) => onServiceChange(value === "all" ? "" : value)}>
+        <SelectTrigger className="!h-10 w-full bg-white"><SelectValue placeholder="Todos los servicios" /></SelectTrigger>
+        <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)]">
+          <SelectItem value="all">Todos los servicios</SelectItem>
+          {services.map((service) => <SelectItem key={service} value={service}>{service}</SelectItem>)}
+        </SelectContent>
+      </Select>
 
-      <select value={dateFilter} onChange={(event) => onDateChange(event.target.value)} className="h-9 rounded-md border border-input bg-white px-3 text-sm">
-        <option value="">Todas las fechas</option>
-        <option value="week">Esta semana</option>
-        <option value="month">Este mes</option>
-      </select>
+      <Select value={dateFilter || "all"} onValueChange={(value) => onDateChange(value === "all" ? "" : value)}>
+        <SelectTrigger className="!h-10 w-full bg-white"><SelectValue placeholder="Todas las fechas" /></SelectTrigger>
+        <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)]">
+          <SelectItem value="all">Todas las fechas</SelectItem>
+          <SelectItem value="week">Esta semana</SelectItem>
+          <SelectItem value="month">Este mes</SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   );
 }

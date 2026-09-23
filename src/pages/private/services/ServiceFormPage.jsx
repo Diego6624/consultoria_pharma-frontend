@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { sanitizeHtml, sanitizeText } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@heroui/react";
 import TipTapEditor from "@/components/TipTapEditor";
 import {
@@ -21,6 +22,8 @@ const initialForm = {
   imagen: "",
   idCategoria: "",
 };
+
+const SERVICE_DESCRIPTION_MAX_LENGTH = 160;
 
 export default function ServiceFormPage() {
   const { id } = useParams();
@@ -211,27 +214,30 @@ export default function ServiceFormPage() {
               value={form.descripcion}
               onChange={handleChange("descripcion")}
               placeholder="Breve descripción del servicio"
+              maxLength={SERVICE_DESCRIPTION_MAX_LENGTH}
               required
             />
+            <div className="flex justify-end text-xs text-slate-400">
+              {form.descripcion.length}/{SERVICE_DESCRIPTION_MAX_LENGTH}
+            </div>
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-slate-700">
               Categoría
             </label>
-            <select
-              value={form.idCategoria}
-              onChange={handleChange("idCategoria")}
-              required
-              className="h-10 w-full rounded-md border border-input bg-white px-3 text-sm text-slate-700 outline-none focus:border-slate-400"
-            >
-              <option value="">Selecciona una categoría</option>
+            <Select value={form.idCategoria ? String(form.idCategoria) : "none"} onValueChange={(value) => setForm((current) => ({ ...current, idCategoria: value === "none" ? "" : value }))}>
+              <SelectTrigger className="!h-10 w-full bg-white"><SelectValue placeholder="Selecciona una categoría" /></SelectTrigger>
+              <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)]">
+                <SelectItem value="none">Selecciona una categoría</SelectItem>
               {(categorias ?? []).map((cat) => (
-                <option key={cat.idCategoria} value={cat.idCategoria}>
+                <SelectItem key={cat.idCategoria} value={String(cat.idCategoria)}>
                   {cat.nombre}
-                </option>
+                </SelectItem>
               ))}
-            </select>
+              </SelectContent>
+            </Select>
           </div>
+
         </div>
 
         {/* Imagen de portada moderna */}

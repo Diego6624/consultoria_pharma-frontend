@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@heroui/react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import {
@@ -15,7 +16,7 @@ import { AdminTableSkeleton } from "@/components/admin/AdminSkeletons";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
 import AdminPagination from "@/pages/private/components/AdminPagination";
-import { Pencil, Plus, Power, Save, Trash2 } from "lucide-react";
+import { Pencil, Plus, Power, PowerOff, Save, Trash2 } from "lucide-react";
 
 const emptyForm = {
   nombre: "",
@@ -164,18 +165,18 @@ export default function UsersPage() {
               <DialogDescription>Completa los datos del administrador.</DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="grid gap-4 md:grid-cols-2">
-          <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
-            <Input value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre completo" className={"text-sm"} required />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Correo</label>
-            <Input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} placeholder="correo@empresa.com" className={"text-sm"} required />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium text-slate-700">Contraseña</label>
-            <Input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder={editingId ? "Nueva contraseña" : "Contraseña"} className={"text-sm"} required={!editingId} />
-          </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Nombre</label>
+                <Input value={form.nombre} onChange={(event) => setForm({ ...form, nombre: event.target.value })} placeholder="Nombre completo" className={"text-sm"} required />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Correo</label>
+                <Input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} placeholder="correo@empresa.com" className={"text-sm"} required />
+              </div>
+              <div>
+                <label className="mb-1 block text-sm font-medium text-slate-700">Contraseña</label>
+                <Input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} placeholder={editingId ? "Nueva contraseña" : "Contraseña"} className={"text-sm"} required={!editingId} />
+              </div>
               <DialogFooter className="md:col-span-2">
                 <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>Cancelar</Button>
                 <Button className="cursor-pointer" type="submit" disabled={submitting}>{submitting ? "Guardando..." : <><Save size={16} />{editingId ? "Guardar cambios" : "Crear usuario"}</>}</Button>
@@ -187,12 +188,17 @@ export default function UsersPage() {
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-4 grid gap-3 md:grid-cols-[1fr_180px]">
-          <Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o correo" className={"text-sm"} />
-          <select value={statusFilter} onChange={(event) => { setStatusFilter(event.target.value); setPage(0); }} className="h-9 rounded-md border border-input bg-white px-3 text-sm">
-            <option value="">Todos los estados</option>
-            <option value="true">Activos</option>
-            <option value="false">Inactivos</option>
-          </select>
+          <Input value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por nombre o correo" className="h-10 w-full text-sm" />
+          <Select value={statusFilter || "all"} onValueChange={(value) => { setStatusFilter(value === "all" ? "" : value); setPage(0); }}>
+            <SelectTrigger className="!h-10 w-full bg-white">
+              <SelectValue placeholder="Todos los estados" />
+            </SelectTrigger>
+            <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)]">
+              <SelectItem value="all">Todos los estados</SelectItem>
+              <SelectItem value="true">Activos</SelectItem>
+              <SelectItem value="false">Inactivos</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="overflow-x-auto rounded-2xl border border-slate-200">
           <table className="min-w-full text-sm">
@@ -222,11 +228,16 @@ export default function UsersPage() {
                       </span>
                     </td>
                     <td className="px-4 py-3 space-x-2 flex flex-col md:flex-row gap-2 md:gap-0">
-                      <Button className={"cursor-pointer"}  variant="outline" size="sm" onClick={() => handleEdit(user)}>
+                      <Button className={"cursor-pointer"} variant="outline" size="sm" onClick={() => handleEdit(user)}>
                         <><Pencil size={14} />Editar</>
                       </Button>
-                      <Button className={"cursor-pointer"}  variant="secondary" size="sm" disabled={Boolean(action)} onClick={() => handleToggle(user)}>
-                        {action?.id === user.idUsuario && action.type === "toggle" ? "Procesando..." : <><Power size={14} />{user.estado ? "Desactivar" : "Activar"}</>}
+                      <Button className={"cursor-pointer"} variant="secondary" size="sm" disabled={Boolean(action)} onClick={() => handleToggle(user)}>
+                        {action?.id === user.idUsuario && action.type === "toggle" ? "Procesando..." :
+                          <>
+                            {user.estado ? <PowerOff size={14} /> : <Power size={14} />}
+                            {user.estado ? "Desactivar" : "Activar"}
+                          </>
+                        }
                       </Button>
                       <Button className={"cursor-pointer"} variant="destructive" size="sm" disabled={Boolean(action)} onClick={() => requestDelete(user)}>
                         {action?.id === user.idUsuario && action.type === "delete" ? "Eliminando..." : <><Trash2 size={14} />Eliminar</>}

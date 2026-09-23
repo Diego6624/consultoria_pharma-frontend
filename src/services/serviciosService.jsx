@@ -4,9 +4,16 @@ export const listarServiciosPublicos = ({ page = 0, size = 10 } = {}) => {
   return api.get("/api/public/servicios", { params: { page, size } });
 };
 
+export const listarServiciosParaInicio = (limite = 3) => {
+  return api.get("/api/public/servicios/inicio", { params: { limite } });
+};
+
 export const obtenerServicioPublico = (slug) => api.get(`/api/public/servicios/slug/${encodeURIComponent(slug)}`);
 
 export const listarServiciosAdmin = ({ page = 0, size = 10 } = {}) => api.get("/api/admin/servicios", { params: { page, size } });
+
+export const listarConfiguracionServiciosInicio = () => api.get("/api/admin/servicios/inicio");
+export const actualizarConfiguracionServiciosInicio = (items) => api.put("/api/admin/servicios/inicio", items);
 
 export const obtenerServicioAdmin = (id) => api.get(`/api/admin/servicios/${id}`);
 

@@ -1,41 +1,23 @@
 import ServiceCard from "@/components/ServiceCardH";
-import { FileCheckCorner, InfoIcon, KeyRound, ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
-import imageCard from '/images/imageCards.jpg';
-import imageCard2 from '/images/imageCards2.jpg';
-import imageCard3 from '/images/imageCards3.jpg';
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { listarServiciosParaInicio } from "@/services/serviciosService";
+import { getServiceIconComponent } from "@/components/admin/serviceIconCatalog";
 
-const services = [
-    {
-        category: "Regulatorio",
-        title: "Registro Sanitario y Trámites DIGEMID",
-        description:
-            "Gestionamos la inscripción y cambios en tus registros de productos farmacéuticos, asegurando cero rechazos y agilidad en el trámite.",
-        icon: <FileCheckCorner />,
-        image: imageCard,
-        navigation: "/services"
-    },
-    {
-        category: "Calidad",
-        title: "Certificaciones BPA, BPM y BPDT",
-        description:
-            "Preparamos tu droguería o almacén para superar las inspecciones. Implementamos Manuales de Calidad y POEs para garantizar tu certificación a la primera.",
-        icon: <ShieldCheck />,
-        image: imageCard2,
-        navigation: "/services"
-    },
-    {
-        category: "Gestión",
-        title: "Autorización de Funcionamiento",
-        description:
-            "Asesoría integral para la apertura de tu establecimiento. Desde el diseño del plano del almacén hasta la obtención final de la Resolución Directoral.",
-        icon: <KeyRound />,
-        image: imageCard3,
-        navigation: "/services"
-    },
-];
+const fallbackImages = ["/images/imageCards.jpg", "/images/imageCards2.jpg", "/images/imageCards3.jpg"];
 
 const SpecializedServices = () => {
+    const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        listarServiciosParaInicio(3)
+            .then((data) => setServices(Array.isArray(data) ? data : []))
+            .catch(() => setServices([]))
+            .finally(() => setLoading(false));
+    }, []);
+
     return (
         <section className="w-full">
 
@@ -78,25 +60,36 @@ const SpecializedServices = () => {
             <div className="bg-white -mt-24 pt-10 pb-20">
                 <div className="mx-auto px-8 md:px-16 lg:px-32 xl:px-48 2xl:px-64 gap-6">
                     <div className="grid gap-8 lg:grid-cols-3">
-                        {services.map((service, index) => (
+                        {loading ? Array.from({ length: 3 }, (_, index) => (
+                            <div key={`skeleton-${index}`} className="space-y-4">
+                                <Skeleton className="h-[300px] w-full rounded-2xl" />
+                                <Skeleton className="-mt-24 mx-5 h-64 rounded-2xl" />
+                            </div>
+                        )) : services.map((service, index) => {
+                            const ServiceIcon = getServiceIconComponent(service.iconoInicio);
+                            return (
                             <motion.div
-                                key={index}
+                                key={service.idServicio}
                                 initial={{ opacity: 0, y: 40 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6, delay: index * 0.15, ease: 'easeOut' }}
                                 viewport={{ once: true, amount: 0.2 }}
                             >
                                 <ServiceCard
-                                    category={service.category}
-                                    title={service.title}
-                                    description={service.description}
-                                    icon={service.icon}
-                                    image={service.image}
-                                    navigation={service.navigation}
+                                    category={service.nombreCategoria || "Servicio especializado"}
+                                    title={service.titulo}
+                                    description={service.descripcion}
+                                    icon={<ServiceIcon />}
+                                    image={service.imagen || fallbackImages[index % fallbackImages.length]}
+                                    navigation={`/services/${service.slug}`}
                                 />
                             </motion.div>
-                        ))}
+                            );
+                        })}
                     </div>
+                    {!loading && services.length === 0 && (
+                        <p className="py-6 text-center text-sm text-slate-500">Próximamente conocerás nuestros servicios especializados.</p>
+                    )}
                 </div>
             </div>
 

@@ -65,7 +65,7 @@ const ServicesCard = ({
 
           <div className="h-1 w-12 rounded-full bg-cyan-400" />
 
-          <p className="text-sm text-gray-600 leading-6 h-max">
+          <p className="text-sm text-gray-600 leading-6 h-max lg:line-clamp-4">
             {description}
           </p>
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@heroui/react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 import {
   actualizarCategoria,
   crearCategoria,
@@ -149,15 +149,13 @@ export default function CategoriesPage() {
               </div>
               <div>
                 <label className="mb-1 block text-sm font-medium text-slate-700">Tipo</label>
-                <NativeSelect
-                  className="w-full"
-                  value={form.tipo}
-                  onChange={(event) => setForm({ ...form, tipo: event.target.value })}
-                  required
-                >
-                  <option value="NOTICIA">Noticia</option>
-                  <option value="SERVICIO">Servicio</option>
-                </NativeSelect>
+                <Select value={form.tipo} onValueChange={(value) => setForm({ ...form, tipo: value })}>
+                  <SelectTrigger className="!h-10 w-full bg-white"><SelectValue placeholder="Selecciona un tipo" /></SelectTrigger>
+                  <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)]">
+                    <SelectItem value="NOTICIA">Noticia</SelectItem>
+                    <SelectItem value="SERVICIO">Servicio</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <DialogFooter className="md:col-span-2">
                 <Button className={"cursor-pointer"} type="button" variant="outline" onClick={() => setDialogOpen(false)}>
@@ -174,14 +172,15 @@ export default function CategoriesPage() {
 
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="mb-6 grid gap-3 md:grid-cols-[1fr_220px]">
-          <input className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por ID o nombre" />
-          <select className="h-10 rounded-md border border-slate-300 bg-white px-3 text-sm" value={typeFilter} onChange={(event) => { setTypeFilter(event.target.value); setPage(0); }}>
-            <option value="">
-              Todos los tipos
-            </option>
-            <option value="NOTICIA">Noticia</option>
-            <option value="SERVICIO">Servicio</option>
-          </select>
+          <Input className="h-10 w-full" value={search} onChange={(event) => { setSearch(event.target.value); setPage(0); }} placeholder="Buscar por ID o nombre" />
+          <Select value={typeFilter || "all"} onValueChange={(value) => { setTypeFilter(value === "all" ? "" : value); setPage(0); }}>
+            <SelectTrigger className="!h-10 w-full bg-white"><SelectValue placeholder="Todos los tipos" /></SelectTrigger>
+            <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)]">
+              <SelectItem value="all">Todos los tipos</SelectItem>
+              <SelectItem value="NOTICIA">Noticias</SelectItem>
+              <SelectItem value="SERVICIO">Servicios</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <CategoryTable categories={filteredCategories} loading={loading} deletingId={deletingId} onEdit={handleEdit} onDelete={requestDelete} />
         <AdminPagination pages={pages} currentPage={page} onPageChange={setPage} disabled={loading || Boolean(deletingId)} />

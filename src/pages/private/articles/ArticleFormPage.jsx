@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { sanitizeHtml, sanitizeText } from "@/lib/content";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@heroui/react";
 import TipTapEditor from "@/components/TipTapEditor";
 import {
@@ -215,19 +216,17 @@ export default function ArticleFormPage() {
             <label className="block text-sm font-medium text-slate-700">
               Categoría
             </label>
-            <select
-              value={form.idCategoria}
-              onChange={handleChange("idCategoria")}
-              className="h-9 w-full rounded-md border border-input bg-transparent px-2.5 text-sm outline-none focus:ring-1 focus:ring-slate-900"
-              required
-            >
-              <option value="">Selecciona una categoría</option>
+            <Select value={form.idCategoria ? String(form.idCategoria) : "none"} onValueChange={(value) => setForm((current) => ({ ...current, idCategoria: value === "none" ? "" : value }))}>
+              <SelectTrigger className="!h-10 w-full bg-white"><SelectValue placeholder="Selecciona una categoría" /></SelectTrigger>
+              <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)]">
+                <SelectItem value="none">Selecciona una categoría</SelectItem>
               {categories.map((cat) => (
-                <option key={cat.idCategoria} value={cat.idCategoria}>
+                <SelectItem key={cat.idCategoria} value={String(cat.idCategoria)}>
                   {cat.nombre}
-                </option>
+                </SelectItem>
               ))}
-            </select>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 

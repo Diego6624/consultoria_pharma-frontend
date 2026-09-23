@@ -28,10 +28,10 @@ const ArticleCard = ({ title, subtitle, image, navigate: target }) => {
 
         {/* Texto */}
         <div className="flex flex-col gap-1">
-          <p className="text-white font-bold text-lg leading-snug">
+          <p className="line-clamp-2 text-white font-bold text-lg leading-snug">
             {title}
           </p>
-          <p className="text-white text-md leading-snug max-w-xs">
+          <p className="line-clamp-3 text-white text-md leading-snug max-w-xs">
             {subtitle}
           </p>
         </div>

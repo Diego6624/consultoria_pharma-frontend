@@ -7,9 +7,10 @@ import { listarCategoriasPorTipo } from "@/services/categoriasService";
 import DeleteConfirmDialog from "@/components/admin/DeleteConfirmDialog";
 import AdminPageHeader from "@/pages/private/components/AdminPageHeader";
 import AdminPagination from "@/pages/private/components/AdminPagination";
-import { Plus } from "lucide-react";
+import { Plus, Settings2 } from "lucide-react";
 import ServiceFilters from "./components/ServiceFilters";
 import ServiceTable from "./components/ServiceTable";
+import ServiceHomeSettingsDialog from "./components/ServiceHomeSettingsDialog";
 
 export default function ServiceListPage() {
   const [services, setServices] = useState([]);
@@ -21,6 +22,7 @@ export default function ServiceListPage() {
   const [category, setCategory] = useState("");
   const [deletingId, setDeletingId] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [homeSettingsOpen, setHomeSettingsOpen] = useState(false);
 
   const loadServices = async () => {
     setLoading(true);
@@ -68,7 +70,7 @@ export default function ServiceListPage() {
           <AdminPageHeader
             title="Servicios"
             description="Administra los servicios que se muestran en el sitio."
-            actions={<Link to="/admin/servicios/nuevo" className="hidden md:flex"><Button className="cursor-pointer"><Plus size={16} />Crear servicio</Button></Link>}
+            actions={<div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row"><Button type="button" variant="outline" className="cursor-pointer" onClick={() => setHomeSettingsOpen(true)}><Settings2 size={16} />Configurar Inicio</Button><Link to="/admin/servicios/nuevo" className="hidden md:flex"><Button className="w-full cursor-pointer"><Plus size={16} />Crear servicio</Button></Link></div>}
           />
         </div>
         <ServiceFilters search={search} category={category} categories={categories} onSearchChange={(value) => { setSearch(value); setPage(0); }} onCategoryChange={(value) => { setCategory(value); setPage(0); }} />
@@ -87,6 +89,7 @@ export default function ServiceListPage() {
           setDeleteTarget(null);
         }}
       />
+      <ServiceHomeSettingsDialog open={homeSettingsOpen} onOpenChange={setHomeSettingsOpen} onSaved={loadServices} />
     </div>
   );
 }

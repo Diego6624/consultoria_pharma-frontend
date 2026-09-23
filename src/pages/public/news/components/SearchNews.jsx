@@ -114,7 +114,7 @@ export default function SearchNews() {
                                             </div>
                                             <div className="flex flex-1 flex-col gap-4 p-4">
                                                 <div className="flex-1">
-                                                    <h3 className="mb-2 text-lg font-bold text-gray-800">
+                                                    <h3 className="mb-2 line-clamp-2 text-lg font-bold text-gray-800">
                                                         {article.titulo}
                                                     </h3>
                                                     <p className="line-clamp-3 text-sm text-gray-600">
@@ -132,7 +132,7 @@ export default function SearchNews() {
                             {totalPages > 1
                                 ? <div className="flex justify-center gap-2">
                                     {Array.from({ length: totalPages }, (_, pageNumber) =>
-                                        <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600"}`}>
+                                        <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`cursor-pointer size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600"}`}>
                                             {pageNumber + 1}
                                         </button>
                                     )}

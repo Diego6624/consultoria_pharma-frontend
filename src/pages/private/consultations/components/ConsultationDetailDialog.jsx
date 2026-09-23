@@ -1,4 +1,4 @@
-import { CalendarDays, Check, Loader2, Mail, Phone, Tag, Trash2 } from "lucide-react";
+import { CalendarDays, Check, CheckCheck, EyeOff, Loader2, Mail, Phone, Tag, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ConsultationDialogSkeleton } from "@/components/admin/AdminSkeletons";
@@ -49,7 +49,7 @@ export default function ConsultationDetailDialog({
 
               <div className="flex items-center justify-end gap-3">
                 <Button className="cursor-pointer" variant="outline" size="sm" disabled={busy} onClick={onUpdateRevision}>
-                  {revisionActionId === item.idConsulta ? <><Loader2 size={14} className="animate-spin" /> Guardando...</> : <><Check size={14} />{item.revisada ? "Marcar no leída" : "Marcar leída"}</>}
+                  {revisionActionId === item.idConsulta ? <><Loader2 size={14} className="animate-spin" /> Guardando...</> : <>{item.revisada ? <EyeOff size={14} /> : <CheckCheck size={14} />}{item.revisada ? "Marcar no leída" : "Marcar leída"}</>}
                 </Button>
                 <Button className="cursor-pointer" variant="destructive" size="sm" disabled={busy} onClick={(event) => onRequestDelete(item.idConsulta, event)}>
                   {deleteActionId === item.idConsulta ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}

@@ -67,7 +67,7 @@ const ServicesPage = () => {
             {totalPages > 1 ? (
               <div className="flex justify-center gap-2 px-6">
                 {Array.from({ length: totalPages }, (_, pageNumber) => (
-                  <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600 hover:border-cyan-400"}`}>
+                  <button key={pageNumber} type="button" onClick={() => setPage(pageNumber)} className={`cursor-pointer size-10 rounded-full text-sm font-semibold ${page === pageNumber ? "bg-cyan-500 text-white" : "border border-slate-200 text-slate-600 hover:border-cyan-400"}`}>
                     {pageNumber + 1}
                   </button>
                 ))}
