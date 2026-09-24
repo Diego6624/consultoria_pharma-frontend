@@ -39,9 +39,9 @@ export default function ConsultationDetailDialog({
                 <ContactField icon={Tag} label="Servicio:" value={item.nombreServicio || "Sin preferencia"} />
               </div>
 
-              <div className="rounded-xl border border-slate-200 bg-white p-4">
+              <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-4">
                 <div className="flex items-center justify-between">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Mensaje</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Mensaje</p>
                   <StatusBadge revisada={item.revisada} />
                 </div>
                 <p className="whitespace-pre-line text-sm leading-relaxed text-slate-700">{item.mensaje}</p>

@@ -8,7 +8,7 @@ import { formatDate } from "@/lib/content";
 import { AdminDashboardSkeleton } from "@/components/admin/AdminSkeletons";
 
 const metrics = [
-  { key: "totalConsultas", label: "Consultas recibidas", icon: CalendarDays, tone: "cyan" },
+  { key: "totalConsultas", label: "Consultas recibidas", icon: CalendarDays, tone: "blue" },
   { key: "totalArticulos", label: "Artículos publicados", icon: Newspaper, tone: "blue" },
   { key: "totalServicios", label: "Servicios", icon: BriefcaseBusiness, tone: "blue" },
   { key: "totalUbicaciones", label: "Ubicaciones", icon: MapPinned, tone: "blue" },
