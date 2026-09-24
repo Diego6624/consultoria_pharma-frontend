@@ -35,9 +35,9 @@ const FooterComponent = () => {
                 <div className="flex flex-col gap-2">
                     <p className="font-bold text-base mb-1">Empresa</p>
                     <Link to="/" className="text-white hover:underline text-sm">Inicio</Link>
-                    <Link to="/" className="text-white hover:underline text-sm">Nosotros</Link>
-                    <Link to="/" className="text-white hover:underline text-sm">Servicios</Link>
-                    <Link to="/" className="text-white hover:underline text-sm">Noticias</Link>
+                    <Link to="/aboutUs" className="text-white hover:underline text-sm">Nosotros</Link>
+                    <Link to="/services" className="text-white hover:underline text-sm">Servicios</Link>
+                    <Link to="/news" className="text-white hover:underline text-sm">Noticias</Link>
                 </div>
 
                 {/* Col 3 — Servicios */}
