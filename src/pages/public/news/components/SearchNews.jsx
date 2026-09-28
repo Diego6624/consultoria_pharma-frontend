@@ -73,7 +73,7 @@ export default function SearchNews() {
                         }
                     </div>
                     <Select value={selectedCategory || "all"} onValueChange={(value) => handleCategoryChange(value === "all" ? "" : value)}>
-                        <SelectTrigger className="!h-12 min-w-56 rounded-lg border-gray-300 bg-white px-4 py-0 hover:border-gray-400 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-cyan-400">
+                        <SelectTrigger className="!h-12 w-full min-w-56 md:w-auto rounded-lg border-gray-300 bg-white px-4 py-0 hover:border-gray-400 focus-visible:border-transparent focus-visible:ring-2 focus-visible:ring-cyan-400">
                             <SelectValue placeholder="Todas las categorías" />
                         </SelectTrigger>
                         <SelectContent position="popper" className="w-[var(--radix-select-trigger-width)] min-w-56">

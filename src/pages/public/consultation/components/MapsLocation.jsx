@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { listarUbicacionesPublicas } from "@/services/ubicacionesService";
 
-const buildIframeUrl = (lat, lng, nombre) =>
-  `https://www.google.com/maps?q=${encodeURIComponent(nombre)}&ll=${lat},${lng}&hl=es&z=16&output=embed`;
+const buildIframeUrl = (lat, lng) =>
+  `https://www.google.com/maps?q=${lat},${lng}&hl=es&z=16&output=embed`;
 
 const MapsLocation = () => {
   const [activeLocation, setActiveLocation] = useState(0);
@@ -18,7 +18,7 @@ const MapsLocation = () => {
           id: u.idUbicacion,
           name: u.nombre,
           description: u.descripcion,
-          iframeUrl: buildIframeUrl(u.latitud, u.longitud, u.nombre),
+          iframeUrl: buildIframeUrl(u.latitud, u.longitud),
         }));
         setLocations(mapped);
       } catch (error) {
@@ -90,34 +90,38 @@ const MapsLocation = () => {
 
           {/* Botones sobre el mapa — solo visible en md+ */}
           <div className="absolute left-10 top-1/2 z-10 hidden -translate-y-1/2 md:block">
-            {/* Fade superior */}
-            <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-black/20 to-transparent rounded-t-xl" />
-
-            {/* Lista scrolleable */}
-            <div className="max-h-[420px] overflow-y-auto overscroll-contain scrollbar-none py-6"
-              style={{ maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)" }}
+            <div
+              className="flex max-h-[400px] flex-col gap-3 overflow-y-auto overscroll-contain px-2"
+              style={{
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                maskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+                WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%)",
+              }}
             >
-              <div className="flex flex-col gap-3 pr-3">
+              {/* Padding top para que el fade superior tenga espacio */}
+              <div className="pt-4 pb-4 flex flex-col gap-3">
                 {locations.map((location, index) => (
                   <button
                     key={location.id}
                     onClick={() => setActiveLocation(index)}
-                    className={`w-56 rounded-xl px-5 py-3 text-left text-sm font-semibold shadow-lg
-            backdrop-blur-sm transition-all duration-300 hover:translate-x-2
+                    style={{
+                      animation: `fadeSlideIn 0.35s ease both`,
+                      animationDelay: `${index * 60}ms`,
+                    }}
+                    className={`w-56 rounded-xl px-5 py-3 text-left font-semibold shadow-lg
+            transition-all duration-300 hover:translate-x-2
             ${activeLocation === index
-                        ? "translate-x-2 bg-[#0DB3DE] text-white shadow-[#0DB3DE]/30"
-                        : "bg-white/20 text-white hover:bg-white/30 border border-white/20"
+                        ? "translate-x-2 bg-[#0DB3DE] text-white"
+                        : "bg-[#268EA9] text-white hover:bg-[#0DB3DE]"
                       }`}
                   >
                     <p className="font-bold leading-tight line-clamp-1">{location.name}</p>
-                    <p className="mt-0.5 text-xs opacity-80 line-clamp-1">{location.description}</p>
+                    <p className="mt-0.5 text-xs opacity-90 line-clamp-1">{location.description}</p>
                   </button>
                 ))}
               </div>
             </div>
-
-            {/* Fade inferior */}
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-black/20 to-transparent rounded-b-xl" />
           </div>
         </div>
       </motion.div>
