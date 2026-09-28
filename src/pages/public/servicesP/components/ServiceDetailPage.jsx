@@ -4,8 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import { obtenerServicioPublico } from "@/services/serviciosService";
 import { getImageUrl, sanitizeHtml } from "@/lib/content";
-import { PublicLoading } from "@/components/PublicLoading";
 import PublicBannerImage from "@/components/PublicBannerImage";
+import PublicDetailSkeleton from "@/components/PublicDetailSkeleton";
 
 const ServiceDetailPage = () => {
   const { slug } = useParams();
@@ -25,7 +25,7 @@ const ServiceDetailPage = () => {
     return () => { active = false; };
   }, [slug]);
 
-  if (loading) return <PublicLoading label="Cargando servicio..." />;
+  if (loading) return <PublicDetailSkeleton withSidebar />;
   if (!service || error) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-8">

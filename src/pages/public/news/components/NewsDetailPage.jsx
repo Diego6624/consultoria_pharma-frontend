@@ -4,8 +4,9 @@ import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import { obtenerNoticiaPublica } from "@/services/noticiasService";
 import { formatDate, getImageUrl, sanitizeHtml } from "@/lib/content";
-import { PublicError, PublicLoading } from "@/components/PublicLoading";
+import { PublicError } from "@/components/PublicLoading";
 import PublicBannerImage from "@/components/PublicBannerImage";
+import PublicDetailSkeleton from "@/components/PublicDetailSkeleton";
 
 export default function NewsDetailPage() {
   const { slug } = useParams();
@@ -24,7 +25,7 @@ export default function NewsDetailPage() {
     return () => { active = false; };
   }, [slug]);
 
-  if (loading) return <PublicLoading label="Cargando noticia..." />;
+  if (loading) return <PublicDetailSkeleton />;
   if (error || !article) return <PublicError message={error || "Noticia no encontrada."} />;
 
   return (
