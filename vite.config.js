@@ -13,8 +13,12 @@ export default defineConfig({
     tailwindcss(),
     {
       name: 'spa-404-fallback',
-      closeBundle() {
-        fs.copyFileSync('dist/index.html', 'dist/404.html')
+      writeBundle(options) {
+        const outputDir = options.dir || path.resolve('dist')
+        const indexPath = path.join(outputDir, 'index.html')
+        if (fs.existsSync(indexPath)) {
+          fs.copyFileSync(indexPath, path.join(outputDir, '404.html'))
+        }
       },
     },
   ],

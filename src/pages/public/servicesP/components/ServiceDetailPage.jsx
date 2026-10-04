@@ -6,6 +6,7 @@ import { obtenerServicioPublico } from "@/services/serviciosService";
 import { getImageUrl, sanitizeHtml } from "@/lib/content";
 import PublicBannerImage from "@/components/PublicBannerImage";
 import PublicDetailSkeleton from "@/components/PublicDetailSkeleton";
+import SeoHead from "@/components/SeoHead";
 
 const ServiceDetailPage = () => {
   const { slug } = useParams();
@@ -43,13 +44,20 @@ const ServiceDetailPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
+      <SeoHead
+        title={`${service.titulo} | Consultoría YL Pharma`}
+        description={service.descripcion || "Servicios de consultoría y asesoría farmacéutica."}
+        image={service.imagen ? getImageUrl(service.imagen) : "/images/imageServices.webp"}
+        type="article"
+      />
+      <div className="min-h-screen bg-white">
 
       {/* HERO — igual que BannerMain */}
       <section className="relative w-full h-svh overflow-hidden">
 
         <PublicBannerImage
-          src={service.imagen ? getImageUrl(service.imagen) : "/images/imageServices.jpg"}
+          src={service.imagen ? getImageUrl(service.imagen) : "/images/imageServices.webp"}
           alt={service.titulo}
         />
 
@@ -134,7 +142,8 @@ const ServiceDetailPage = () => {
 
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

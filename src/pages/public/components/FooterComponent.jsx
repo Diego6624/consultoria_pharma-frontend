@@ -1,7 +1,7 @@
 import { Facebook, Instagram, WhatsApp } from "@mui/icons-material";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LinkIcons from "../../../components/LinkIcons";
-import logo from '/images/logo.png';
+import logo from '/images/logo.webp';
 import { Link } from "react-router-dom";
 
 const FooterComponent = () => {
@@ -14,7 +14,7 @@ const FooterComponent = () => {
                 {/* Col 1 — Logo + Descripción + Redes */}
                 <div className="col-span-2 md:col-span-1 flex flex-col gap-4">
                     <div className="flex gap-2 items-center">
-                        <img src={logo} alt="Logo" className="w-12 h-12 bg-white rounded-full object-contain shrink-0" />
+                        <img src={logo} alt="Logo de Consultoría YL Pharma" className="w-12 h-12 bg-white rounded-full object-contain shrink-0" />
                         <div className="flex flex-col text-sm font-semibold leading-tight">
                             <p>CONSULTORÍA YL PHARMA</p>
                             <p>CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
@@ -25,9 +25,9 @@ const FooterComponent = () => {
                         normativo de tu empresa con soluciones ágiles y seguras.
                     </p>
                     <div className="flex gap-2">
-                        <LinkIcons socialIcon={<Facebook />} navigate={"https://web.facebook.com/asesoriafarmaceuticayl"} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE"/>
-                        <LinkIcons socialIcon={<Instagram />} navigate={"/"} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE" />
-                        <LinkIcons socialIcon={<WhatsApp />} navigate={"https://wa.me/51901676492?text=%C2%A1Hola!%20Estoy%20interesado%20en%20sus%20servicios%20de%20consultor%C3%ADa%20farmac%C3%A9utica.%20Me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20c%C3%B3mo%20pueden%20ayudarme."} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE" />
+                        <LinkIcons ariaLabel="Facebook de Consultoría YL Pharma" socialIcon={<Facebook />} navigate={"https://web.facebook.com/asesoriafarmaceuticayl"} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE"/>
+                        <LinkIcons ariaLabel="Instagram de Consultoría YL Pharma" socialIcon={<Instagram />} navigate={"/"} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE" />
+                        <LinkIcons ariaLabel="Contactar por WhatsApp" socialIcon={<WhatsApp />} navigate={"https://wa.me/51901676492?text=%C2%A1Hola!%20Estoy%20interesado%20en%20sus%20servicios%20de%20consultor%C3%ADa%20farmac%C3%A9utica.%20Me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20c%C3%B3mo%20pueden%20ayudarme."} bg="#1F4C7F" hoverBg="#FFFFFF" hoverText="#0DB3DE" />
                     </div>
                 </div>
 
@@ -81,6 +81,7 @@ const FooterComponent = () => {
                         allowFullScreen=""
                         loading="lazy"
                         referrerPolicy="no-referrer-when-downgrade"
+                        title="Ubicación de Consultoría YL Pharma en Google Maps"
                     />
                 </div>
 

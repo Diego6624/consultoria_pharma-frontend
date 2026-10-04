@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import logo from '/images/logo.png';
+import logo from '/images/logo.webp';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import { motion, AnimatePresence } from 'framer-motion';
 import AnimateBoton from '../../../components/AnimateBoton';
@@ -34,7 +34,7 @@ const HeaderComponent = () => {
                 <div className="flex w-full items-center justify-between md:hidden gap-8">
                     {/* Logo + nombre centrado */}
                     <Link className="flex items-center gap-3 min-w-min" to="/">
-                        <img src={logo} alt="Company Logo" className='w-12 h-12 bg-white rounded-full border border-gray-200' />
+                        <img src={logo} alt="Logo de Consultoría YL Pharma" className='w-12 h-12 bg-white rounded-full border border-gray-200' />
                         <div className='text-[#0DB3DE] flex flex-col text-sm font-semibold leading-tight min-w-min'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
                             <p className="text-black font-normal text-xs">CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>
@@ -52,7 +52,7 @@ const HeaderComponent = () => {
                 {/* 🔹 DESKTOP HEADER */}
                 <div className="hidden md:flex w-full items-center justify-between">
                     <Link className='flex items-center gap-3 min-w-max' to="/">
-                        <img src={logo} alt="Company Logo" className='w-15 h-15 bg-white rounded-full' />
+                        <img src={logo} alt="Logo de Consultoría YL Pharma" className='w-15 h-15 bg-white rounded-full' />
                         <div className='text-[#0DB3DE] flex flex-col font-semibold'>
                             <p>CONSULTORÍA <span className='text-[#FF0000]'>YL</span> PHARMA</p>
                             <p>CONSULTORÍA Y ASESORÍA FARMACÉUTICA</p>

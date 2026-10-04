@@ -27,7 +27,7 @@ const GuaranteedResults = () => {
                         <div className="absolute -top-2 -left-2 md:-top-4 md:-left-4
                                         w-full h-full rounded-lg bg-[#0DB3DE] z-0" />
                         <img
-                            src="/images/imageResult.jpg"
+                            src="/images/imageResult.webp"
                             alt="Resultados garantizados"
                             className="relative w-full h-52 sm:h-64 md:h-[420px] lg:h-[500px]
                                        object-cover rounded-lg shadow-md z-10"

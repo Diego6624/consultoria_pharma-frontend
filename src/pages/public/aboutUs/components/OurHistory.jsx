@@ -58,7 +58,7 @@ const OurHistory = () => {
 
                         {/* IMAGEN */}
                         <img
-                            src="/images/imageUs2.jpg"
+                            src="/images/imageUs2.webp"
                             alt="image"
                             className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg
                                 md:[border-top-right-radius:150px] [border-top-right-radius:100px]

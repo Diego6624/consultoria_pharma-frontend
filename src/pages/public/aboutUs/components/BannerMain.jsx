@@ -7,7 +7,7 @@ const BannerMain = () => {
 
             {/* Imagen — entra de arriba a abajo */}
             <PublicBannerImage
-                src="/images/imageUs.jpg"
+                src="/images/imageUs.webp"
                 imageClassName="object-[75%_center] md:object-center"
             />
 

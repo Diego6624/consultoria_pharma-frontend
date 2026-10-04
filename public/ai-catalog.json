@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agenticweb.ai/schemas/ai-catalog.json",
+  "name": "Consultoría YL Pharma",
+  "description": "Consultoría y asesoría farmacéutica especializada en regulación sanitaria, calidad y cumplimiento normativo en Perú.",
+  "resources": [
+    {
+      "name": "Página principal",
+      "url": "https://consultoriapharma.vercel.app/",
+      "type": "webpage",
+      "description": "Presentación general de Consultoría YL Pharma."
+    },
+    {
+      "name": "Servicios farmacéuticos",
+      "url": "https://consultoriapharma.vercel.app/services",
+      "type": "webpage",
+      "description": "Catálogo público de servicios de consultoría farmacéutica."
+    },
+    {
+      "name": "Noticias farmacéuticas",
+      "url": "https://consultoriapharma.vercel.app/news",
+      "type": "webpage",
+      "description": "Noticias y artículos públicos del sector farmacéutico."
+    },
+    {
+      "name": "Agendar asesoría",
+      "url": "https://consultoriapharma.vercel.app/consultation",
+      "type": "action",
+      "description": "Formulario para solicitar una consulta o asesoría."
+    }
+  ]
+}

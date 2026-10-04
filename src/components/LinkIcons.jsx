@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const LinkIcons = ({ navigate, socialIcon, bg, hoverBg, hoverText }) => {
+const LinkIcons = ({ navigate, socialIcon, ariaLabel, bg, hoverBg, hoverText }) => {
     return (
         <div
             className="flex items-center justify-centerrounded-full rounded-full w-min text-white transition-colors duration-300"
@@ -14,7 +14,7 @@ const LinkIcons = ({ navigate, socialIcon, bg, hoverBg, hoverText }) => {
                 e.currentTarget.style.color = "white";
             }}
         >
-            <Link to={navigate} className="p-2">
+            <Link to={navigate} aria-label={ariaLabel} className="p-2">
                 {socialIcon}
             </Link>
         </div>

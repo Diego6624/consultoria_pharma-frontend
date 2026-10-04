@@ -6,7 +6,7 @@ const WorkExperts = () => {
     const divStyle = {
         width: '100%',
         height: '90vh',
-        backgroundImage: 'url(images/imageUs4.jpg)',
+        backgroundImage: 'url(/images/imageUs4.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     }

@@ -74,7 +74,7 @@ const RegulatoryCurrent = () => {
                 <ArticleCard
                   title={article.titulo}
                   subtitle={article.descripcion}
-                  image={getImageUrl(article.imagen) || "/images/imageNews2.jpg"}
+                  image={getImageUrl(article.imagen) || "/images/imageNews2.webp"}
                   navigate={`/news/${article.slug}`}
                 />
               </motion.div>
@@ -84,7 +84,7 @@ const RegulatoryCurrent = () => {
           <div className="space-y-3 md:hidden">
             {articles.map((article, index) => {
               const isOpen = openArticle === index;
-              const image = getImageUrl(article.imagen) || "/images/imageNews2.jpg";
+              const image = getImageUrl(article.imagen) || "/images/imageNews2.webp";
 
               return (
                 <motion.div

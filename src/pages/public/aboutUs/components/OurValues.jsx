@@ -49,7 +49,7 @@ const OurValues = () => {
 
                         {/* IMAGEN */}
                         <img
-                            src="/images/imageUs3.png"
+                            src="/images/imageUs3.webp"
                             alt="image"
                             className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg bg-center
                                 md:[border-top-right-radius:150px] [border-top-right-radius:100px]

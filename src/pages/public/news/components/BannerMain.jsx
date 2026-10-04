@@ -6,7 +6,7 @@ const BannerMain = () => {
         <section className="relative w-full h-svh overflow-hidden">
 
             <PublicBannerImage
-                src="/images/imageNews.jpg"
+                src="/images/imageNews.webp"
                 imageClassName="object-[50%_center] md:object-center"
             />
             

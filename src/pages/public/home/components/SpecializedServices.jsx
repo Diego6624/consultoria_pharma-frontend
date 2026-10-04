@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { listarServiciosParaInicio } from "@/services/serviciosService";
 import { getServiceIconComponent } from "@/components/admin/serviceIconCatalog";
 
-const fallbackImages = ["/images/imageCards.jpg", "/images/imageCards2.jpg", "/images/imageCards3.jpg"];
+const fallbackImages = ["/images/imageCards.webp", "/images/imageCards2.webp", "/images/imageCards3.webp"];
 
 const SpecializedServices = () => {
     const [services, setServices] = useState([]);

@@ -1,27 +1,29 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import { lazy } from "react";
 import App from "../App";
 import NotFoundComponent from "../components/NotFoundComponent";
-import HomePage from "../pages/public/home/HomePage";
-import ServicesPage from "../pages/public/servicesP/ServicesPage";
-import ServiceDetailPage from "../pages/public/servicesP/components/ServiceDetailPage";
-import AboutUsPage from "../pages/public/aboutUs/AboutUsPage";
-import NewsPage from "../pages/public/news/NewsPage";
-import NewsDetailPage from "../pages/public/news/components/NewsDetailPage";
-import ConsultationPage from "@/pages/public/consultation/ConsultationPage";
-import LoginPage from "@/pages/private/auth/LoginPage";
+const HomePage = lazy(() => import("../pages/public/home/HomePage"));
+const ServicesPage = lazy(() => import("../pages/public/servicesP/ServicesPage"));
+const ServiceDetailPage = lazy(() => import("../pages/public/servicesP/components/ServiceDetailPage"));
+const AboutUsPage = lazy(() => import("../pages/public/aboutUs/AboutUsPage"));
+const NewsPage = lazy(() => import("../pages/public/news/NewsPage"));
+const NewsDetailPage = lazy(() => import("../pages/public/news/components/NewsDetailPage"));
+const ConsultationPage = lazy(() => import("@/pages/public/consultation/ConsultationPage"));
+const LoginPage = lazy(() => import("@/pages/private/auth/LoginPage"));
 import PrivateRoute from "@/pages/private/auth/PrivateRoute";
 import RoleRoute from "@/pages/private/auth/RoleRoute";
-import NotAuthorized from "@/pages/private/auth/NotAuthorized";
-import AdminShell from "@/pages/private/layout/AdminShell";
-import DashboardPage from "@/pages/private/dashboard/DashboardPage";
-import ArticleListPage from "@/pages/private/articles/ArticleListPage";
-import ArticleFormPage from "@/pages/private/articles/ArticleFormPage";
-import ServiceListPage from "@/pages/private/services/ServiceListPage";
-import ServiceFormPage from "@/pages/private/services/ServiceFormPage";
-import UsersPage from "@/pages/private/users/UsersPage";
-import LocationsPage from "@/pages/private/locations/LocationsPage";
-import CategoriesPage from "@/pages/private/categories/CategoriesPage";
-import ConsultationsPage from "@/pages/private/consultations/ConsultationsPage";
+const NotAuthorized = lazy(() => import("@/pages/private/auth/NotAuthorized"));
+const AdminShell = lazy(() => import("@/pages/private/layout/AdminShell"));
+const DashboardPage = lazy(() => import("@/pages/private/dashboard/DashboardPage"));
+const ArticleListPage = lazy(() => import("@/pages/private/articles/ArticleListPage"));
+const ArticleFormPage = lazy(() => import("@/pages/private/articles/ArticleFormPage"));
+const ServiceListPage = lazy(() => import("@/pages/private/services/ServiceListPage"));
+const ServiceFormPage = lazy(() => import("@/pages/private/services/ServiceFormPage"));
+const UsersPage = lazy(() => import("@/pages/private/users/UsersPage"));
+const LocationsPage = lazy(() => import("@/pages/private/locations/LocationsPage"));
+const CategoriesPage = lazy(() => import("@/pages/private/categories/CategoriesPage"));
+const ConsultationsPage = lazy(() => import("@/pages/private/consultations/ConsultationsPage"));
 import { Navigate } from "react-router-dom";
 
 const router = createBrowserRouter(

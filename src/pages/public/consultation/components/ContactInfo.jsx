@@ -199,10 +199,11 @@ const ContactInfo = () => {
 
                     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-white font-semibold text-sm md:text-base">
+                            <label htmlFor="consultation-name" className="text-white font-semibold text-sm md:text-base">
                                 Nombre Completo
                             </label>
                             <input
+                                id="consultation-name"
                                 type="text"
                                 placeholder="Nombre"
                                 value={form.nombre}
@@ -216,10 +217,11 @@ const ContactInfo = () => {
 
                         <div className="flex flex-col sm:flex-row gap-4">
                             <div className="flex flex-col gap-1.5 w-full">
-                                <label className="text-white font-semibold text-sm md:text-base">
+                                <label htmlFor="consultation-phone" className="text-white font-semibold text-sm md:text-base">
                                     Número de Teléfono
                                 </label>
                                 <input
+                                    id="consultation-phone"
                                     type="tel"
                                     placeholder="Número de Teléfono"
                                     value={form.telefono}
@@ -231,10 +233,11 @@ const ContactInfo = () => {
                                 />
                             </div>
                             <div className="flex flex-col gap-1.5 w-full">
-                                <label className="text-white font-semibold text-sm md:text-base">
+                                <label htmlFor="consultation-email" className="text-white font-semibold text-sm md:text-base">
                                     Email
                                 </label>
                                 <input
+                                    id="consultation-email"
                                     type="email"
                                     placeholder="Correo Electrónico"
                                     value={form.correo}
@@ -248,11 +251,11 @@ const ContactInfo = () => {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-white font-semibold text-sm md:text-base">
+                            <label htmlFor="consultation-service" className="text-white font-semibold text-sm md:text-base">
                                 Tipo de consulta
                             </label>
                             <Select onValueChange={handleServicioChange} value={form.idServicio}>
-                                <SelectTrigger className="w-full bg-white p-3 py-6">
+                                <SelectTrigger id="consultation-service" aria-label="Tipo de consulta" className="w-full bg-white p-3 py-6">
                                     <SelectValue placeholder="Seleccione un servicio" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -273,10 +276,11 @@ const ContactInfo = () => {
                         </div>
 
                         <div className="flex flex-col gap-1.5">
-                            <label className="text-white font-semibold text-sm md:text-base">
+                            <label htmlFor="consultation-message" className="text-white font-semibold text-sm md:text-base">
                                 Mensaje
                             </label>
                             <textarea
+                                id="consultation-message"
                                 placeholder="Cuéntanos sobre tu problema o necesidad..."
                                 value={form.mensaje}
                                 onChange={handleChange("mensaje")}

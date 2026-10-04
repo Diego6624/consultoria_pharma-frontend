@@ -7,6 +7,7 @@ import { formatDate, getImageUrl, sanitizeHtml } from "@/lib/content";
 import { PublicError } from "@/components/PublicLoading";
 import PublicBannerImage from "@/components/PublicBannerImage";
 import PublicDetailSkeleton from "@/components/PublicDetailSkeleton";
+import SeoHead from "@/components/SeoHead";
 
 export default function NewsDetailPage() {
   const { slug } = useParams();
@@ -29,13 +30,19 @@ export default function NewsDetailPage() {
   if (error || !article) return <PublicError message={error || "Noticia no encontrada."} />;
 
   return (
-
+    <>
+      <SeoHead
+        title={`${article.titulo} | Consultoría YL Pharma`}
+        description={article.descripcion || "Noticias y novedades del sector farmacéutico."}
+        image={article.imagen ? getImageUrl(article.imagen) : "/images/imageNews.webp"}
+        type="article"
+      />
     <article className="min-h-screen bg-white">
 
       {/* HERO — copia exacta de BannerMain */}
       <section className="relative w-full h-svh overflow-hidden">
 
-        <PublicBannerImage src={article.imagen ? getImageUrl(article.imagen) : "/images/imageNews.jpg"} alt={article.titulo} />
+        <PublicBannerImage src={article.imagen ? getImageUrl(article.imagen) : "/images/imageNews.webp"} alt={article.titulo} />
 
         <div className="absolute inset-0 bg-linear-to-r from-black/80 md:via-black/20 md:to-transparent" />
 
@@ -96,5 +103,6 @@ export default function NewsDetailPage() {
       </div>
 
     </article>
+    </>
   );
 }

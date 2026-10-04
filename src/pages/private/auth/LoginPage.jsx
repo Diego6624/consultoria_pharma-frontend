@@ -33,7 +33,7 @@ export default function LoginPage() {
   return (
     <main className="grid h-screen md:min-h-screen bg-slate-950 text-white lg:grid-cols-[1.05fr_0.95fr]">
       <section className="relative hidden overflow-hidden bg-[#075b69] p-12 lg:flex lg:flex-col lg:justify-between">
-        <div className="absolute inset-0 bg-[url('/images/loginImage.png')] bg-cover  opacity-25" />
+        <div className="absolute inset-0 bg-[url('/images/loginImage.webp')] bg-cover  opacity-25" />
         <div className="relative">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-200">
             YLPHARMA

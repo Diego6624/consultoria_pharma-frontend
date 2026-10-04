@@ -6,7 +6,7 @@ const PersonalizedAdvice = () => {
     const divStyle = {
         width: '100%',
         height: '90vh',
-        backgroundImage: 'url(images/imageHome3.jpg)',
+        backgroundImage: 'url(/images/imageHome3.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
     }

@@ -69,7 +69,7 @@ const QuestionsSection = () => {
                     viewport={{ once: true, amount: 0.2 }}
                 >
                     <img
-                        src="/images/imageHome2.jpg"
+                        src="/images/imageHome2.webp"
                         alt="image"
                         className="h-56 w-full max-w-none object-cover rounded-2xl shadow-md sm:h-72 md:h-[420px] md:max-w-[420px] md:rounded-b-full lg:h-[500px] lg:max-w-[480px]"
                     />

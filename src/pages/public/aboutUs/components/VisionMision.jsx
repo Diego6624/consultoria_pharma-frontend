@@ -8,7 +8,7 @@ const VisionMision = () => {
                 {/* MISION */}
                 <motion.div
                     className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-lg
-                                bg-[url(/images/visionMision.png)] bg-cover bg-center
+                                bg-[url(/images/visionMision.webp)] bg-cover bg-center
                                 flex flex-col md:flex-row items-center md:items-center
                                 text-center md:text-left
                                 gap-4 p-5 md:p-6 min-h-[220px] md:min-h-48 md:hover:-translate-y-2 md:transition-transform md:duration-300"
@@ -19,8 +19,8 @@ const VisionMision = () => {
                 >
                     {/* Icono */}
                     <img
-                        src="/images/diana.png"
-                        alt="diana"
+                        src="/images/diana.webp"
+                        alt="Icono de misión"
                         className="relative z-10 w-16 h-16 md:w-20 md:h-20 object-contain"
                     />
 
@@ -37,7 +37,7 @@ const VisionMision = () => {
                 {/* VISION */}
                 <motion.div
                     className="relative rounded-2xl md:rounded-3xl overflow-hidden shadow-lg
-                                bg-[url(/images/visionMision.png)] bg-cover bg-center
+                                bg-[url(/images/visionMision.webp)] bg-cover bg-center
                                 flex flex-col md:flex-row items-center
                                 text-center md:text-left
                                 gap-4 p-5 md:p-6 min-h-[220px] md:min-h-48 md:hover:-translate-y-2 md:transition-transform md:duration-300"
@@ -48,8 +48,8 @@ const VisionMision = () => {
                 >
                     {/* Icono */}
                     <img
-                        src="/images/eye.png"
-                        alt="eye"
+                        src="/images/eye.webp"
+                        alt="Icono de visión"
                         className="relative z-10 w-16 h-16 md:w-20 md:h-20 object-contain"
                     />
 

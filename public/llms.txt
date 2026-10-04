@@ -1,0 +1,15 @@
+# Consultoría YL Pharma
+
+Consultoría y asesoría farmacéutica especializada en regulación sanitaria, calidad y cumplimiento normativo en Perú.
+
+## Sitio público
+
+- [Página principal](https://consultoriapharma.vercel.app/): presentación de la consultora y sus áreas de trabajo.
+- [Nosotros](https://consultoriapharma.vercel.app/aboutUs): información institucional, misión, visión y experiencia.
+- [Servicios](https://consultoriapharma.vercel.app/services): catálogo público de servicios farmacéuticos.
+- [Noticias](https://consultoriapharma.vercel.app/news): noticias y artículos del sector farmacéutico.
+- [Agendar asesoría](https://consultoriapharma.vercel.app/consultation): formulario público para solicitar una consulta.
+
+## Contacto
+
+Para solicitar información o una asesoría, utiliza el formulario de contacto del sitio público.
