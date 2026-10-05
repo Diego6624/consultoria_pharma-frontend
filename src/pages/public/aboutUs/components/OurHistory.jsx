@@ -59,7 +59,7 @@ const OurHistory = () => {
                         {/* IMAGEN */}
                         <img
                             src="/images/imageUs2.webp"
-                            alt="image"
+                            alt="Equipo de Consultoría YL Pharma en una farmacia"
                             className="relative z-10 w-full h-full md:h-[450px] object-cover shadow-lg
                                 md:[border-top-right-radius:150px] [border-top-right-radius:100px]
                                 md:[border-bottom-left-radius:150px] [border-bottom-left-radius:100px]"

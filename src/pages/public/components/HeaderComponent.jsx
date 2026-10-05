@@ -41,7 +41,13 @@ const HeaderComponent = () => {
                         </div>
                     </Link>
 
-                    <button onClick={() => setOpen(!open)} className='min-w-min p-2'>
+                    <button
+                        type="button"
+                        onClick={() => setOpen(!open)}
+                        aria-label={open ? "Cerrar menú de navegación" : "Abrir menú de navegación"}
+                        aria-expanded={open}
+                        className='min-w-min p-2'
+                    >
                         {open
                             ? <X className="w-7 h-7 text-[#003F45]" />
                             : <Menu className="w-7 h-7 text-[#003F45]" />
