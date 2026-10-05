@@ -36,6 +36,18 @@ export default function NewsDetailPage() {
         description={article.descripcion || "Noticias y novedades del sector farmacéutico."}
         image={article.imagen ? getImageUrl(article.imagen) : "/images/imageNews.webp"}
         type="article"
+        structuredData={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: article.titulo,
+          ...(article.descripcion ? { description: article.descripcion } : {}),
+          ...(article.imagen ? { image: [getImageUrl(article.imagen)] } : {}),
+          ...(article.fechaPublicacion ? { datePublished: article.fechaPublicacion } : {}),
+          publisher: {
+            "@type": "Organization",
+            name: "Consultoría YL Pharma",
+          },
+        }}
       />
     <article className="min-h-screen bg-white">
 

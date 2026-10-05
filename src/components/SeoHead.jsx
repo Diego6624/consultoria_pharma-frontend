@@ -32,10 +32,33 @@ function upsertLink(rel, href) {
   element.setAttribute("href", href);
 }
 
-export default function SeoHead({ title, description, image = DEFAULT_IMAGE, type = "website", noIndex = false }) {
+function upsertJsonLd(id, data) {
+  let element = document.head.querySelector(`script#${id}`);
+  if (!element) {
+    element = document.createElement("script");
+    element.id = id;
+    element.type = "application/ld+json";
+    document.head.appendChild(element);
+  }
+  element.textContent = JSON.stringify(data);
+}
+
+function removeJsonLd(id) {
+  document.head.querySelector(`script#${id}`)?.remove();
+}
+
+export default function SeoHead({
+  title,
+  description,
+  image = DEFAULT_IMAGE,
+  type = "website",
+  noIndex = false,
+  structuredData,
+}) {
   useEffect(() => {
     const canonicalUrl = `${window.location.origin}${window.location.pathname}`;
     const absoluteImage = new URL(image, window.location.origin).href;
+    const absoluteLogo = new URL(DEFAULT_IMAGE, window.location.origin).href;
 
     document.title = title;
     upsertMeta("description", description);
@@ -51,7 +74,24 @@ export default function SeoHead({ title, description, image = DEFAULT_IMAGE, typ
     upsertMeta("twitter:description", description);
     upsertMeta("twitter:image", absoluteImage);
     upsertLink("canonical", canonicalUrl);
-  }, [description, image, noIndex, title, type]);
+
+    upsertJsonLd("seo-organization", {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "Consultoría YL Pharma",
+      url: window.location.origin,
+      logo: absoluteLogo,
+      description: "Consultoría y asesoría farmacéutica especializada en regulación sanitaria, calidad y cumplimiento normativo en Perú.",
+    });
+
+    if (structuredData) {
+      upsertJsonLd("seo-page", structuredData);
+    }
+
+    return () => {
+      if (structuredData) removeJsonLd("seo-page");
+    };
+  }, [description, image, noIndex, structuredData, title, type]);
 
   return null;
 }

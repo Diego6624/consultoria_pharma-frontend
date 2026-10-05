@@ -4,4 +4,3 @@ Disallow: /admin
 Disallow: /login
 
 Sitemap: https://consultoriapharma.vercel.app/sitemap.xml
-Agentmap: https://consultoriapharma.vercel.app/.well-known/ard.json
