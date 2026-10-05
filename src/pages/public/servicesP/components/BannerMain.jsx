@@ -8,6 +8,7 @@ const BannerMain = () => {
             {/* Imagen — entra de derecha a izquierda */}
             <PublicBannerImage
                 src="/images/imageServices.webp"
+                mobileSrc="/images/imageServices-mobile.webp"
                 imageClassName="object-[52%_center] md:object-center"
             />
 

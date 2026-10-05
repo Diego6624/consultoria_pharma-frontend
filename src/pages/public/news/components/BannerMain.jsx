@@ -7,6 +7,7 @@ const BannerMain = () => {
 
             <PublicBannerImage
                 src="/images/imageNews.webp"
+                mobileSrc="/images/imageNews-mobile.webp"
                 imageClassName="object-[50%_center] md:object-center"
             />
             

@@ -10,6 +10,7 @@ const BannerMain = () => {
             {/* Imagen — ocupa el espacio de la pantalla */}
             <PublicBannerImage
                 src="/images/imageHome.webp"
+                mobileSrc="/images/imageHome-mobile.webp"
                 imageClassName="object-[70%_center] md:object-center"
             />
 

@@ -7,6 +7,7 @@ const BannerMain = () => {
 
             <PublicBannerImage
                 src="/images/imageContact.webp"
+                mobileSrc="/images/imageContact-mobile.webp"
                 imageClassName="object-[55%_center] md:object-center"
             />
 

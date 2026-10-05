@@ -1,28 +1,17 @@
 {
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Consultoría YL Pharma",
+    "identifier": "consultoriapharma.vercel.app"
+  },
   "entries": [
     {
-      "identifier": "urn:air:consultoriapharma.vercel.app:website:home",
-      "displayName": "Consultoría YL Pharma",
-      "type": "text/html",
-      "url": "https://consultoriapharma.vercel.app/"
-    },
-    {
-      "identifier": "urn:air:consultoriapharma.vercel.app:website:services",
-      "displayName": "Servicios farmacéuticos",
-      "type": "text/html",
-      "url": "https://consultoriapharma.vercel.app/services"
-    },
-    {
-      "identifier": "urn:air:consultoriapharma.vercel.app:website:news",
-      "displayName": "Noticias farmacéuticas",
-      "type": "text/html",
-      "url": "https://consultoriapharma.vercel.app/news"
-    },
-    {
-      "identifier": "urn:air:consultoriapharma.vercel.app:website:consultation",
-      "displayName": "Agendar asesoría",
-      "type": "text/html",
-      "url": "https://consultoriapharma.vercel.app/consultation"
+      "identifier": "urn:air:consultoriapharma.vercel.app:knowledge:public-site",
+      "displayName": "Información pública de Consultoría YL Pharma",
+      "type": "text/markdown",
+      "url": "https://consultoriapharma.vercel.app/llms.txt",
+      "description": "Información resumida sobre la empresa, servicios, noticias y formulario para agendar asesorías.",
+      "tags": ["consultoría farmacéutica", "regulación sanitaria", "Perú"]
     }
   ]
 }
