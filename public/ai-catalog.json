@@ -1,31 +1,40 @@
 {
-  "$schema": "https://agenticweb.ai/schemas/ai-catalog.json",
-  "name": "Consultoría YL Pharma",
-  "description": "Consultoría y asesoría farmacéutica especializada en regulación sanitaria, calidad y cumplimiento normativo en Perú.",
-  "resources": [
+  "entries": [
     {
-      "name": "Página principal",
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:home",
+      "displayName": "Consultoría YL Pharma",
+      "type": "text/html",
       "url": "https://consultoriapharma.vercel.app/",
-      "type": "webpage",
-      "description": "Presentación general de Consultoría YL Pharma."
+      "description": "Presentación general de Consultoría YL Pharma.",
+      "representativeQueries": ["¿Qué servicios ofrece Consultoría YL Pharma?", "Necesito asesoría farmacéutica en Perú"]
     },
     {
-      "name": "Servicios farmacéuticos",
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:services",
+      "displayName": "Servicios farmacéuticos",
+      "type": "text/html",
       "url": "https://consultoriapharma.vercel.app/services",
-      "type": "webpage",
-      "description": "Catálogo público de servicios de consultoría farmacéutica."
+      "description": "Catálogo público de servicios de consultoría farmacéutica.",
+      "representativeQueries": ["¿Qué servicios de consultoría farmacéutica ofrecen?", "Quiero conocer el catálogo de servicios"]
     },
     {
-      "name": "Noticias farmacéuticas",
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:news",
+      "displayName": "Noticias farmacéuticas",
+      "type": "text/html",
       "url": "https://consultoriapharma.vercel.app/news",
-      "type": "webpage",
-      "description": "Noticias y artículos públicos del sector farmacéutico."
+      "description": "Noticias y artículos públicos del sector farmacéutico.",
+      "representativeQueries": ["¿Qué noticias farmacéuticas tienen publicadas?", "Quiero leer artículos sobre regulación sanitaria"]
     },
     {
-      "name": "Agendar asesoría",
+      "@context": "https://agenticresourcediscovery.org/context/v1",
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:consultation",
+      "displayName": "Agendar asesoría",
+      "type": "text/html",
       "url": "https://consultoriapharma.vercel.app/consultation",
-      "type": "action",
-      "description": "Formulario para solicitar una consulta o asesoría."
+      "description": "Formulario público para solicitar una consulta o asesoría farmacéutica.",
+      "representativeQueries": ["Quiero agendar una asesoría farmacéutica", "¿Cómo puedo solicitar una consulta?"]
     }
   ]
 }

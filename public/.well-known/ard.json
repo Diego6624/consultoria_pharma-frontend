@@ -1,0 +1,36 @@
+{
+  "entries": [
+    {
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:home",
+      "displayName": "Consultoría YL Pharma",
+      "type": "text/html",
+      "url": "https://consultoriapharma.vercel.app/",
+      "description": "Presentación general de Consultoría YL Pharma.",
+      "representativeQueries": ["¿Qué servicios ofrece Consultoría YL Pharma?", "Necesito asesoría farmacéutica en Perú"]
+    },
+    {
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:services",
+      "displayName": "Servicios farmacéuticos",
+      "type": "text/html",
+      "url": "https://consultoriapharma.vercel.app/services",
+      "description": "Catálogo público de servicios de consultoría farmacéutica.",
+      "representativeQueries": ["¿Qué servicios de consultoría farmacéutica ofrecen?", "Quiero conocer el catálogo de servicios"]
+    },
+    {
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:news",
+      "displayName": "Noticias farmacéuticas",
+      "type": "text/html",
+      "url": "https://consultoriapharma.vercel.app/news",
+      "description": "Noticias y artículos públicos del sector farmacéutico.",
+      "representativeQueries": ["¿Qué noticias farmacéuticas tienen publicadas?", "Quiero leer artículos sobre regulación sanitaria"]
+    },
+    {
+      "identifier": "urn:air:consultoriapharma.vercel.app:website:consultation",
+      "displayName": "Agendar asesoría",
+      "type": "text/html",
+      "url": "https://consultoriapharma.vercel.app/consultation",
+      "description": "Formulario público para solicitar una consulta o asesoría farmacéutica.",
+      "representativeQueries": ["Quiero agendar una asesoría farmacéutica", "¿Cómo puedo solicitar una consulta?"]
+    }
+  ]
+}
