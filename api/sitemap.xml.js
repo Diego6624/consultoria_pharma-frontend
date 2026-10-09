@@ -1,5 +1,5 @@
 const SITE_URL = "https://consultoriapharma.vercel.app";
-const API_URL = process.env.VITE_API_BASE_URL || "https://consultoria-pharma-backend.onrender.com";
+const API_URL = process.env.SITEMAP_API_URL?.replace(/\/+$/, "");
 
 const staticUrls = [
   "/",
