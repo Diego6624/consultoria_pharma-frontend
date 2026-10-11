@@ -143,8 +143,7 @@ const RegulatoryCurrent = () => {
 
       {!loading && !error && articles.length > 0 ? (
         <>
-          {/* Escritorio (sin cambios) */}
-          <div className="hidden grid-cols-12 auto-rows-[300px] gap-4 md:grid">
+          <div className="hidden grid-cols-12 auto-rows-[270px] gap-4 md:grid">
             {articles.map((article, index) => (
               <motion.div
                 key={article.idNoticia}
