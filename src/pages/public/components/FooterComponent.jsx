@@ -43,10 +43,10 @@ const FooterComponent = () => {
                 {/* Col 3 — Servicios */}
                 <div className="flex flex-col gap-2">
                     <p className="font-bold text-base mb-1">Servicios</p>
-                    <Link to="/" className="text-white hover:underline text-sm">Registros</Link>
-                    <Link to="/" className="text-white hover:underline text-sm">Auditorías</Link>
-                    <Link to="/" className="text-white hover:underline text-sm">Licencias</Link>
-                    <Link to="/" className="text-white hover:underline text-sm">Calidad</Link>
+                    <Link to="/services" className="text-white hover:underline text-sm">Registros</Link>
+                    <Link to="/services" className="text-white hover:underline text-sm">Auditorías</Link>
+                    <Link to="/services" className="text-white hover:underline text-sm">Licencias</Link>
+                    <Link to="/services" className="text-white hover:underline text-sm">Calidad</Link>
                 </div>
 
                 {/* Col 4 — Contacto + Horarios */}
@@ -71,7 +71,7 @@ const FooterComponent = () => {
 
                 {/* Col 5 — Mapa */}
                 <div className="col-span-2 md:col-span-1 rounded-2xl overflow-hidden
-                                w-full h-40 md:w-45 md:h-37.5
+                                w-full h-40 md:w-45 md:max-h-min
                                 shrink-0 shadow-lg">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d241.88495547687222!2d-75.72868417074176!3d-14.0677695686553!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2spe!4v1778549262791!5m2!1ses-419!2spe"
@@ -92,7 +92,7 @@ const FooterComponent = () => {
 
             {/* Copyright & Policies */}
             <div className="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs md:text-sm text-white/90  text-center">
-                <p>© 2025 YLPHARMA. Todos los derechos reservados.</p>
+                <p>© 2026 YLPHARMA. Todos los derechos reservados.</p>
                 <p className="">
                     Desarrollado por <Link to="https://moralestechsolutionsadvanced.com/" className="hover:underline text-[#0022ff]">Morales Tech Solutions Advanced SAC</Link> | <Link to="https://www.facebook.com/moralestechsolutionsadvanced" className="hover:underline text-[#0022ff]">Síguenos en Facebook</Link>
                 </p>

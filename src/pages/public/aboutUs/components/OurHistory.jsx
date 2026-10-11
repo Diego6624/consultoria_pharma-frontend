@@ -16,7 +16,7 @@ const OurHistory = () => {
                 >
                     {/* Tittle | Description*/}
                     <div className="flex flex-col gap-6 mx-auto w-full h-full">
-                        <p className="font-semibold text-3xl text-center md:text-start">
+                        <p className="text-4xl font-bold text-gray-900 text-center md:text-start">
                             Nuestra Historia
                         </p>
                         <div className="flex flex-col gap-2 text-md md:text-xl text-center md:text-start">

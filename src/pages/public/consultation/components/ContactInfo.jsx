@@ -120,18 +120,6 @@ const ContactInfo = () => {
                             </DialogDescription>
                         </div>
                     </DialogHeader>
-                    {/* <div className="flex justify-center pb-2">
-                        <button
-                            onClick={() => setModal((prev) => ({ ...prev, open: false }))}
-                            className={`px-6 py-2 rounded-lg font-semibold text-white text-sm transition-colors duration-300 ${
-                                modal.type === "success"
-                                    ? "bg-emerald-600 hover:bg-emerald-700"
-                                    : "bg-red-600 hover:bg-red-700"
-                            }`}
-                        >
-                            {modal.type === "success" ? "¡Perfecto!" : "Intentar de nuevo"}
-                        </button>
-                    </div> */}
                 </DialogContent>
             </Dialog>
 
