@@ -47,7 +47,11 @@ const MapsLocation = () => {
   }
 
   return (
-    <section className="bg-gray-100 relative w-full">
+    <section className="flex flex-col relative w-full bg-[#1F4C7F]">
+      <div className="mb-8 pt-12 flex flex-col items-center gap-3 md:mb-10">
+        <div className="text-center text-3xl font-bold text-white">Nuestros clientes</div>
+        <p className="text-center text-base text-white/80 md:text-lg">Descubre quienes confiaron en nosotros</p>
+      </div>
       <motion.div
         className="relative w-full flex flex-col items-center justify-center"
         initial={{ opacity: 0 }}
@@ -55,7 +59,8 @@ const MapsLocation = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.2 }}
       >
-        <div className="text-xl md:text-2xl font-bold text-gray-900 text-center py-4">Nuestros clientes</div>
+
+
         {/* Botones debajo del mapa — solo visible en mobile */}
         <div className="flex md:hidden w-full overflow-x-auto">
           {locations.map((location, index) => (

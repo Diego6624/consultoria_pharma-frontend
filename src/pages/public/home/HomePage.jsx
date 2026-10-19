@@ -1,3 +1,4 @@
+import MapsLocation from "./components/MapsLocation";
 import BannerMain from "./components/BannerMain";
 import GuaranteedResults from "./components/GuaranteedResults";
 import PersonalizedAdvice from "./components/PersonalizedAdvice";
@@ -14,6 +15,7 @@ const HomePage = () => {
             <SpecializedServices />
             <GuaranteedResults />
             <RegulatoryCurrent />
+            <MapsLocation />
             <PersonalizedAdvice />
         </div>
     </>)
