@@ -89,7 +89,7 @@ const MapsLocation = () => {
 
   return (
     <section className="flex flex-col relative w-full bg-[#1F4C7F]">
-      <div className="mb-8 pt-12 flex flex-col items-center gap-3 md:mb-10">
+      <div className="mb-8 pt-12 flex flex-col items-center gap-3 md:mb-10 px-4 sm:px-0">
         <div className="text-center text-3xl font-bold text-white">
           Presentes donde nos necesitan
         </div>
