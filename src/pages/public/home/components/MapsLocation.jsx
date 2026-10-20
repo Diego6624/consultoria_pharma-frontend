@@ -90,8 +90,12 @@ const MapsLocation = () => {
   return (
     <section className="flex flex-col relative w-full bg-[#1F4C7F]">
       <div className="mb-8 pt-12 flex flex-col items-center gap-3 md:mb-10">
-        <div className="text-center text-3xl font-bold text-white">Nuestros clientes</div>
-        <p className="text-center text-base text-white/80 md:text-lg">Descubre quienes confiaron en nosotros</p>
+        <div className="text-center text-3xl font-bold text-white">
+          Presentes donde nos necesitan
+        </div>
+        <p className="text-center text-base text-white/80 md:text-lg">
+          Explora en el mapa a los establecimientos que ya cuentan con nuestro acompañamiento.
+        </p>
       </div>
       <motion.div
         className="relative w-full flex flex-col items-center justify-center"
@@ -199,9 +203,8 @@ const MapsLocation = () => {
                         className="flex h-6 items-center px-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
                       >
                         <span
-                          className={`block h-2 rounded-full transition-all duration-300 motion-reduce:transition-none ${
-                            index === activeLocation ? "w-5 bg-[#0DB3DE]" : "w-2 bg-white/40"
-                          }`}
+                          className={`block h-2 rounded-full transition-all duration-300 motion-reduce:transition-none ${index === activeLocation ? "w-5 bg-[#0DB3DE]" : "w-2 bg-white/40"
+                            }`}
                         />
                       </button>
                     ))}
