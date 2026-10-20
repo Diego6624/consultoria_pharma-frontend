@@ -1,15 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ChevronDown, MapPin } from "lucide-react";
+import { Check, MapPin } from "lucide-react";
 import { listarUbicacionesPublicas } from "@/services/ubicacionesService";
 
 const buildIframeUrl = (lat, lng) =>
   `https://www.google.com/maps?q=${lat},${lng}&hl=es&z=16&output=embed`;
 
+const scrollBehavior = () =>
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ? "auto"
+    : "smooth";
+
 const MapsLocation = () => {
   const [activeLocation, setActiveLocation] = useState(0);
   const [locations, setLocations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const mapRef = useRef(null);
 
   useEffect(() => {
     async function load() {
@@ -31,6 +37,12 @@ const MapsLocation = () => {
     load();
   }, []);
 
+  // Mobile: al elegir un cliente, se asegura de que el mapa quede a la vista
+  const selectOnMobile = (index) => {
+    setActiveLocation(index);
+    mapRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: "nearest" });
+  };
+
   if (loading) {
     return (
       <section className="relative w-full h-64 md:h-[550px] flex items-center justify-center bg-slate-100">
@@ -47,8 +59,6 @@ const MapsLocation = () => {
     );
   }
 
-  const current = locations[activeLocation];
-
   return (
     <section className="flex flex-col relative w-full bg-[#1F4C7F]">
       <div className="mb-8 pt-12 flex flex-col items-center gap-3 md:mb-10">
@@ -62,49 +72,8 @@ const MapsLocation = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.2 }}
       >
-        {/* Selector de cliente — solo visible en mobile */}
-        <div className="w-full px-5 pb-5 sm:mx-auto sm:max-w-md md:hidden">
-          <label htmlFor="cliente-select" className="mb-2 block text-sm font-medium text-white/80">
-            Selecciona un cliente
-          </label>
-
-          <div className="relative">
-            <MapPin
-              size={20}
-              aria-hidden="true"
-              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#0DB3DE]"
-            />
-            {/* Select nativo: en celular abre el selector del sistema (cómodo y accesible).
-                text-base (16px) evita el zoom automático de iOS al enfocarlo. */}
-            <select
-              id="cliente-select"
-              value={activeLocation}
-              onChange={(e) => setActiveLocation(Number(e.target.value))}
-              className="w-full appearance-none rounded-xl border border-white/20 bg-white py-3.5 pl-12 pr-12 text-base font-semibold text-[#1F4C7F] shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0DB3DE]"
-            >
-              {locations.map((location, index) => (
-                <option key={location.id} value={index}>
-                  {location.name}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              size={20}
-              strokeWidth={3}
-              aria-hidden="true"
-              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#0DB3DE]"
-            />
-          </div>
-
-          {current?.description ? (
-            <p className="mt-3 text-sm leading-6 text-white/85" aria-live="polite">
-              {current.description}
-            </p>
-          ) : null}
-        </div>
-
         {/* Mapa */}
-        <div className="relative w-full overflow-hidden h-64 sm:h-80 md:h-[550px] lg:h-screen">
+        <div ref={mapRef} className="relative w-full overflow-hidden h-64 sm:h-80 md:h-[550px] lg:h-screen">
           <iframe
             key={activeLocation}
             width="100%"
@@ -113,8 +82,8 @@ const MapsLocation = () => {
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
-            src={current?.iframeUrl}
-            title={current?.name}
+            src={locations[activeLocation]?.iframeUrl}
+            title={locations[activeLocation]?.name}
           />
 
           {/* Botones sobre el mapa — solo visible en md+ */}
@@ -152,6 +121,60 @@ const MapsLocation = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Lista de clientes debajo del mapa — solo visible en mobile */}
+        <div className="w-full px-4 pb-8 pt-5 sm:mx-auto sm:max-w-xl md:hidden">
+          <p className="mb-3 text-sm text-white/80">
+            Toca un cliente para ver su ubicación en el mapa
+          </p>
+
+          <ul
+            className="max-h-[18.5rem] space-y-2 overflow-y-auto overscroll-contain pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            style={{
+              maskImage: "linear-gradient(to bottom, black 82%, transparent 100%)",
+              WebkitMaskImage: "linear-gradient(to bottom, black 82%, transparent 100%)",
+            }}
+          >
+            {locations.map((location, index) => {
+              const isActive = index === activeLocation;
+
+              return (
+                <li key={location.id}>
+                  <button
+                    type="button"
+                    onClick={() => selectOnMobile(index)}
+                    aria-pressed={isActive}
+                    className={`flex w-full items-center gap-3 rounded-2xl border px-4 py-3 text-left transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white ${
+                      isActive
+                        ? "border-[#0DB3DE] bg-[#0DB3DE] text-white shadow-lg"
+                        : "border-white/10 bg-white/10 text-white active:bg-white/20"
+                    }`}
+                  >
+                    <span
+                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
+                        isActive ? "bg-white/25" : "bg-white/10"
+                      }`}
+                      aria-hidden="true"
+                    >
+                      <MapPin size={18} />
+                    </span>
+
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold leading-tight line-clamp-1">{location.name}</span>
+                      {location.description ? (
+                        <span className="mt-0.5 block text-xs leading-snug text-white/85 line-clamp-2">
+                          {location.description}
+                        </span>
+                      ) : null}
+                    </span>
+
+                    {isActive ? <Check size={20} strokeWidth={3} className="shrink-0" aria-hidden="true" /> : null}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </motion.div>
     </section>
