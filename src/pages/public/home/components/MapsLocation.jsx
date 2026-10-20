@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { ChevronDown, MapPin } from "lucide-react";
 import { listarUbicacionesPublicas } from "@/services/ubicacionesService";
 
 const buildIframeUrl = (lat, lng) =>
@@ -46,6 +47,8 @@ const MapsLocation = () => {
     );
   }
 
+  const current = locations[activeLocation];
+
   return (
     <section className="flex flex-col relative w-full bg-[#1F4C7F]">
       <div className="mb-8 pt-12 flex flex-col items-center gap-3 md:mb-10">
@@ -59,25 +62,45 @@ const MapsLocation = () => {
         transition={{ duration: 1, ease: "easeOut" }}
         viewport={{ once: true, amount: 0.2 }}
       >
+        {/* Selector de cliente — solo visible en mobile */}
+        <div className="w-full px-5 pb-5 sm:mx-auto sm:max-w-md md:hidden">
+          <label htmlFor="cliente-select" className="mb-2 block text-sm font-medium text-white/80">
+            Selecciona un cliente
+          </label>
 
-
-        {/* Botones debajo del mapa — solo visible en mobile */}
-        <div className="flex md:hidden w-full overflow-x-auto">
-          {locations.map((location, index) => (
-            <button
-              key={location.id}
-              onClick={() => setActiveLocation(index)}
-              className={`flex-shrink-0 w-32 py-3 px-2 text-center text-xs font-semibold transition-all duration-300 border-t-2 ${activeLocation === index
-                ? "bg-[#0DB3DE] text-white border-[#0DB3DE]"
-                : "bg-[#268EA9] text-white border-transparent hover:bg-[#1F7FA0]"
-                }`}
+          <div className="relative">
+            <MapPin
+              size={20}
+              aria-hidden="true"
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#0DB3DE]"
+            />
+            {/* Select nativo: en celular abre el selector del sistema (cómodo y accesible).
+                text-base (16px) evita el zoom automático de iOS al enfocarlo. */}
+            <select
+              id="cliente-select"
+              value={activeLocation}
+              onChange={(e) => setActiveLocation(Number(e.target.value))}
+              className="w-full appearance-none rounded-xl border border-white/20 bg-white py-3.5 pl-12 pr-12 text-base font-semibold text-[#1F4C7F] shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0DB3DE]"
             >
-              <p className="font-bold leading-tight line-clamp-2">{location.name}</p>
-              <p className="opacity-80 text-[10px] leading-tight mt-0.5 line-clamp-1">
-                {location.description}
-              </p>
-            </button>
-          ))}
+              {locations.map((location, index) => (
+                <option key={location.id} value={index}>
+                  {location.name}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={20}
+              strokeWidth={3}
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#0DB3DE]"
+            />
+          </div>
+
+          {current?.description ? (
+            <p className="mt-3 text-sm leading-6 text-white/85" aria-live="polite">
+              {current.description}
+            </p>
+          ) : null}
         </div>
 
         {/* Mapa */}
@@ -88,10 +111,10 @@ const MapsLocation = () => {
             height="100%"
             style={{ border: 0, display: "block" }}
             loading="lazy"
-            allowFullScreen=""
+            allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
-            src={locations[activeLocation]?.iframeUrl}
-            title={locations[activeLocation]?.name}
+            src={current?.iframeUrl}
+            title={current?.name}
           />
 
           {/* Botones sobre el mapa — solo visible en md+ */}
