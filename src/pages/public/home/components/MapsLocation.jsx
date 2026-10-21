@@ -13,6 +13,36 @@ const scrollBehavior = () =>
 
 const MAX_DOTS = 8; // con más clientes que esto, los puntos se reemplazan por "3 / 12"
 
+const MapsLocationSkeleton = () => (
+  <div role="status" aria-label="Cargando ubicaciones">
+    <div className="relative h-72 w-full animate-pulse bg-slate-300 sm:h-96 md:h-[550px] lg:h-screen">
+      <div className="absolute left-10 top-1/2 hidden -translate-y-1/2 space-y-3 md:block">
+        {Array.from({ length: 4 }, (_, index) => (
+          <div
+            key={index}
+            className="h-[4.25rem] w-56 animate-pulse rounded-xl bg-slate-400/70"
+          />
+        ))}
+      </div>
+    </div>
+    <div className="w-full border-t-2 border-[#0DB3DE] bg-[#163A63] md:hidden">
+      <div className="mx-auto flex min-h-[6.5rem] max-w-xl items-center gap-2 px-3 py-4">
+        <span className="h-12 w-12 shrink-0 animate-pulse rounded-full bg-white/20" />
+        <div className="flex min-w-0 flex-1 flex-col items-center gap-2">
+          <span className="h-5 w-3/4 animate-pulse rounded bg-white/20" />
+          <span className="h-4 w-full animate-pulse rounded bg-white/15" />
+          <div className="flex gap-2">
+            <span className="h-2 w-5 animate-pulse rounded-full bg-white/30" />
+            <span className="h-2 w-2 animate-pulse rounded-full bg-white/20" />
+            <span className="h-2 w-2 animate-pulse rounded-full bg-white/20" />
+          </div>
+        </div>
+        <span className="h-12 w-12 shrink-0 animate-pulse rounded-full bg-white/20" />
+      </div>
+    </div>
+  </div>
+);
+
 const MapsLocation = () => {
   const [activeLocation, setActiveLocation] = useState(0);
   const [locations, setLocations] = useState([]);
@@ -67,15 +97,7 @@ const MapsLocation = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <section className="relative w-full h-64 md:h-[550px] flex items-center justify-center bg-slate-100">
-        <p className="text-slate-500 text-sm">Cargando ubicaciones...</p>
-      </section>
-    );
-  }
-
-  if (locations.length === 0) {
+  if (!loading && locations.length === 0) {
     return (
       <section className="relative w-full h-64 md:h-[550px] flex items-center justify-center bg-slate-100">
         <p className="text-slate-500 text-sm">No hay ubicaciones disponibles.</p>
@@ -97,7 +119,7 @@ const MapsLocation = () => {
           Explora en el mapa a los establecimientos que ya cuentan con nuestro acompañamiento.
         </p>
       </div>
-      <motion.div
+      {loading ? <MapsLocationSkeleton /> : <motion.div
         className="relative w-full flex flex-col items-center justify-center"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -231,7 +253,7 @@ const MapsLocation = () => {
             )}
           </div>
         </div>
-      </motion.div>
+      </motion.div>}
     </section>
   );
 };

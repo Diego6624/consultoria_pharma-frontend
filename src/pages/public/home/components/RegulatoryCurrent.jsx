@@ -3,7 +3,7 @@ import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import ArticleCard from "@/components/ArticleCard";
-import { PublicError, PublicLoading } from "@/components/PublicLoading";
+import { PublicError } from "@/components/PublicLoading";
 import { listarNoticiasPublicas } from "@/services/noticiasService";
 import { getImageUrl } from "@/lib/content";
 
@@ -25,6 +25,39 @@ const scrollBehavior = () =>
   typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ? "auto"
     : "smooth";
+
+const RegulatorySkeleton = () => (
+  <div role="status" aria-label="Cargando noticias regulatorias">
+    <div className="hidden grid-cols-12 auto-rows-[270px] gap-4 md:grid">
+      {GRID_LAYOUTS[6].map((layout, index) => (
+        <div
+          key={index}
+          className={`animate-pulse rounded-2xl bg-slate-200 ${layout}`}
+        />
+      ))}
+    </div>
+
+    <div className="md:hidden">
+      <div className="mx-auto w-[78vw] max-w-[22rem]">
+        <div className="aspect-[4/5] animate-pulse rounded-3xl bg-slate-200" />
+      </div>
+      <div className="mt-4 flex items-center justify-center gap-3">
+        <span className="h-10 w-10 animate-pulse rounded-full bg-slate-200" />
+        <div className="flex items-center gap-2">
+          {Array.from({ length: 6 }, (_, index) => (
+            <span
+              key={index}
+              className={`h-2 animate-pulse rounded-full bg-slate-200 ${
+                index === 0 ? "w-6" : "w-2"
+              }`}
+            />
+          ))}
+        </div>
+        <span className="h-10 w-10 animate-pulse rounded-full bg-slate-200" />
+      </div>
+    </div>
+  </div>
+);
 
 /* Móvil: carrusel con scroll-snap nativo (sin librerías) */
 const NewsCarousel = ({ articles }) => {
@@ -182,7 +215,25 @@ const RegulatoryCurrent = () => {
   };
 
   useEffect(() => {
-    loadArticles();
+    let cancelled = false;
+
+    const loadInitialArticles = async () => {
+      try {
+        const page = await listarNoticiasPublicas({ page: 0, size: 6 });
+        if (!cancelled) setArticles((page?.content || []).slice(0, 6));
+      } catch (loadError) {
+        if (!cancelled) {
+          setError(loadError.message || "No se pudieron cargar las noticias regulatorias.");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    loadInitialArticles();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const layout = GRID_LAYOUTS[articles.length] || GRID_LAYOUTS[6];
@@ -196,7 +247,7 @@ const RegulatoryCurrent = () => {
         </p>
       </div>
 
-      {loading ? <PublicLoading label="Cargando actualidad regulatoria..." /> : null}
+      {loading ? <RegulatorySkeleton /> : null}
       {error && !loading ? <PublicError message={error} onRetry={loadArticles} /> : null}
 
       {!loading && !error && articles.length === 0 ? (
